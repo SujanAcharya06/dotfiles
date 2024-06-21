@@ -137,10 +137,9 @@ export SENDER_PASSWORD='eiuk avwz yspg udyk'
 
 alias vi='vim'
 alias cat='bat'
-alias ls='exa' 
-alias ll='exa -alh'
+alias ls ='exa'
+alias ll='xea -alh'
 alias tree='exa --tree'
-
 
 # For executing cpp program
 alias runcpp='sh /home/sujanacharya/Documents/Asus_win64/Code/Bash_Scripts/bashScripts/exe-cpp.sh'
