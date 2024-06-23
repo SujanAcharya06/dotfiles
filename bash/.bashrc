@@ -137,8 +137,8 @@ export SENDER_PASSWORD='eiuk avwz yspg udyk'
 
 alias vi='vim'
 alias cat='bat'
-alias ls ='exa'
-alias ll='xea -alh'
+alias ls'=exa'
+alias ll='exa -alh'
 alias tree='exa --tree'
 
 # For executing cpp program

@@ -127,7 +127,7 @@ export SENDER_PASSWORD='eiuk avwz yspg udyk'
 
 alias vi='vim'
 alias cat='bat'
-alias ls='exa' 
+alias ls='exa'
 alias ll='exa -alh'
 alias tree='exa --tree'
 
@@ -147,3 +147,4 @@ alias copy='xsel --input --clipboard'
 alias paste='xsel --output --clipboard'
 
 alias fileCount='python /home/sujanacharya/Documents/Asus_win64/Code/Python/Py-Scripts/fileCount.py'
+
