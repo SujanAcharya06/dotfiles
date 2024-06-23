@@ -219,7 +219,7 @@ call plug#end()
 "----------------------------------------------------------------
 " --- Statusbar ---
 " Airline settings
-let g:airline_theme                       = 'atomic'
+let g:airline_theme                       = 'dracula'
 let g:airline_powerline_fonts             = 1
 let g:airline#extensions#tabline#enabled  = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
@@ -452,8 +452,8 @@ vnoremap <Leader>X :Tabularize /.*/<Left><Left><Left>
 
 " Auto-pairs settings
 " Maps for normal and insert modes
-let g:AutoPairsFlyMode        = 0
-let g:AutoPairsMultilineClose = 0
+let g:AutoPairsFlyMode        = 0 " 1 means enable. Fly mode - on the go 
+let g:AutoPairsMultilineClose = 0 
 let g:AutoPairsShortcutJump   = '<C-z>'
 let g:AutoPairsShortcutToggle = '<C-y>'
 
