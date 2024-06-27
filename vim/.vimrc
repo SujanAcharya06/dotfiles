@@ -297,11 +297,11 @@ let g:ale_sign_info='ℹ'
 let $FZF_DEFAULT_COMMAND=""
 let $FZF_PREVIEW_COMMAND = 'cat {}'
 let g:fzf_preview_window = ['right', 'ctrl-i']
-nnoremap <C-q> :Files<CR>
-nnoremap <C-p> :Buffers<CR>
+nnoremap <C-q> :call FZFOpen(':Files')<CR>
+nnoremap <C-p> :call FZFOpen(':Buffers')<CR>
 nnoremap <Leader>gz :Commits<CR>
 nnoremap <Leader>uh :History<CR>
-nnoremap <Leader>ul :BLines<CR>
+" nnoremap <Leader>ul :BLines<CR>
 nnoremap <Leader>ut :Tags<CR>
 nnoremap <Leader>uu :BTags<CR>
 nnoremap <silent><Leader>uf
@@ -314,6 +314,40 @@ nnoremap <silent><Leader>uv
 " Navigate between errors
 nnoremap <Leader>h :lprevious<CR>zz
 nnoremap <Leader>l :lnext<CR>zz
+
+" Fix FZF opening window in NERD tree buffer.`vim .` issue
+" function! FZFOpen(command_str)
+"   if (expand('%') =~# 'NERD_tree' && winnr('$') > 1)
+"     exe "normal! \<c-w>\<c-w>"
+"   endif
+"   exe 'normal! ' . a:command_str . "\<cr>"
+" endfunction
+
+
+function! FZFOpen(command_str)
+	if expand('%') =~# 'NERD_tree' && winnr('$') > 1
+		" Switch to the next window if NERDTree is open and there are other windows
+		exe "normal! \<c-w>\<c-w>"
+" Check if current buffer is NERDTree and it's the only open window
+	elseif expand('%') =~# 'NERD_tree' && winnr('$') == 1
+		let current_file = expand('%')
+		" Open new window for fzf command
+		exe "new"
+		" Open the selected file in the new window
+		exe 'edit ' . fnameescape(current_file)
+		" Delete any 'No Name' buffer that might have been created
+    %bd
+	endif
+
+	" Execute the provided command_str
+	exe 'normal! ' . a:command_str . "\<cr>"
+endfunction
+
+" nnoremap <silent> <C-b> :call FZFOpen(':Buffers')<CR>
+nnoremap <silent> <C-g>g :call FZFOpen(':Ag')<CR>
+nnoremap <silent> <C-g>c :call FZFOpen(':Commands')<CR>
+nnoremap <silent> <C-g>l :call FZFOpen(':BLines')<CR>
+" nnoremap <silent> <C-p> :call FZFOpen(':Files')<CR>
 
 " Listtoggle settings
 let g:lt_location_list_toggle_map = '<leader>e'
@@ -2003,6 +2037,3 @@ set wildmenu
 
 " For closing all the files in the buffers except the current one
 nnoremap <Leader>ca :w <bar> %bd <bar> e# <bar> bd# <CR>
-
-
-
