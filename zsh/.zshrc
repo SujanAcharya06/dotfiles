@@ -148,3 +148,6 @@ alias paste='xsel --output --clipboard'
 
 alias fileCount='python /home/sujanacharya/Documents/Asus_win64/Code/Python/Py-Scripts/fileCount.py'
 
+echo "Remember to git fetch..."
+# For git fetch
+alias fetch='git fetch origin main'
