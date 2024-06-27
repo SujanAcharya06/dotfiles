@@ -292,7 +292,9 @@ let g:ale_sign_warning='∆'
 let g:ale_sign_info='ℹ'
 
 " FZF settings
-let $FZF_DEFAULT_COMMAND = "ag --hidden --ignore .git -p ~/.gitignore -g ''"
+" let $FZF_DEFAULT_COMMAND = "ag --hidden --ignore .git -p ~/.gitignore -g ''"
+" Fixed fzf load command
+let $FZF_DEFAULT_COMMAND=""
 let $FZF_PREVIEW_COMMAND = 'cat {}'
 let g:fzf_preview_window = ['right', 'ctrl-i']
 nnoremap <C-q> :Files<CR>
@@ -1990,3 +1992,17 @@ command! -nargs=1 SH :r !<args>
 
 " Use Terminal GPT
 nnoremap <Leader>T :SH tgpt -q "
+
+
+" I added these
+" Search down into subfolders
+set path+=**
+
+" Display all matching files when we tab complete
+set wildmenu
+
+" For closing all the files in the buffers except the current one
+nnoremap <Leader>ca :w <bar> %bd <bar> e# <bar> bd# <CR>
+
+
+
