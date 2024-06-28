@@ -325,6 +325,8 @@ nnoremap <Leader>l :lnext<CR>zz
 
 
 function! FZFOpen(command_str)
+	"Defint the predefined directory
+	let predefined_directory = '~/Documents/'
 	if expand('%') =~# 'NERD_tree' && winnr('$') > 1
 		" Switch to the next window if NERDTree is open and there are other windows
 		exe "normal! \<c-w>\<c-w>"
@@ -339,8 +341,16 @@ function! FZFOpen(command_str)
     %bd
 	endif
 
-	" Execute the provided command_str
-	exe 'normal! ' . a:command_str . "\<cr>"
+	" Temporarily change the directory to the predefined path
+	let current_cwd = getcwd()
+	execute 'cd ' . predefined_directory
+
+	try
+		" Execute the provided command_str
+		exe 'normal! ' . a:command_str . "\<cr>"
+	finally
+		execute 'cd ' . current_cwd
+	endtry
 endfunction
 
 " nnoremap <silent> <C-b> :call FZFOpen(':Buffers')<CR>
