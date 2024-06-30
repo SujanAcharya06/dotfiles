@@ -2047,3 +2047,10 @@ set wildmenu
 
 " For closing all the files in the buffers except the current one
 nnoremap <Leader>ca :w <bar> %bd <bar> e# <bar> bd# <CR>
+
+" Move the current window in new vertical split window
+
+nnoremap <leader>mv :vsplit<CR>:b#<CR>
+
+" Set complete to exclude included files
+set complete+=i
