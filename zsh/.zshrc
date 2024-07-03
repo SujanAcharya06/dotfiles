@@ -120,8 +120,8 @@ export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
 export PATH=$PATH:$JAVA_HOME/bin
 . "$HOME/.cargo/env"
 
-alias mail='python /home/sujanacharya/Documents/Asus_win64/Code/Python/Py-Scripts/test.py'
-alias mail-log='python /home/sujanacharya/Documents/Asus_win64/Code/Python/Py-Scripts/test-logfile.py'
+alias mail='python /home/sujanacharya/Documents/Resource/Code/Python/Py-Scripts/test.py'
+alias mail-log='python /home/sujanacharya/Documents/Resource/Code/Python/Py-Scripts/test-logfile.py'
 export SENDER_EMAIL='root.popxos.domain@gmail.com'
 export SENDER_PASSWORD='eiuk avwz yspg udyk'
 
@@ -133,8 +133,8 @@ alias tree='exa --tree'
 
 
 # For executing cpp program
-alias exe-cpp='sh /home/sujanacharya/Documents/Asus_win64/Code/Bash_Scripts/bashScripts/Auto-Exec/exe-cpp.sh'
-alias exe-java='sh /home/sujanacharya/Documents/Asus_win64/Code/Bash_Scripts/bashScripts/Auto-Exec/exe-java.sh'
+alias exe-cpp='sh /home/sujanacharya/Documents/Resource/Code/Bash_Scripts/bashScripts/Auto-Exec/exe-cpp.sh'
+alias exe-java='sh /home/sujanacharya/Documents/Resource/Code/Bash_Scripts/bashScripts/Auto-Exec/exe-java.sh'
 
 
 # For storing the cwd of the folder in ranger
@@ -146,7 +146,7 @@ alias rm='trash'
 alias copy='xsel --input --clipboard'
 alias paste='xsel --output --clipboard'
 
-alias fileCount='python /home/sujanacharya/Documents/Asus_win64/Code/Python/Py-Scripts/fileCount.py'
+alias fileCount='python /home/sujanacharya/Documents/Resource/Code/Python/Py-Scripts/fileCount.py'
 
 echo "Remember to git fetch..."
 # For git fetch
