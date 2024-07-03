@@ -130,8 +130,8 @@ export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
 export PATH=$PATH:$JAVA_HOME/bin
 . "$HOME/.cargo/env"
 
-alias mail='python /home/sujanacharya/Documents/Asus_win64/Code/Python/Py-Scripts/test.py'
-alias mail-log='python /home/sujanacharya/Documents/Asus_win64/Code/Python/Py-Scripts/test-logfile.py'
+alias mail='python /home/sujanacharya/Documents/Resource/Code/Python/Py-Scripts/test.py'
+alias mail-log='python /home/sujanacharya/Documents/Resource/Code/Python/Py-Scripts/test-logfile.py'
 export SENDER_EMAIL='root.popxos.domain@gmail.com'
 export SENDER_PASSWORD='eiuk avwz yspg udyk'
 
@@ -142,7 +142,7 @@ alias ll='exa -alh'
 alias tree='exa --tree'
 
 # For executing cpp program
-alias runcpp='sh /home/sujanacharya/Documents/Asus_win64/Code/Bash_Scripts/bashScripts/exe-cpp.sh'
+alias runcpp='sh /home/sujanacharya/Documents/Resource/Code/Bash_Scripts/bashScripts/exe-cpp.sh'
 
 # For storing the cwd of the folder in ranger
 alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
