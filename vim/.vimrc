@@ -756,10 +756,10 @@ filetype indent on
 
 " Allow us to use Ctrl-s and Ctrl-q as keybinds
 " Restore default behaviour when leaving Vim.
-if !has("nvim")
-	silent !stty -ixon
-	autocmd VimLeave * silent !stty ixon
-endif
+" if !has("nvim")
+"   silent !stty -ixon
+"   autocmd VimLeave * silent !stty ixon
+" endif
 
 " Save the current buffer
 nnoremap <Leader>s :update<CR>
