@@ -99,6 +99,13 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+
+echo "mail - to send mail via terminal - py"
+echo "mail.log - to log the mail details - py"
+echo "fileCount - to count the number of file recursively in a dir for given extension"
+echo "search - for peviewing using fzf and bat"
+echo "edit - to search using fzf and edit using vim"
 
 
 # some more ls aliases
@@ -148,6 +155,11 @@ alias paste='xsel --output --clipboard'
 
 alias fileCount='python /home/sujanacharya/Documents/Resource/Code/Python/Py-Scripts/fileCount.py'
 
-echo "Remember to git fetch..."
 # For git fetch
 alias fetch='git fetch origin main'
+
+# Alias for searching files with fzf and previewing with bat
+alias search='fzf --preview="bat --style=numbers --color=always {}"'
+
+# Alias for editing files selected with fzf and previewing with bat
+alias edit='vim $(fzf --preview="bat --style=numbers --color=always {}")'
