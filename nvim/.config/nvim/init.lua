@@ -189,22 +189,38 @@ require('lazy').setup({
     },
   },
 
+  -- {
+  --   -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'onedark'
+  --   end,
+  -- },
   {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    --tokyonight-theme
+    --colorscheme tokyonight
+    --
+    --" There are also colorschemes for the different styles.
+    --colorscheme tokyonight-night
+    --colorscheme tokyonight-storm
+    --colorscheme tokyonight-day
+    --colorscheme tokyonight-moon
+    "folke/tokyonight.nvim",
+    lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'tokyonight-night'
     end,
   },
-
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
+    -- theme = {onedark, tokyonight}
     opts = {
       options = {
-        icons_enabled = false,
+        icons_enabled = true,
         theme = 'onedark',
         component_separators = '|',
         section_separators = '',
