@@ -9,7 +9,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "clangd" }
+        ensure_installed = { "lua_ls", "clangd", "pylsp" }
       })
     end
   },
@@ -20,25 +20,17 @@ return {
 
       local lspconfig = require("lspconfig")
 
-      --for lua
+      -- for lua
       lspconfig.lua_ls.setup({})
 
       -- Setup for clangd
       lspconfig.clangd.setup({
-        filetypes = { "c", "objc",}, -- {"cpp", "objcpp"}
-        cmd = { "clangd", "--background-index" },
-        init_options = {
-          compilationDatabaseDirectory = ".",
-          clangd = {
-            extraArgs = {
-              "-std=c++11",
-              "/usr/include/c++/11",
-              -- Add any other necessary flags or include paths here
-            }
-          }
-        }
+        filetypes = { "c", "objc",} -- {"cpp", "objcpp"}
       })
-      -- Keymaps
+
+      -- Setup for pylsp
+      lspconfig.pylsp.setup({})
+
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
       vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {})
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
