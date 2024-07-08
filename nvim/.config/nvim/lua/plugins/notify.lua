@@ -2,7 +2,10 @@ return {
   "rcarriga/nvim-notify",
   config = function()
     local notify = require("notify")
-    notify.setup()
+    notify.setup({
+      top_down = false,
+      -- render = "compact" -- {"minmal", "compact", "default", "simple", "wrapped-compact"}
+    })
 
     -- Create an autocommand group
     vim.api.nvim_create_augroup("NotifyFileEvents", { clear = true })

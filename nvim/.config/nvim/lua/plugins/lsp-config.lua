@@ -17,7 +17,9 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       local notify = require("notify")
-      notify.setup()
+      notify.setup({
+        top_down = false
+      })
 
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       local lspconfig = require("lspconfig")
