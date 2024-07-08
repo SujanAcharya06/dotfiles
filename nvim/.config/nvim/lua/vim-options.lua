@@ -8,3 +8,4 @@ vim.cmd("set numberwidth=2")
 vim.cmd("set relativenumber")
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+vim.opt.termguicolors = true
