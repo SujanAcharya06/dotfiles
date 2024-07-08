@@ -8,7 +8,7 @@ return {
 
   -- Nvim-tree keymaps
   config = function()
-    vim.keymap.set('n', '<C-n>', ':Neotree toggle<CR>', {})
+    vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal left<CR>', {})
   end
 }
 
