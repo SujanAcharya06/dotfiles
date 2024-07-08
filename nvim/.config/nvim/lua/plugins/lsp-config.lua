@@ -18,6 +18,8 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
+      local notify = require("notify")
+      notify.setup()
       -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -25,6 +27,12 @@ return {
 
       -- Define the on_attach function
       local on_attach = function(client, bufnr)
+        -- Whenever an lsp client gets attatched, notify
+        notify("LSP attatched: " .. client.name, "info", {
+          title = "Language Server Protocol",
+          timeout = 1000,
+        })
+
         -- Enable completion triggered by <c-x><c-o>
         vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -80,10 +88,10 @@ return {
         on_attach = on_attach,
       })
 
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
-      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {})
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
-      vim.keymap.set({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, {})
+      -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
+      -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {})
+      -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
+      -- vim.keymap.set({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, {})
     end
   }
 }
