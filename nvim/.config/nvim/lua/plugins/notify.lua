@@ -19,7 +19,7 @@ return {
         local filename = get_filename()
         notify("Opened file: " .. filename, "info", {
           title = "File Opened",
-          timeout = 3000,
+          timeout = 1000,
         })
       end,
     })
@@ -31,7 +31,7 @@ return {
         local filename = get_filename()
         notify("Saved file: " .. filename, "info", {
           title = "File Saved",
-          timeout = 3000,
+          timeout = 1000,
         })
       end,
     })
