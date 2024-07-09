@@ -37,10 +37,10 @@
 "----------------------------------------------------------------
 " 1. General settings
 "----------------------------------------------------------------
-" Disable vi compatibility
-" if !has("nvim")
-" 	set nocompatible
-" endif
+Disable vi compatibility
+if !has("nvim")
+	set nocompatible
+endif
 
 " Reload .vimrc
 nnoremap <F12> :so $MYVIMRC<CR>
