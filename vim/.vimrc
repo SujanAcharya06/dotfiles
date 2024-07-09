@@ -37,7 +37,7 @@
 "----------------------------------------------------------------
 " 1. General settings
 "----------------------------------------------------------------
-Disable vi compatibility
+" Disable vi compatibility
 if !has("nvim")
 	set nocompatible
 endif
