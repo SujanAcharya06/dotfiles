@@ -4,7 +4,7 @@ return {
     local notify = require("notify")
     notify.setup({
       top_down = false,
-      -- render = "compact" -- {"minmal", "compact", "default", "simple", "wrapped-compact"}
+      -- render = "compact" -- {"minimal", "compact", "default", "simple", "wrapped-compact"}
     })
 
     -- Create an autocommand group
@@ -15,15 +15,24 @@ return {
       return vim.fn.expand("%:t")
     end
 
+    -- Keep track of opened files
+    local opened_files = {}
+
     -- Create an autocommand for BufReadPost event (file open)
     vim.api.nvim_create_autocmd("BufReadPost", {
       group = "NotifyFileEvents",
       callback = function()
         local filename = get_filename()
-        notify("Opened file: " .. filename, "info", {
-          title = "File Opened",
-          timeout = 1000,
-        })
+        local fullpath = vim.fn.expand("%:p")
+
+        -- Only notify if this file hasn't been opened in this session
+        if not opened_files[fullpath] then
+          opened_files[fullpath] = true
+          notify("Opened file: " .. filename, "info", {
+            title = "File Opened",
+            timeout = 1000,
+          })
+        end
       end,
     })
 
