@@ -1,31 +1,46 @@
 return {
   "rcarriga/nvim-notify",
   config = function()
+
+    -- Local notification for git-related messages
     local notify = require("notify")
     notify.setup({
-      top_down = false,
-      -- render = "compact" -- {"minimal", "compact", "default", "simple", "wrapped-compact"}
+      top_down = true,
     })
 
-    -- Create an autocommand group
     vim.api.nvim_create_augroup("NotifyFileEvents", { clear = true })
 
-    -- Function to get filename
     local function get_filename()
       return vim.fn.expand("%:t")
     end
 
-    -- Keep track of opened files
+    -- Table for keeping the files in the current session
     local opened_files = {}
 
-    -- Create an autocommand for BufReadPost event (file open)
+    -- Table to keep track of the current git directories visited
+    local git_directories = {}
+
+    -- Table for not git directories
+    local normal_directories = {}
+
+    -- Function to return the directory with .git or cwd
+    local function get_git_root_or_cwd()
+      local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+
+      if vim.v.shell_error ~= 0 then
+        local cwd = vim.fn.getcwd()
+        return cwd, false
+      end
+
+      return git_root, true
+    end
+
     vim.api.nvim_create_autocmd("BufReadPost", {
       group = "NotifyFileEvents",
       callback = function()
         local filename = get_filename()
         local fullpath = vim.fn.expand("%:p")
 
-        -- Only notify if this file hasn't been opened in this session
         if not opened_files[fullpath] then
           opened_files[fullpath] = true
           notify("Opened file: " .. filename, "info", {
@@ -33,26 +48,41 @@ return {
             timeout = 1000,
           })
         end
-      end,
+
+        -- Get the root git directory path or cwd
+        local path, is_git_root = get_git_root_or_cwd()
+        if is_git_root then
+          if not git_directories[path] then
+            -- Mark visited git directories to avoid repeated notifications
+            git_directories[path] = true
+            notify("Inside git directory " .. path, "info", {
+              title = "Git Repository Detected",
+              timeout = 1000,
+            })
+          end
+        else
+          if not normal_directories[path] then
+            -- Mark visited directories to avoid repeated notifications
+            normal_directories[path] = true
+            notify("Not in a git directory... " .. path, "info", {
+              title = "!Git Directory:",
+              timeout = 1000,
+            })
+          end
+        end
+      end
     })
 
-    -- Create an autocommand for BufWritePost event (file save)
     vim.api.nvim_create_autocmd("BufWritePost", {
       group = "NotifyFileEvents",
       callback = function()
         local filename = get_filename()
         notify("Saved file: " .. filename, "info", {
           title = "File Saved",
-          timeout = 1000,
+          timeout = 600,
         })
       end,
     })
-
-    -- -- Your existing async notification setup
-    -- local async = require("plenary.async")
-    -- async.run(function()
-    --   notify("Let's wait for this to close").events.close()
-    --   notify("It closed!")
-    -- end)
   end,
 }
+
