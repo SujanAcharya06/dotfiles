@@ -166,6 +166,3 @@ alias edit='vim $(fzf --preview="bat --style=numbers --color=always {}")'
 
 #lazy-load nvm
 source ~/.lazy-load.zsh
-
-#nvim for vim
-alias vim='nvim'
