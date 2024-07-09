@@ -38,9 +38,9 @@
 " 1. General settings
 "----------------------------------------------------------------
 " Disable vi compatibility
-if !has("nvim")
-	set nocompatible
-endif
+" if !has("nvim")
+" 	set nocompatible
+" endif
 
 " Reload .vimrc
 nnoremap <F12> :so $MYVIMRC<CR>
@@ -278,14 +278,16 @@ vnoremap cc :call NERDComment(0,'toggle')<CR>
 nnoremap <silent> <C-n> :call <SID>ToggleNERDTree()<CR>
 
 " ALE settings
+
 let g:ale_linters = {
-	\ 'c'          : ['clang'],
-	\ 'vim'        : ['vint'],
-	\ 'python'     : ['pylint'],
-	\ 'javascript' : ['jshint'],
-	\ 'css'        : ['csslint'],
-	\ 'tex'        : ['chktex'],
-	\ }
+			\ 'c'          : ['clang'],
+			\ 'cpp'          : [],
+			\ 'vim'        : ['vint'],
+			\ 'python'     : ['pylint'],
+			\ 'javascript' : ['jshint'],
+			\ 'css'        : ['csslint'],
+			\ 'tex'        : ['chktex'],
+			\ }
 
 let g:ale_sign_error='✗'
 let g:ale_sign_warning='∆'
@@ -459,7 +461,7 @@ let g:deoplete#omni#functions.javascript = [
 
 " Clang autocompletion
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-4.0/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/14/include/'
 
 " --- Snippets ---
 " Neosnippet settings
