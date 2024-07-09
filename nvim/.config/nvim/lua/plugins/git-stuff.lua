@@ -1,8 +1,14 @@
 return {
   {
     "tpope/vim-fugitive",
+    config = function()
+      -- Optional: Add some keymaps for Fugitive
+      vim.keymap.set("n", "<leader>gs", ":vert Git<CR>", {noremap = true, silent = true})
+      vim.keymap.set("n", "<leader>gc", ":Git commit<CR>", {noremap = true, silent = true})
+    end
   },
-  { "lewis6991/gitsigns.nvim",
+  {
+    "lewis6991/gitsigns.nvim",
     config = function()
       require('gitsigns').setup({
         signs = {
@@ -28,4 +34,3 @@ return {
     end,
   }
 }
-
