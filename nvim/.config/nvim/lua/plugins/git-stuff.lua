@@ -5,6 +5,7 @@ return {
       -- Optional: Add some keymaps for Fugitive
       vim.keymap.set("n", "<leader>gs", ":vert Git<CR>", {noremap = true, silent = true})
       vim.keymap.set("n", "<leader>gc", ":Git commit<CR>", {noremap = true, silent = true})
+      vim.keymap.set("n", "<leader>P", ":Git push<CR>", {noremap = true, silent = true})
     end
   },
   {
