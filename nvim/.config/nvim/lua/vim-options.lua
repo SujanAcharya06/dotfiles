@@ -9,3 +9,13 @@ vim.cmd("set relativenumber")
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.opt.termguicolors = true
+
+-- Spell checking configuration
+vim.opt.spelllang = "en_us"
+vim.opt.spell = false  -- Spell checking is off by default
+
+-- Keymaps for spell checking
+vim.api.nvim_set_keymap('n', '<leader>s', ':set spell!<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-]>', ']s', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-[>', '[s', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>c', '1z=', { noremap = true })
