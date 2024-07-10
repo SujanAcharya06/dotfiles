@@ -27,7 +27,6 @@ return {
           title = "Language Server Protocol",
           timeout = 1000,
         })
-        
         -- Mappings.
         local opts = { buffer = bufnr, noremap = true, silent = true }
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
