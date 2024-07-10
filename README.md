@@ -6,13 +6,13 @@ Place the dot files in the **home directory** and use `stow` command
 #example for nvim
 stow  nvim
 ```
-    - If you are placing the dot files else where just specify **--target=$HOME**
+    - If you are placing the repo else where just specify **--target=$HOME**
 
 ### Neovim
 
-#### Plugings
+#### Plugins
 
-1) ** lsp-config.lua**
+1) **lsp-config.lua**
     - Currently has lsp's for 
         1) python - pyright
         2) c/c++ - clangd
