@@ -162,7 +162,7 @@ alias fetch='git fetch origin main'
 alias search='fzf --preview="bat --style=numbers --color=always {}"'
 
 # Alias for editing files selected with fzf and previewing with bat
-alias edit='vim $(fzf --preview="bat --style=numbers --color=always {}")'
+alias edit='nvim $(fzf --preview="bat --style=numbers --color=always {}")'
 
 #lazy-load nvm
 source ~/.lazy-load.zsh
