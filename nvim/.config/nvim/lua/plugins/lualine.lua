@@ -5,7 +5,7 @@ return {
     require('lualine').setup({
       options = {
         icons_enables = true;
-        theme = 'nord' --{"dracula", "gruvbox"}
+        theme = 'onedark' --{"dracula", "gruvbox"}
       }
     })
   end

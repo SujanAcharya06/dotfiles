@@ -1,9 +1,16 @@
 return{
   {
+    'navarasu/onedark.nvim',
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme 'onedark'
+    end,
+  },
+  {
     'marko-cerovac/material.nvim',
     config = function()
-      vim.g.material_style = "deep ocean"
-      vim.cmd('colorscheme material')
+      -- vim.g.material_style = "deep ocean"
+      -- vim.cmd('colorscheme material')
     end,
   },
   {
