@@ -55,7 +55,7 @@ return {
           if not git_directories[path] then
             -- Mark visited git directories to avoid repeated notifications
             git_directories[path] = true
-            notify("Inside git directory " .. path, "info", {
+            notify("Inside git directory\n " .. path, "info", {
               title = "Git Repository Detected",
               timeout = 1000,
             })
@@ -64,7 +64,7 @@ return {
           if not normal_directories[path] then
             -- Mark visited directories to avoid repeated notifications
             normal_directories[path] = true
-            notify("Not in a git directory... " .. path, "info", {
+            notify("Not in a git directory...\n " .. path, "info", {
               title = "!Git Directory:",
               timeout = 1000,
             })
@@ -85,4 +85,3 @@ return {
     })
   end,
 }
-
