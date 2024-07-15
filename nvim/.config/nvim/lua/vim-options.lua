@@ -19,3 +19,6 @@ vim.api.nvim_set_keymap('n', '<leader>s', ':set spell!<CR>', { noremap = true, s
 vim.api.nvim_set_keymap('n', '<C-]>', ']s', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-[>', '[s', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>c', '1z=', { noremap = true })
+
+-- Lazy menu toggle
+vim.api.nvim_set_keymap('n', '<leader>]', ':Lazy<CR>', {noremap = true})
