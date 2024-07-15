@@ -166,3 +166,4 @@ alias edit='nvim $(fzf --preview="bat --style=numbers --color=always {}")'
 
 #lazy-load nvm
 source ~/.lazy-load.zsh
+export PATH=$HOME/.local/bin:$PATH
