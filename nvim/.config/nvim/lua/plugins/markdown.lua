@@ -5,25 +5,14 @@ return {
         ft = { "markdown" },
         build = function() vim.fn["mkdp#util#install"]() end,
         config = function()
-            -- Existing configuration...
-
-            -- Set a specific port (uncomment to use)
-            -- vim.g.mkdp_port = '8888'
-
-            -- Automatically close the browser window when the Markdown buffer is closed
-            vim.g.mkdp_auto_close = 1
-
-            -- Echo the preview URL when it's opened (helpful for debugging)
-            vim.g.mkdp_echo_preview_url = 1
-
             vim.g.mkdp_auto_start = 0
-            vim.g.mkdp_auto_close = 1
+            vim.g.mkdp_auto_close = 0  -- This is the key change
             vim.g.mkdp_refresh_slow = 0
-            vim.g.mkdp_command_for_global = 0
+            vim.g.mkdp_command_for_global = 1  -- Allow the command to work outside markdown files
             vim.g.mkdp_open_to_the_world = 0
             vim.g.mkdp_open_ip = ''
             vim.g.mkdp_browser = ''
-            vim.g.mkdp_echo_preview_url = 0
+            vim.g.mkdp_echo_preview_url = 1  -- Echo the server url for convenience
             vim.g.mkdp_browserfunc = ''
             vim.g.mkdp_preview_options = {
                 mkit = {},
@@ -48,13 +37,14 @@ return {
 
             -- Set up keymaps
             vim.api.nvim_set_keymap('n', '<leader>mp', ':MarkdownPreviewToggle<CR>', { noremap = true, silent = true })
-            vim.cmd[[
-        augroup MarkdownPreviewAutoclose
-        autocmd!
-        autocmd VimLeavePre * :MarkdownPreviewStop
-        augroup END
-        ]]
 
+            -- Autocommand to stop preview when leaving Neovim
+            vim.cmd[[
+                augroup MarkdownPreviewAutoclose
+                    autocmd!
+                    autocmd VimLeavePre * :MarkdownPreviewStop
+                augroup END
+            ]]
         end,
     }
 }
