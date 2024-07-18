@@ -16,8 +16,9 @@ vim.opt.spell = false  -- Spell checking is off by default
 
 -- Keymaps for spell checking
 vim.api.nvim_set_keymap('n', '<leader>s', ':set spell!<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-]>', ']s', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-[>', '[s', { noremap = true })
+-- vim.api.nvim_set_keymap('n', '<C-]>', ']s', { noremap = true })
+-- vim.api.nvim_set_keymap('n', '<C-[>', '[s', { noremap = true })
+-- Key map to automatically correct the spelling
 vim.api.nvim_set_keymap('n', '<leader>c', '1z=', { noremap = true })
 
 -- Lazy menu toggle
