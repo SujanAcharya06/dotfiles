@@ -164,6 +164,9 @@ alias search='fzf --preview="bat --style=numbers --color=always {}"'
 # Alias for editing files selected with fzf and previewing with bat
 alias edit='nvim $(fzf --preview="bat --style=numbers --color=always {}")'
 
+# Alias for cd'ing using fzf
+alias fcd='cd "$(dirname "$(fzf)")"'
+
 #lazy-load nvm
 source ~/.lazy-load.zsh
 export PATH=$HOME/.local/bin:$PATH
