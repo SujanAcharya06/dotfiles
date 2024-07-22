@@ -6,8 +6,8 @@ return {
         notify.setup({
             top_down = true,
             render = "wrapped-compact",
-            max_width = 50,
-            max_height = 10,
+            max_width = 30,
+            max_height = 25,
 
        })
         vim.api.nvim_create_augroup("NotifyFileEvents", { clear = true })
