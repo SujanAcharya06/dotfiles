@@ -5,6 +5,18 @@
 # posing no start up time penalty for the shells that aren't going to use them at all.
 # There is only single time penalty for one shell.
 
+load-cargo(){
+export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
+export PATH=$PATH:$JAVA_HOME/bin
+. "$HOME/.cargo/env"
+}
+
+load-pyenv(){
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+}
+
 load-nvm() {
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
