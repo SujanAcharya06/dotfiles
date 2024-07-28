@@ -111,14 +111,7 @@ echo "edit - to search using fzf and edit using vim"
 # export PATH="$PYENV_ROOT/bin:$PATH"
 # eval "$(pyenv init --path)"
 
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 
-
-export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
-export PATH=$PATH:$JAVA_HOME/bin
-. "$HOME/.cargo/env"
 
 export SENDER_EMAIL='root.popxos.domain@gmail.com'
 export SENDER_PASSWORD='eiuk avwz yspg udyk'
@@ -138,3 +131,4 @@ export PATH=$HOME/.local/bin:$PATH
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFULT_OPS="--extended"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export PATH="$PATH:/opt/nvim-linux64/bin"
