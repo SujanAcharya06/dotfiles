@@ -37,7 +37,7 @@ return{
             })
 
             -- Apply the colorscheme
-            vim.cmd("colorscheme carbonfox")
+            vim.cmd("colorscheme nightfox")
         end
     },
     {
