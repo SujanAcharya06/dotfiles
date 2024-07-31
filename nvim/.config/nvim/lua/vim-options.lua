@@ -23,3 +23,10 @@ vim.api.nvim_set_keymap('n', '<leader>c', '1z=', { noremap = true })
 
 -- Lazy menu toggle
 vim.api.nvim_set_keymap('n', '<leader>]', ':Lazy<CR>', {noremap = true})
+
+-- Resize splits using Alt key
+-- vim.api.nvim_set_keymap('n', '<A-h>', ':resize +2<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<A-l>', ':resize -2<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-h>', ':vertical resize -2<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-l>', ':vertical resize +2<CR>', { noremap = true, silent = true })
+
