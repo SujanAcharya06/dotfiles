@@ -111,10 +111,10 @@ echo "edit - to search using fzf and edit using vim"
 # export PATH="$PYENV_ROOT/bin:$PATH"
 # eval "$(pyenv init --path)"
 
+source ~/dotfiles/.env
 
-
-export SENDER_EMAIL='root.popxos.domain@gmail.com'
-export SENDER_PASSWORD='eiuk avwz yspg udyk'
+export SENDER_EMAIL
+export SENDER_PASSWORD
 
 # In .bashrc or .zshrc
 if [ -f ~/.lazy-load.zsh ]; then
