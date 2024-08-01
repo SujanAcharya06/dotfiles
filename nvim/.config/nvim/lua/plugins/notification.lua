@@ -9,7 +9,9 @@ return {
             max_width = 30,
             max_height = 25,
 
-       })
+        })
+        -- Override the default vim.notify with nvim-notify
+        vim.notify = notify
         vim.api.nvim_create_augroup("NotifyFileEvents", { clear = true })
         local function get_filename()
             return vim.fn.expand("%:t")
