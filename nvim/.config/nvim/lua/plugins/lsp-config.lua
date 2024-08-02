@@ -9,7 +9,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "clangd", "jdtls", "pyright" }
+                ensure_installed = { "lua_ls", "clangd", "jdtls", "pyright", "html"}
             })
         end
     },
@@ -21,6 +21,8 @@ return {
                 top_down = false
             })
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            -- Add snippet support to capabilities
+            capabilities.textDocument.completion.completionItem.snippetSupport = true
             local lspconfig = require("lspconfig")
             local on_attach = function(client, bufnr)
                 notify("LSP attached: " .. client.name, "info", {
@@ -54,6 +56,9 @@ return {
                 config = config or {}
                 config.capabilities = capabilities
                 config.on_attach = on_attach
+                config.root_dir = function(fname)
+                    return vim.fn.getcwd()
+                end
                 lspconfig[server].setup(config)
             end
 
