@@ -13,7 +13,7 @@ return {
     },
     init = function()
 
-        vim.g.db_ui_win_position = 'right'
+        vim.g.db_ui_win_position = 'left'
 
         -- Your DBUI configuration
         vim.g.db_ui_use_nerd_fonts = 1
@@ -35,5 +35,12 @@ return {
 
         -- Add keymap to run selected query in visual mode
         vim.keymap.set('v', '<leader>e', ":'<,'>DB<CR>", { noremap = true, silent = true })
+        -- Set up autocmd for SQL file types
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = {"sql", "mysql", "plsql"},
+            callback = function()
+                require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
+            end
+        })
     end,
 }
