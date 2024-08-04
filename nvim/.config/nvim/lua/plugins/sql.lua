@@ -13,7 +13,7 @@ return {
     },
     init = function()
 
-        vim.g.db_ui_win_position = 'left'
+        vim.g.db_ui_win_position = 'right'
 
         -- Your DBUI configuration
         vim.g.db_ui_use_nerd_fonts = 1
