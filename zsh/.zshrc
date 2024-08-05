@@ -100,6 +100,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
+#
+
+export PATH="$HOME/.config/emacs/bin:$PATH"
 
 echo "mail - to send mail via terminal - py"
 echo "mail.log - to log the mail details - py"
