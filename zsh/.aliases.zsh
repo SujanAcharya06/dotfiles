@@ -39,3 +39,6 @@ alias edit='nvim $(fzf --preview="bat --style=numbers --color=always {}")'
 
 # Alias for cd'ing using fzf
 alias fcd='cd "$(dirname "$(fzf)")"'
+
+#For doom emacs
+alias emacs='emacsclient -c -a 'emacs''
