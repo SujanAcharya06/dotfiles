@@ -30,3 +30,6 @@ vim.api.nvim_set_keymap('n', '<leader>]', ':Lazy<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<A-,>', ':vertical resize -2<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<A-.>', ':vertical resize +2<CR>', { noremap = true, silent = true })
 
+vim.api.nvim_set_hl(0, "BorderBG", { fg = "#3e4451", bg = "#282c34" })
+vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#98c379", fg = "#282c34" })
+
