@@ -78,7 +78,8 @@ return {
                     { name = "nvim_lsp" },
                     { name = "luasnip" },
                     { name = "path" },
-                    { name = "buffer", keyword_length = 5 },
+                    { name = 'omni' },
+                    { name = "buffer", keyword_length = 2 },
                     { name = 'vim-dadbod-completion' },
                 }),
                 experimental = {
