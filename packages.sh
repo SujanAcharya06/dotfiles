@@ -6,7 +6,7 @@ NC='\033[0m' # No Color
 
 echo -e "${GREEN}This script installs the dependency packages${NC}"
 
-sudo apt install -y stow exa xsel trash-cli tree bat
+sudo apt install -y stow exa xsel trash-cli tree bat ranger
 
 # Function to check if a command exists
 command_exists() {
