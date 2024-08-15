@@ -118,6 +118,9 @@ source ~/dotfiles/.env
 
 export SENDER_EMAIL
 export SENDER_PASSWORD
+export MAIL_SERVER
+export MAIL_PORT
+export MAIL_USE_TLE
 
 # In .bashrc or .zshrc
 if [ -f ~/.lazy-load.zsh ]; then
