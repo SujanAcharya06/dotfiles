@@ -76,6 +76,15 @@ uninstall() {
                     if [[ "$pkg" == "nvim" ]]; then
                         echo "Uninstalling $pkg...${NC}"
                         sudo apt remove -y "$pkg"
+                        if [[ -d /opt/nvim-linux64 ]]; then
+                            echo -e "${RED}Found neovim in /opt Do you want to remove it?${NC}"
+                            read choice
+                            if [[ -z "$choice" || "$choice" == 'Y' || "$choice" == 'y' ]]; then
+                                rm -rf /opt/nvim-linux64
+                                echo -e "${RED} Done..." 
+                            else
+                                echo -e "${GREEN}Skipping..."
+                        fi
                         echo -e "${RED}Do you want to remove ~/.config/nvim directory? (y/n)${NC}"
                         read choice
                         if [[ -z "$choice" || "$choice" == 'Y' || "$choice" == 'y' ]]; then
@@ -123,4 +132,3 @@ uninstall() {
 
 uninstall
 echo "Completed"
-
