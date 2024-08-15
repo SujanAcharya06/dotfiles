@@ -17,6 +17,6 @@ return {
         -- Additional configuration options
         vim.g.VM_theme = "ocean"
         vim.g.VM_show_warnings = 1
-        vim.g.VM_silent_exit = 1
+        vim.g.VM_silent_exit = 0
     end,
 }
