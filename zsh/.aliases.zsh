@@ -42,3 +42,6 @@ alias fcd='cd "$(dirname "$(fzf)")"'
 
 #For doom emacs
 alias emacs='emacsclient -c -a 'emacs''
+
+#Wifi quick connect 
+alias wc='nmcli c up $WIFI'

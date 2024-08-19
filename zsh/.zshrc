@@ -121,6 +121,7 @@ export SENDER_PASSWORD
 export MAIL_SERVER
 export MAIL_PORT
 export MAIL_USE_TLE
+export WIFI
 
 # In .bashrc or .zshrc
 if [ -f ~/.lazy-load.zsh ]; then
