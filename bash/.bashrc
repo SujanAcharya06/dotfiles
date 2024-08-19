@@ -153,6 +153,7 @@ alias rm='trash'
 alias copy='xsel --input --clipboard'
 alias paste='xsel --output --clipboard'
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --bash)"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
