@@ -1,47 +1,61 @@
 return {
-    -- {
-    --     "startup-nvim/startup.nvim",
-    --     dependencies = {
-    --         "nvim-telescope/telescope.nvim",
-    --         "nvim-lua/plenary.nvim"
-    --     },
-    --     -- themes
-    --     -- dashboard (default)
-    --     -- evil
-    --     -- startify
-    --     config = function()
-    --         require("startup").setup({theme = "dashboard"})
-    --     end
-    -- },
-    -- {
-
-    "goolord/alpha-nvim",
-    dependencies = {
-        "nvim-tree/nvim-web-devicons",
-    },
-
-    config = function()
-        local alpha = require("alpha")
-        local dashboard = require("alpha.themes.startify")
-
-        dashboard.section.header.val = {
-            [[                                                                       ]],
-            [[                                                                       ]],
-            [[                                                                       ]],
-            [[                                                                       ]],
-            [[                                                                     ]],
-            [[       ████ ██████           █████      ██                     ]],
-            [[      ███████████             █████                             ]],
-            [[      █████████ ███████████████████ ███   ███████████   ]],
-            [[     █████████  ███    █████████████ █████ ██████████████   ]],
-            [[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
-            [[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
-            [[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
-            [[                                                                       ]],
-            [[                                                                       ]],
-            [[                                                                       ]],
+    "nvimdev/dashboard-nvim",
+    event = "VimEnter",
+    opts = {
+        theme = "doom",
+        config = {
+            header = {
+                "                                   ",
+                "                                   ",
+                "   ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          ",
+                "    ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ",
+                "          ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄     ",
+                "           ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄    ",
+                "          ⢠⣿⣿⣿⠈    ⣻⣿⣿⣿⣿⣿⣿⣿⣛⣳⣤⣀⣀   ",
+                "   ⢠⣧⣶⣥⡤⢄ ⣸⣿⣿⠘  ⢀⣴⣿⣿⡿⠛⣿⣿⣧⠈⢿⠿⠟⠛⠻⠿⠄  ",
+                "  ⣰⣿⣿⠛⠻⣿⣿⡦⢹⣿⣷   ⢊⣿⣿⡏  ⢸⣿⣿⡇ ⢀⣠⣄⣾⠄   ",
+                " ⣠⣿⠿⠛ ⢀⣿⣿⣷⠘⢿⣿⣦⡀ ⢸⢿⣿⣿⣄ ⣸⣿⣿⡇⣪⣿⡿⠿⣿⣷⡄  ",
+                " ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄ ",
+                "      ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆     ",
+                "       ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     ",
+                "                                   ",
+            },
+            center = {
+                {
+                    icon = " ",
+                    icon_hl = "Title",
+                    desc = "Find File",
+                    desc_hl = "String",
+                    key = "f",
+                    keymap = "SPC f f",
+                    key_hl = "Number",
+                    action = "Telescope find_files"
+                },
+                {
+                    icon = " ",
+                    desc = "Recent Files",
+                    key = "r",
+                    keymap = "SPC f r",
+                    action = "Telescope oldfiles"
+                },
+                {
+                    icon = " ",
+                    desc = "New File",
+                    key = "n",
+                    keymap = "SPC c n",
+                    action = "enew"
+                },
+                {
+                    icon = " ",
+                    desc = "Quit Neovim",
+                    key = "q",
+                    keymap = "SPC q",
+                    action = "qa"
+                },
+            },
+            disable_move,
+            footer = {"🚀 Day-1"}
         }
-
-        alpha.setup(dashboard.opts)
-    end,
+    },
+    dependencies = { {'nvim-tree/nvim-web-devicons'} }
 }
