@@ -45,3 +45,5 @@ alias emacs='emacsclient -c -a 'emacs''
 
 #Wifi quick connect 
 alias wc='nmcli c up $WIFI'
+
+alias nvim='nvm > /dev/null 2>&1 && nvim'
