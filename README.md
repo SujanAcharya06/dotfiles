@@ -6,7 +6,7 @@ Place the dot files in the **home directory** and use `stow` command
 #example for nvim
 stow  nvim
 ```
-    - If you are placing the repo else where just specify **--target=$HOME**
+- If you are placing the repo else where just specify `stow --target=$HOME package-name`
 
 ### Neovim
 
@@ -18,6 +18,7 @@ stow  nvim
         2) c/c++ - clangd
         3) java - jdtls
         4) lua - lua_ls
+        3) bash - bashls
     - Currently installed `linters`
         1) eslint_d -> js
         2) pylint, isort, black -> python 
