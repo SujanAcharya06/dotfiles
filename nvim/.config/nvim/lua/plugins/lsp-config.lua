@@ -9,7 +9,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "clangd", "jdtls", "pyright", "html", "cssls" }
+                ensure_installed = { "lua_ls", "clangd", "jdtls", "pyright", "html", "cssls", "bashls" }
             })
         end
     },
@@ -95,6 +95,7 @@ return {
             })
             setup_server("html")
             setup_server("jdtls")
+            setup_server("bashls")
 
             -- Diagnostic configuration
             vim.diagnostic.config({
