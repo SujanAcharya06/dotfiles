@@ -73,7 +73,7 @@ uninstall() {
                         fi
                     fi
 
-                    if [[ "$pkg" == "nvim" ]]; then
+                    if [[ "$pkg" == "nevim" ]]; then
                         echo "Uninstalling $pkg...${NC}"
                         sudo apt remove -y "$pkg"
                         if [[ -d /opt/nvim-linux64 ]]; then
@@ -84,45 +84,45 @@ uninstall() {
                                 echo -e "${RED} Done..." 
                             else
                                 echo -e "${GREEN}Skipping..."
-                        fi
-                        echo -e "${RED}Do you want to remove ~/.config/nvim directory? (y/n)${NC}"
-                        read choice
-                        if [[ -z "$choice" || "$choice" == 'Y' || "$choice" == 'y' ]]; then
-                            if [[ -d ~/.config/nvim ]]; then
-                                rm -rf ~/.config/nvim
-                                echo -e "${RED}Removed ~/.config/nvim${NC}"
                             fi
-                        else
-                            echo -e "${GREEN}Skipping...${NC}"
+                            echo -e "${RED}Do you want to remove ~/.config/nvim directory? (y/n)${NC}"
+                            read choice
+                            if [[ -z "$choice" || "$choice" == 'Y' || "$choice" == 'y' ]]; then
+                                if [[ -d ~/.config/nvim ]]; then
+                                    rm -rf ~/.config/nvim
+                                    echo -e "${RED}Removed ~/.config/nvim${NC}"
+                                fi
+                            else
+                                echo -e "${GREEN}Skipping...${NC}"
+                            fi
                         fi
-                    fi
 
-                    if [[ "$pkg" == "tmux" ]]; then
-                        echo "Uninstalling $pkg...${NC}"
-                        sudo apt remove -y "$pkg"
-                        echo -e "${RED}Do you want to remove ~/.tmux.conf file? (y/n)${NC}"
-                        read choice
-                        if [[ -z "$choice" || "$choice" == 'Y' || "$choice" == 'y' ]]; then
-                            if [[ -f ~/.tmux.conf ]]; then
-                                rm ~/.tmux.conf
-                                echo -e "${RED}Removed ~/.tmux.conf${NC}"
+                        if [[ "$pkg" == "tmux" ]]; then
+                            echo "Uninstalling $pkg...${NC}"
+                            sudo apt remove -y "$pkg"
+                            echo -e "${RED}Do you want to remove ~/.tmux.conf file? (y/n)${NC}"
+                            read choice
+                            if [[ -z "$choice" || "$choice" == 'Y' || "$choice" == 'y' ]]; then
+                                if [[ -f ~/.tmux.conf ]]; then
+                                    rm ~/.tmux.conf
+                                    echo -e "${RED}Removed ~/.tmux.conf${NC}"
+                                fi
+                            else
+                                echo -e "${GREEN}Skipping...${NC}"
                             fi
-                        else
-                            echo -e "${GREEN}Skipping...${NC}"
                         fi
+                        ;;
+                    [Nn]* )
+                        echo -e "${GREEN}Skipping uninstallation of $pkg.${NC}"
+                        ;;
+                    * )
+                        echo -e "${RED}Invalid input. Skipping uninstallation of $pkg.${NC}"
+                        ;;
+                esac
+            else
+                echo -e "${GREEN}pkg is not installed.${NC}"
                     fi
-                    ;;
-                [Nn]* )
-                    echo -e "${GREEN}Skipping uninstallation of $pkg.${NC}"
-                    ;;
-                * )
-                    echo -e "${RED}Invalid input. Skipping uninstallation of $pkg.${NC}"
-                    ;;
-            esac
-        else
-            echo -e "${GREEN}pkg is not installed.${NC}"
-        fi
-    done
+                done
 
     # Clean up after uninstallation
     echo -e "${GREEN} Clean up${NC}"
