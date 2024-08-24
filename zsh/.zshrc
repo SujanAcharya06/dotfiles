@@ -140,3 +140,6 @@ export FZF_DEFULT_OPS="--extended"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export PATH="$PATH:/opt/nvim-linux64/bin"
+
+# Remove gnome-terminal titile bar
+gsettings set org.gnome.Terminal.Legacy.Settings headerbar "@mb false"
