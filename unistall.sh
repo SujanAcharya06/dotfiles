@@ -28,7 +28,7 @@ remove_zsh(){
         echo -e "${RED}Removing ~/.zsh_history${NC}"
         rm ~/.zsh_history
     else
-        echo -e "${GREEN}~/.zsh_history not found"
+        echo -e "${GREEN}~/.zsh_history not found${NC}"
     fi
 }
 
@@ -39,55 +39,52 @@ uninstall() {
     for pkg in "${packages[@]}"; do
         if command_exists "$pkg"; then
             echo -e "${RED}Do you want to uninstall $pkg? (y/n) ${NC}"
-            read response
+            read -r response
             case "$response" in
                 [Yy]* )
-                    if [[ "$pkg" == "zsh" ]]; then
-                        echo "Uninstalling $pkg... ${NC}"
-                        sudo apt remove -y "$pkg"
-                        echo -e "${RED}Changing shell to bash${NC}"
-                        chsh -s /bin/bash
-                        echo -e "${RED}You might have to re-login for changes to take effect${NC}"
-                        sleep 1
-                        echo -e "${RED}Do you want to remove existing ~/.zshrc and its components? (y/n)${NC}"
-                        read choice
-                        if [[ -z "$choice" || "$choice" == 'Y' || "$choice" == 'y' ]]; then
-                            remove_zsh
-                        else 
-                            echo -e "${GREEN}Skipping...${NC}"
-                        fi
-                    fi
+                    echo "Uninstalling $pkg..."
+                    sudo apt remove -y "$pkg"
 
-                    if [[ "$pkg" == "vim" ]]; then
-                        echo "Uninstalling $pkg...${NC}"
-                        sudo apt remove -y "$pkg"
-                        echo -e "${RED}Do you want to remove ~/.vimrc file? (y/n)${NC}"
-                        read choice
-                        if [[ -z "$choice" || "$choice" == 'Y' || "$choice" == 'y' ]]; then
-                            if [[ -f ~/.vimrc ]]; then
-                                rm ~/.vimrc
-                                echo -e "${RED}Removed ~/.vimrc${NC}"
+                    case "$pkg" in
+                        "zsh")
+                            echo -e "${RED}Changing shell to bash${NC}"
+                            chsh -s /bin/bash
+                            echo -e "${RED}You might have to re-login for changes to take effect${NC}"
+                            sleep 1
+                            echo -e "${RED}Do you want to remove existing ~/.zshrc and its components? (y/n)${NC}"
+                            read -r choice
+                            if [[ -z "$choice" || "$choice" =~ ^[Yy] ]]; then
+                                remove_zsh
+                            else 
+                                echo -e "${GREEN}Skipping...${NC}"
                             fi
-                        else 
-                            echo -e "${GREEN}Skipping...${NC}"
-                        fi
-                    fi
-
-                    if [[ "$pkg" == "nevim" ]]; then
-                        echo "Uninstalling $pkg...${NC}"
-                        sudo apt remove -y "$pkg"
-                        if [[ -d /opt/nvim-linux64 ]]; then
-                            echo -e "${RED}Found neovim in /opt Do you want to remove it?${NC}"
-                            read choice
-                            if [[ -z "$choice" || "$choice" == 'Y' || "$choice" == 'y' ]]; then
-                                rm -rf /opt/nvim-linux64
-                                echo -e "${RED} Done..." 
-                            else
-                                echo -e "${GREEN}Skipping..."
+                            ;;
+                        "vim")
+                            echo -e "${RED}Do you want to remove ~/.vimrc file? (y/n)${NC}"
+                            read -r choice
+                            if [[ -z "$choice" || "$choice" =~ ^[Yy] ]]; then
+                                if [[ -f ~/.vimrc ]]; then
+                                    rm ~/.vimrc
+                                    echo -e "${RED}Removed ~/.vimrc${NC}"
+                                fi
+                            else 
+                                echo -e "${GREEN}Skipping...${NC}"
+                            fi
+                            ;;
+                        "neovim")
+                            if [[ -d /opt/nvim-linux64 ]]; then
+                                echo -e "${RED}Found neovim in /opt. Do you want to remove it? (y/n)${NC}"
+                                read -r choice
+                                if [[ -z "$choice" || "$choice" =~ ^[Yy] ]]; then
+                                    sudo rm -rf /opt/nvim-linux64
+                                    echo -e "${RED}Done...${NC}" 
+                                else
+                                    echo -e "${GREEN}Skipping...${NC}"
+                                fi
                             fi
                             echo -e "${RED}Do you want to remove ~/.config/nvim directory? (y/n)${NC}"
-                            read choice
-                            if [[ -z "$choice" || "$choice" == 'Y' || "$choice" == 'y' ]]; then
+                            read -r choice
+                            if [[ -z "$choice" || "$choice" =~ ^[Yy] ]]; then
                                 if [[ -d ~/.config/nvim ]]; then
                                     rm -rf ~/.config/nvim
                                     echo -e "${RED}Removed ~/.config/nvim${NC}"
@@ -95,14 +92,11 @@ uninstall() {
                             else
                                 echo -e "${GREEN}Skipping...${NC}"
                             fi
-                        fi
-
-                        if [[ "$pkg" == "tmux" ]]; then
-                            echo "Uninstalling $pkg...${NC}"
-                            sudo apt remove -y "$pkg"
+                            ;;
+                        "tmux")
                             echo -e "${RED}Do you want to remove ~/.tmux.conf file? (y/n)${NC}"
-                            read choice
-                            if [[ -z "$choice" || "$choice" == 'Y' || "$choice" == 'y' ]]; then
+                            read -r choice
+                            if [[ -z "$choice" || "$choice" =~ ^[Yy] ]]; then
                                 if [[ -f ~/.tmux.conf ]]; then
                                     rm ~/.tmux.conf
                                     echo -e "${RED}Removed ~/.tmux.conf${NC}"
@@ -110,22 +104,23 @@ uninstall() {
                             else
                                 echo -e "${GREEN}Skipping...${NC}"
                             fi
-                        fi
-                        ;;
-                    [Nn]* )
-                        echo -e "${GREEN}Skipping uninstallation of $pkg.${NC}"
-                        ;;
-                    * )
-                        echo -e "${RED}Invalid input. Skipping uninstallation of $pkg.${NC}"
-                        ;;
-                esac
-            else
-                echo -e "${GREEN}pkg is not installed.${NC}"
-                    fi
-                done
+                            ;;
+                    esac
+                    ;;
+                [Nn]* )
+                    echo -e "${GREEN}Skipping uninstallation of $pkg.${NC}"
+                    ;;
+                * )
+                    echo -e "${RED}Invalid input. Skipping uninstallation of $pkg.${NC}"
+                    ;;
+            esac
+        else
+            echo -e "${GREEN}$pkg is not installed.${NC}"
+        fi
+    done
 
     # Clean up after uninstallation
-    echo -e "${GREEN} Clean up${NC}"
+    echo -e "${GREEN}Clean up${NC}"
     sudo apt autoremove -y
     sudo apt autoclean
 }
