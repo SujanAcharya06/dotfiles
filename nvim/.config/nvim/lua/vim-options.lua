@@ -32,4 +32,3 @@ vim.api.nvim_set_keymap('n', '<A-.>', ':vertical resize +2<CR>', { noremap = tru
 
 vim.api.nvim_set_hl(0, "BorderBG", { fg = "#3e4451", bg = "#282c34" })
 vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#98c379", fg = "#282c34" })
-

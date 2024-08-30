@@ -1,2 +1,3 @@
 return {
+    { import = "plugins.colorscheme" },
 }
