@@ -1,8 +1,6 @@
 return {
     {
-        "tpope/vim-fugitive",
-        config = function()
-            local git_window_open = false
+        "tpope/vim-fugitive", config = function() local git_window_open = false
             local git_window_bufnr = nil
 
             local function toggle_git_window()
@@ -38,7 +36,7 @@ return {
                     untracked    = { text = '┆' },
                 },
                 signs_staged = {
-                    add          = { text = '+' },
+                    add          = { text = '++' },
                     change       = { text = '^' },
                     delete       = { text = '_' },
                     topdelete    = { text = '‾' },
@@ -54,10 +52,6 @@ return {
                 opts.silent = opts.silent ~= false
                 vim.keymap.set(mode, lhs, rhs, opts)
             end
-
-            -- Existing keymaps
-            vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", {})
-            vim.keymap.set("n", "<leader>gt", ":Gitsigns toggle_current_line_blame<CR>", {})
 
             -- New keymaps
             map('n', '<leader>hs', gitsigns.stage_hunk)
