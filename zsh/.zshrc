@@ -139,7 +139,12 @@ export PATH=$HOME/.local/bin:$PATH
 export FZF_DEFULT_OPS="--extended"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+# neovim v0.10.1
 export PATH="$PATH:/opt/nvim-linux64/bin"
+
+#deno
+export DENO_INSTALL="/home/sujanacharya/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
 
 # Remove gnome-terminal titile bar
 gsettings set org.gnome.Terminal.Legacy.Settings headerbar "@mb false"
