@@ -37,6 +37,23 @@ vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#98c379", fg = "#282c34" })
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,"..
    "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,"..
     "sm:block-blinkwait175-blinkoff150-blinkon175";
+
+-- Set listchars
+vim.opt.listchars = {
+    space = '⋅',
+    -- eol = '↴',
+    tab = '| ',
+    trail = '~',
+    extends = '›',
+    precedes = '‹',
+    nbsp = '␣',
+}
+-- Enable listchars
+vim.opt.list = true
+
+-- Optional: Set a more visible color for listchars
+-- vim.cmd [[highlight SpecialKey ctermfg=gray ctermbg=none cterm=bold]]
+
 -- Folding settings
 vim.opt.foldcolumn = "0"
 vim.opt.foldmethod = "expr"
