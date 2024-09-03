@@ -35,7 +35,7 @@ vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#98c379", fg = "#282c34" })
 
 -- vim.opt.guicursor = "i:block-blinkwait1000-blinkon500-blinkoff500";
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,"..
-    "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,"..
+   "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,"..
     "sm:block-blinkwait175-blinkoff150-blinkon175";
 -- Folding settings
 vim.opt.foldcolumn = "0"
