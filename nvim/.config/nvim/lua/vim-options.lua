@@ -37,3 +37,24 @@ vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#98c379", fg = "#282c34" })
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,"..
     "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,"..
     "sm:block-blinkwait175-blinkoff150-blinkon175";
+-- Folding settings
+vim.opt.foldcolumn = "0"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldtext = ""
+-- vim.opt.foldnestmax = 3
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+
+-- Folding functions
+local function close_all_folds()
+  vim.api.nvim_exec2("%foldc!", { output = false })
+end
+
+local function open_all_folds()
+  vim.api.nvim_exec2("%foldo!", { output = false })
+end
+
+-- Keyboard shortcuts for folding
+vim.keymap.set("n", "<leader>zs", close_all_folds, { desc = "[s]hut all folds" })
+vim.keymap.set("n", "<leader>zo", open_all_folds, { desc = "[o]pen all folds" })
