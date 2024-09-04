@@ -20,6 +20,7 @@ return {
             vim.keymap.set("n", "<leader>gs", toggle_git_window, {noremap = true, silent = true})
             vim.keymap.set("n", "<leader>gc", ":Git commit<CR>", {noremap = true, silent = true})
             vim.keymap.set("n", "<leader>P", ":Git push<CR>", {noremap = true, silent = true})
+            vim.keymap.set('n', '<leader>gl', ':vert Git log --oneline<CR>', { noremap = true, silent = true })
         end
     },
     {
