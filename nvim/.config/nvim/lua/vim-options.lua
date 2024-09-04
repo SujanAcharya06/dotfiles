@@ -42,7 +42,6 @@ vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,"..
 vim.opt.listchars = {
     space = '⋅',
     -- eol = '↴',
-    tab = '| ',
     trail = '~',
     extends = '›',
     precedes = '‹',
@@ -50,9 +49,6 @@ vim.opt.listchars = {
 }
 -- Enable listchars
 vim.opt.list = true
-
--- Optional: Set a more visible color for listchars
--- vim.cmd [[highlight SpecialKey ctermfg=gray ctermbg=none cterm=bold]]
 
 -- Folding settings
 vim.opt.foldcolumn = "0"
