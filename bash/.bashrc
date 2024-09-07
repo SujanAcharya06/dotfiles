@@ -157,3 +157,7 @@ alias paste='xsel --output --clipboard'
 eval "$(fzf --bash)"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# neovim v0.10.1
+export PATH="$PATH:/opt/nvim-linux64/bin"
+# export PATH="$PATH:/opt/nvim-linux64/bin"
