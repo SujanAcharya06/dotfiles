@@ -151,3 +151,6 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 
 # Remove gnome-terminal titile bar
 gsettings set org.gnome.Terminal.Legacy.Settings headerbar "@mb false"
+
+# Golang
+export PATH=$PATH:/usr/local/go/bin
