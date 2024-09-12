@@ -49,12 +49,18 @@ nnoremap <F12> :so $MYVIMRC<CR>
 set exrc
 set secure
 
+
+set expandtab
+set softtabstop=4
+
 " Lines of memory to remember
 set history=10000
 
 " Leader key to add extra key combinations
-let mapleader = ','
-let g:mapleader = ','
+let mapleader = " "
+let g:mapleader = " "
+
+noremap <Space> <Nop>
 
 " Time delay on <Leader> key
 set timeoutlen=3000 ttimeoutlen=100
@@ -87,131 +93,41 @@ set nrformats-=octal
 " List of plugins installed
 call plug#begin('~/.vim/plugged')
 
-	" Statusbar
-	Plug 'vim-airline/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
+" Statusbar
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
-	" Git tools
-	Plug 'airblade/vim-gitgutter'
-	Plug 'tpope/vim-fugitive'
+" Git tools
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 
-	" Sessions
-	Plug 'xolox/vim-session'
-	Plug 'xolox/vim-misc'
+" Sessions
+Plug 'xolox/vim-session'
+Plug 'xolox/vim-misc'
 
-	" Tools
-	Plug 'preservim/nerdcommenter', { 'commit': 'a5d1663' }
-	Plug 'preservim/nerdtree'
-	Plug 'valloric/listtoggle'
-	Plug 'majutsushi/tagbar'
-	Plug 'mbbill/undotree'
-	Plug 'dense-analysis/ale'
-	Plug 'junegunn/fzf'
-	Plug 'junegunn/fzf.vim'
+" Tools
+Plug 'preservim/nerdcommenter', { 'commit': 'a5d1663' }
+Plug 'preservim/nerdtree'
+Plug 'majutsushi/tagbar'
+Plug 'mbbill/undotree'
+Plug 'dense-analysis/ale'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
-	" Deoplete, specific for Vim8
-	if !has("nvim")
-		Plug 'roxma/nvim-yarp'
-		Plug 'roxma/vim-hug-neovim-rpc'
-	endif
+" Edition
+Plug 'junegunn/vim-easy-align'
+Plug 'jiangmiao/auto-pairs'
+Plug 'alvan/vim-closetag'
+Plug 'tpope/vim-surround'
+Plug 'Valloric/MatchTagAlways'
 
-	" Autocomplete
-	Plug 'Shougo/deoplete.nvim', { 'commit': '17ffeb9' }
-	Plug 'Shougo/neosnippet.vim', { 'commit': '037b7a7' }
-	Plug 'Shougo/neosnippet-snippets'
-	Plug 'Shougo/context_filetype.vim', { 'commit': 'e276626' }
-	Plug 'ervandew/supertab'
-
-	" C/C++ support
-	Plug 'deoplete-plugins/deoplete-clang', { 'commit': '30f17cb' }
-
-	" Go support
-	Plug 'fatih/vim-go', { 'tag': 'v1.19' }
-	Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
-	Plug 'deoplete-plugins/deoplete-go', { 'commit': 'fa73f06'}
-
-	" Perl support
-	Plug 'c9s/perlomni.vim'
-
-	" Python support
-	Plug 'deoplete-plugins/deoplete-jedi', { 'commit': '46121d9' }
-
-	" Ruby support
-	Plug 'vim-ruby/vim-ruby'
-	Plug 'tpope/vim-rails'
-	Plug 'tpope/vim-endwise'
-	Plug 'tpope/vim-liquid'
-
-	" PHP support
-	Plug 'shawncplus/phpcomplete.vim'
-
-	" Haskell support
-	Plug 'eagletmt/neco-ghc'
-
-	" Rust support
-	Plug 'racer-rust/vim-racer'
-
-	" Zsh support
-	Plug 'deoplete-plugins/deoplete-zsh', { 'commit': '12141ad' }
-
-	" JavaScript support
-	Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-	Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-	Plug 'othree/jspc.vim'
-	Plug 'maksimr/vim-jsbeautify'
-
-	" VimL support
-	Plug 'Shougo/neco-vim', { 'commit' : '4c0203b' }
-
-	" Additional syntax files
-	Plug 'othree/html5.vim'
-	Plug 'vim-language-dept/css-syntax.vim'
-	Plug 'hail2u/vim-css3-syntax'
-	Plug 'pangloss/vim-javascript'
-	Plug 'Shougo/neco-syntax', { 'commit': '98cba4a' }
-	Plug 'mboughaba/i3config.vim'
-	Plug 'aklt/plantuml-syntax'
-	Plug 'gerardbm/asy.vim'
-	Plug 'gerardbm/eukleides.vim'
-	Plug 'zaid/vim-rec'
-	Plug 'sirtaj/vim-openscad'
-
-	" Edition
-	Plug 'junegunn/vim-easy-align'
-	Plug 'godlygeek/tabular'
-	Plug 'jiangmiao/auto-pairs'
-	Plug 'alvan/vim-closetag'
-	Plug 'tpope/vim-surround'
-	Plug 'tpope/vim-repeat'
-	Plug 'tpope/vim-capslock'
-	Plug 'wellle/targets.vim'
-	Plug 'christoomey/vim-sort-motion'
-	Plug 'terryma/vim-expand-region'
-	Plug 'Valloric/MatchTagAlways'
-	Plug 'FooSoft/vim-argwrap'
-	Plug 'gerardbm/vim-md-headings'
-	Plug 'gerardbm/vim-md-checkbox'
-	Plug 'matze/vim-move'
-
-	" Misc
-	Plug 'christoomey/vim-tmux-navigator'
-	Plug 'tpope/vim-characterize'
-	Plug 'tyru/open-browser.vim'
-	Plug 'junegunn/goyo.vim'
-	Plug 'mattn/webapi-vim'
-	Plug 'mattn/emmet-vim'
-	Plug 'vimwiki/vimwiki', { 'branch': 'master' }
-
-	" Lightline plugin
-	 " Plug 'itchyny/lightline.vim'
-
-	" Color schemes
-	set termguicolors
-	Plug 'gerardbm/vim-atomic'
-	Plug 'dracula/vim', { 'as': 'dracula'  }
-	" Plug 'jacoborus/tender.vim'
-	Plug 'nordtheme/vim'
-	Plug 'nightsense/carbonized'
+" Color schemes
+set termguicolors
+Plug 'gerardbm/vim-atomic'
+Plug 'dracula/vim', { 'as': 'dracula'  }
+" Plug 'jacoborus/tender.vim'
+Plug 'nordtheme/vim'
+Plug 'nightsense/carbonized'
 call plug#end()
 
 "----------------------------------------------------------------
@@ -268,8 +184,8 @@ let g:NERDCompactSexyComs       = 1
 let g:NERDCommentEmptyLines     = 0
 let g:NERDCreateDefaultMappings = 0
 let g:NERDCustomDelimiters      = {
-	\ 'python': {'left': '#'},
-	\ }
+			\ 'python': {'left': '#'},
+			\ }
 
 nnoremap cc :call NERDComment(0,'toggle')<CR>
 vnoremap cc :call NERDComment(0,'toggle')<CR>
@@ -278,10 +194,9 @@ vnoremap cc :call NERDComment(0,'toggle')<CR>
 nnoremap <silent> <C-n> :call <SID>ToggleNERDTree()<CR>
 
 " ALE settings
-
 let g:ale_linters = {
 			\ 'c'          : ['clang'],
-			\ 'cpp'          : [],
+			\ 'cpp'          : ['clang'],
 			\ 'vim'        : ['vint'],
 			\ 'python'     : ['pylint'],
 			\ 'javascript' : ['jshint'],
@@ -332,7 +247,7 @@ function! FZFOpen(command_str)
 	if expand('%') =~# 'NERD_tree' && winnr('$') > 1
 		" Switch to the next window if NERDTree is open and there are other windows
 		exe "normal! \<c-w>\<c-w>"
-" Check if current buffer is NERDTree and it's the only open window
+		" Check if current buffer is NERDTree and it's the only open window
 	elseif expand('%') =~# 'NERD_tree' && winnr('$') == 1
 		let current_file = expand('%')
 		" Open new window for fzf command
@@ -340,7 +255,7 @@ function! FZFOpen(command_str)
 		" Open the selected file in the new window
 		exe 'edit ' . fnameescape(current_file)
 		" Delete any 'No Name' buffer that might have been created
-    %bd
+		%bd
 	endif
 
 	" Temporarily change the directory to the predefined path
@@ -360,10 +275,6 @@ nnoremap <silent> <C-g>g :call FZFOpen(':Ag')<CR>
 nnoremap <silent> <C-g>c :call FZFOpen(':Commands')<CR>
 nnoremap <silent> <C-g>l :call FZFOpen(':BLines')<CR>
 " nnoremap <silent> <C-p> :call FZFOpen(':Files')<CR>
-
-" Listtoggle settings
-let g:lt_location_list_toggle_map = '<leader>e'
-let g:lt_quickfix_list_toggle_map = '<leader>q'
 
 " Tagbar toggle (custom function)
 nnoremap <silent> <C-t> :call <SID>ToggleTagbar()<CR>
@@ -428,51 +339,10 @@ augroup beautify
 	autocmd FileType css vnoremap <buffer> <Leader>bf :call RangeCSSBeautify()<cr>
 augroup end
 
-" --- Autocomplete ---
-" SuperTab settings
-let g:SuperTabDefaultCompletionType = '<TAB>'
-
-" Deoplete settings
-" - «Deoplete requires Neovim with Python3 enabled»
-let g:python3_host_prog       = '/usr/bin/python3'
-let g:python3_host_skip_check = 1
-
-autocmd CompleteDone * if pumvisible() == 0 | pclose | endif
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#omni#functions    = {}
-call deoplete#custom#option('auto_complete_delay', 250)
-
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" Python autocompletion
-let g:deoplete#sources#jedi#show_docstring = 1
-
-" Go autocompletion
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#sort_class    = ['package', 'func', 'type', 'var', 'const']
-let g:deoplete#sources#go#use_cache     = 1
-
-" Javascript autocompletion
-let g:deoplete#omni#functions.javascript = [
-	\ 'tern#Complete',
-	\ 'jspc#omni',
-	\ ]
-
-" Clang autocompletion
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-4.0/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/14/include/'
-
-" --- Snippets ---
-" Neosnippet settings
-imap <C-s> <Plug>(neosnippet_expand_or_jump)
-smap <C-s> <Plug>(neosnippet_expand_or_jump)
-xmap <C-s> <Plug>(neosnippet_expand_target)
-
 " Behaviour like SuperTab
 smap <expr><TAB>
-	\ neosnippet#expandable_or_jumpable() ?
-	\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+			\ neosnippet#expandable_or_jumpable() ?
+			\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers
 if has('conceal')
@@ -492,16 +362,10 @@ augroup end
 xmap gi <Plug>(EasyAlign)
 nmap gi <Plug>(EasyAlign)
 
-" Tabularize (e.g. /= or /:)
-vnoremap <Leader>x :Tabularize /
-
-" Tabularize only the first match on the line (e.g. /=.*/)
-vnoremap <Leader>X :Tabularize /.*/<Left><Left><Left>
-
 " Auto-pairs settings
 " Maps for normal and insert modes
 let g:AutoPairsFlyMode        = 0 " 1 means enable. Fly mode - on the go 
-let g:AutoPairsMultilineClose = 0 
+let g:AutoPairsMultilineClose = 0
 let g:AutoPairsShortcutJump   = '<C-z>'
 let g:AutoPairsShortcutToggle = '<C-y>'
 
@@ -530,28 +394,18 @@ autocmd FileType markdown,liquid let b:surround_{char2nr('e')} = "\[\r\]
 autocmd FileType markdown,liquid let b:surround_{char2nr('y')} = "<a href=\"\"
 			\ rel=\"noopener noreferrer\" target=\"_blank\">\r<\/a>"
 
-" Caps Lock settings
-imap <expr><C-l> deoplete#smart_close_popup()."\<Plug>CapsLockToggle"
-cmap <silent> <C-l> <Plug>CapsLockToggle
-
 " Expand region settings
 vmap v <Plug>(expand_region_expand)
 vmap m <Plug>(expand_region_shrink)
 
 " MatchTagAlways settings
 let g:mta_filetypes = {
-	\ 'html'  : 1,
-	\ 'xhtml' : 1,
-	\ 'xml'   : 1,
-	\ 'jinja' : 1,
-	\ 'php'   : 1,
-	\ }
-
-" ArgWrap settings
-let g:argwrap_tail_comma    = 1
-let g:argwrap_padded_braces = '[{'
-
-nnoremap <Leader>W :ArgWrap<CR>
+			\ 'html'  : 1,
+			\ 'xhtml' : 1,
+			\ 'xml'   : 1,
+			\ 'jinja' : 1,
+			\ 'php'   : 1,
+			\ }
 
 " Vim-move settings. Use Shift
 let g:move_key_modifier = 'S'
@@ -561,40 +415,6 @@ let g:move_key_modifier_visualmode = 'S'
 " Vim-tmux navigator settings
 let g:tmux_navigator_no_mappings = 1
 
-" Open-browser settings
-let g:openbrowser_browser_commands = [{
-	\ 'name': 'w3m',
-	\ 'args': 'tmux new-window w3m {uri}',
-	\ }]
-
-nmap <Leader>gl <Plug>(openbrowser-open)
-
-" Goyo settings
-let g:goyo_width  = "80"
-let g:goyo_height = "100%"
-let g:goyo_linenr = 0
-
-nnoremap <F11> :Goyo<CR>
-
-" Vimwiki settings
-let g:vimwiki_url_maxsave   = 0
-let g:vimwiki_global_ext    = 0
-let g:vimwiki_syntax        = 'markdown'
-let g:vimwiki_list          = [
-	\ {'path': '~/Workspace/vimwiki'},
-	\ {'path': '~/Workspace/vimwiki/Articles'},
-	\ {'path': '~/Workspace/vimwiki/Codes'},
-	\ {'path': '~/Workspace/vimwiki/Notes'},
-	\ {'path': '~/Workspace/vimwiki/Projects'},
-	\ {'path': '~/Workspace/vimwiki/Studies'},
-	\ {'path': '~/Workspace/vimwiki/ToDos'},
-	\ {'path': '~/Workspace/vimwiki/Unix'}
-	\ ]
-
-nnoremap <Leader>we :VimwikiToggleListItem<CR>
-vnoremap <Leader>we :VimwikiToggleListItem<CR>
-
-"----------------------------------------------------------------
 " 4. User interface
 "----------------------------------------------------------------
 " Set X lines to the cursor when moving vertically
@@ -615,7 +435,7 @@ set wildignorecase
 set ruler
 
 " Command bar height
-set cmdheight=4
+set cmdheight=1
 
 " Backspace works on Insert mode
 set backspace=eol,start,indent
@@ -690,10 +510,10 @@ endif
 
 " Omni completion
 if has('autocmd') && exists('+omnifunc')
-autocmd Filetype *
-	\ if &omnifunc == "" |
-	\     setlocal omnifunc=syntaxcomplete#Complete |
-	\ endif
+	autocmd Filetype *
+				\ if &omnifunc == "" |
+				\     setlocal omnifunc=syntaxcomplete#Complete |
+				\ endif
 endif
 
 " Fix italics issue
@@ -917,8 +737,8 @@ set noexpandtab
 set smarttab
 
 " Tab size (in spaces)
-set shiftwidth=2
-set tabstop=2
+set shiftwidth=4
+set tabstop=4
 
 " Remap indentation
 nnoremap <TAB> >>
@@ -1012,9 +832,9 @@ set foldmethod=marker
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
-	\ if line("'\"") > 0 && line("'\"") <= line("$") |
-	\   exe "normal! g`\"" |
-	\ endif
+			\ if line("'\"") > 0 && line("'\"") <= line("$") |
+			\   exe "normal! g`\"" |
+			\ endif
 
 " --- Readline commands ---
 "----------------------------------------------------------------
@@ -1087,8 +907,8 @@ set maxmempattern=1000
 " --- Highlight ---
 "----------------------------------------------------------------
 " Map <Space> to / (search)
-nnoremap <Space> /
-nnoremap <Leader><Space> ?
+" nnoremap <Space> /
+" nnoremap <Leader><Space> ?
 
 " Highlight the word under the cursor and don't jump to next
 nnoremap <silent> <Leader><CR> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hlsearch<CR>
@@ -1105,11 +925,11 @@ nnoremap N Nzz
 
 " Search into a Visual selection
 vnoremap <silent> <Space> :<C-U>call <SID>RangeSearch('/')<CR>
-	\ :if strlen(g:srchstr) > 0
-	\ \|exec '/'.g:srchstr\|endif<CR>n
+			\ :if strlen(g:srchstr) > 0
+			\ \|exec '/'.g:srchstr\|endif<CR>n
 vnoremap <silent> ? :<C-U>call <SID>RangeSearch('?')<CR>
-	\ :if strlen(g:srchstr) > 0
-	\ \|exec '?'.g:srchstr\|endif<CR>N
+			\ :if strlen(g:srchstr) > 0
+			\ \|exec '?'.g:srchstr\|endif<CR>N
 
 " --- Vimgrep and grep ---
 "----------------------------------------------------------------
@@ -1564,8 +1384,8 @@ function! s:RangeSearch(direction)
 	call inputrestore()
 	if strlen(g:srchstr) > 0
 		let g:srchstr = g:srchstr.
-			\ '\%>'.(line("'<")-1).'l'.
-			\ '\%<'.(line("'>")+1).'l'
+					\ '\%>'.(line("'<")-1).'l'.
+					\ '\%<'.(line("'>")+1).'l'
 	else
 		let g:srchstr = ''
 	endif
@@ -1638,9 +1458,9 @@ endfunction
 " - Default :windo cycles through all the open windows
 " - Use 'Windo' instead of 'windo' to avoid it
 command! -nargs=+ -complete=command Windo
-	\ let s:currentWindow = winnr() |
-	\ execute 'windo <args>' |
-	\ exe s:currentWindow . 'wincmd w'
+			\ let s:currentWindow = winnr() |
+			\ execute 'windo <args>' |
+			\ exe s:currentWindow . 'wincmd w'
 
 " Toggle colorcolumn
 function! s:ToggleColorColumn()
@@ -1717,7 +1537,7 @@ function! s:ToggleNERDTree() abort
 			execute ':NERDTreeFind'
 		endif
 	else
-			execute ':NERDTreeToggleVCS'
+		execute ':NERDTreeToggleVCS'
 	endif
 endfunction
 
@@ -1897,9 +1717,9 @@ endfunction
 
 " Convert from EPS to PNG
 function! s:EPS2PNG(eps, out) abort
-		let l:opt_bef = ' -density 150 '
-		let l:opt_aft = ' -flatten -alpha off -colorspace hsl '
-		call system('convert' . l:opt_bef . a:eps . l:opt_aft . a:out)
+	let l:opt_bef = ' -density 150 '
+	let l:opt_aft = ' -flatten -alpha off -colorspace hsl '
+	call system('convert' . l:opt_bef . a:eps . l:opt_aft . a:out)
 endfunction
 
 " Preview EPUB, HTML & PNG with mupdf
