@@ -114,14 +114,17 @@ echo "edit - to search using fzf and edit using vim"
 # export PATH="$PYENV_ROOT/bin:$PATH"
 # eval "$(pyenv init --path)"
 
-source ~/dotfiles/.env
-
-export SENDER_EMAIL
-export SENDER_PASSWORD
-export MAIL_SERVER
-export MAIL_PORT
-export MAIL_USE_TLE
-export WIFI
+if [[ -f ~/dotfiles/.env ]]; then
+    source ~/dotfiles/.env
+    export SENDER_EMAIL
+    export SENDER_PASSWORD
+    export MAIL_SERVER
+    export MAIL_PORT
+    export MAIL_USE_TLE
+    export WIFI
+else
+    echo ".env file Notfound cannot Set custom env variable"
+fi
 
 # In .bashrc or .zshrc
 if [ -f ~/.lazy-load.zsh ]; then
@@ -136,11 +139,11 @@ fi
 export PATH=$HOME/.local/bin:$PATH
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFULT_OPS="--extended"
+export FZF_DEFULT_OPTS="--extended"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # neovim v0.10.1
-export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$PATH:/opt/nvim-linux64/bin/"
 
 #deno
 export DENO_INSTALL="/home/sujanacharya/.deno"
