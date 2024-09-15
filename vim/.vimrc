@@ -1,8 +1,6 @@
 " --------------------------------
 " 1. Vim Options
 " --------------------------------
-
-
 " Set leader key to spacebar
 let mapleader = "\<Space>"
 
@@ -106,6 +104,9 @@ Plug 'tpope/vim-fugitive'
 
 " Path completions
 Plug 'prabirshrestha/asyncomplete-file.vim'
+
+" Color Scheme
+Plug 'EdenEast/nightfox.nvim'
 call plug#end()
 
 " --------------------------------
@@ -153,7 +154,7 @@ autocmd FileType java setlocal expandtab shiftwidth=4 softtabstop=4
 " 5. Plugin Configurations
 " --------------------------------
 " Theme
-colorscheme gruvbox
+colorscheme nightfox 
 set background=dark
 
 " Airline
