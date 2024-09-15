@@ -52,14 +52,14 @@ endif
 " --------------------------------
 " Install vim-plug if not found
 if empty(glob('~/.vim/autoload/plug.vim'))
-	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
 " Run PlugInstall if there are missing plugins
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-			\| PlugInstall --sync | source $MYVIMRC
-			\| endif
+            \| PlugInstall --sync | source $MYVIMRC
+            \| endif
 
 call plug#begin('~/.vim/plugged')
 
@@ -129,8 +129,8 @@ nnoremap <leader>gb :Git blame<CR>
 " --------------------------------
 " Automatically source .vimrc on save
 augroup vimrc
-	autocmd!
-	autocmd BufWritePost $MYVIMRC source $MYVIMRC
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
 " Remove trailing whitespace on save
@@ -199,9 +199,6 @@ call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
                 \ }
                 \ }))
 
-" Enable auto-popup for asyncomplete
-let g:asyncomplete_auto_popup = 1
-
 " Automatically close preview window after completion
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
@@ -228,4 +225,39 @@ if executable('clangd')
                 \ })
 endif
 
+" HTML LSP
+if executable('html-languageserver')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'html-languageserver',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
+        \ 'allowlist': ['html'],
+        \ })
+endif
+
+" CSS LSP
+if executable('css-languageserver')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'css-languageserver',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
+        \ 'allowlist': ['css', 'less', 'sass', 'scss'],
+        \ })
+endif
+
+" Lua LSP
+if executable('lua-language-server')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'lua-language-server',
+        \ 'cmd': {server_info->['lua-language-server']},
+        \ 'allowlist': ['lua'],
+        \ })
+endif
+
+" Markdown LSP
+if executable('remark-language-server')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'remark-language-server',
+        \ 'cmd': {server_info->['remark-language-server', '--stdio']},
+        \ 'allowlist': ['markdown'],
+        \ })
+endif
 " Add more language servers as needed
