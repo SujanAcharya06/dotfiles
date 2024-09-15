@@ -1,6 +1,19 @@
 " --------------------------------
 " 1. Vim Options
 " --------------------------------
+
+
+" Set leader key to spacebar
+let mapleader = "\<Space>"
+
+if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\e[5 q\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\e[2 q\<Esc>\\"
+else
+    let &t_SI = "\e[5 q"
+    let &t_EI = "\e[2 q"
+endif
+
 set nocompatible
 syntax enable
 filetype plugin indent on
@@ -34,18 +47,7 @@ set updatetime=300
 set shortmess+=c
 set ttimeout
 set ttimeoutlen=50
-set timeoutlen=50
-let mapleader = "/<Space>"
-let maplocalleader = "/<Space>"
-
-if exists('$TMUX')
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\e[5 q\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\e[2 q\<Esc>\\"
-else
-    let &t_SI = "\e[5 q"
-    let &t_EI = "\e[2 q"
-endif
-
+set timeoutlen=400
 
 " --------------------------------
 " 2. Plugins
@@ -114,17 +116,20 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
 " LSP
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
+" nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+" nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+" nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+" nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+" nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
 
 " Git
-nnoremap <leader>gs :Git<CR>
-nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gs :vert Git<CR>
+nnoremap <leader>gd :vert Gdiff<CR>
 nnoremap <leader>gb :Git blame<CR>
+nnoremap <leader>gc :Git commit<CR>
+nnoremap <leader>P :Git push<CR>
+nnoremap <leader>gl :vert Git log --oneline<CR>
 
 " --------------------------------
 " 4. Autocmds
