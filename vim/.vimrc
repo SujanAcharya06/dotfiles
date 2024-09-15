@@ -49,7 +49,7 @@ set showmatch
 set visualbell
 set t_vb=
 set updatetime=250
-set shortmess+=c
+set shortmess+=I
 
 " Time delay on <Leader> key
 set timeoutlen=3000 ttimeoutlen=100
@@ -69,6 +69,9 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
             \| endif
 
 call plug#begin('~/.vim/plugged')
+
+" Startify
+Plug 'mhinz/vim-startify'
 
 " Themes
 Plug 'morhetz/gruvbox'
@@ -123,9 +126,21 @@ call plug#end()
 " 3. Plugin Keymaps
 " --------------------------------
 " Custom keymaps
+let g:startify_custom_header = [
+            \ '                              ',
+            \ '            __                ',
+            \ '    __  __ /\_\    ___ ___    ',
+            \ '   /\ \/\ \\/\ \ /'' __` __`\ ',
+            \ '   \ \ \_/ |\ \ \/\ \/\ \/\ \ ',
+            \ '    \ \___/  \ \_\ \_\ \_\ \_\',
+            \ '     \/__/    \/_/\/_/\/_/\/_/',
+            \ ]
 
 " For closing all the files in the buffers except the current one
 nnoremap <Leader>xx :w <bar> %bd <bar> e# <bar> bd# <CR>
+
+" Move the current window in new vertical split window
+nnoremap <leader>mv :vsplit<CR>:b#<CR>
 
 " Cycle through buffers
 noremap <C-h> :bprev<CR>
