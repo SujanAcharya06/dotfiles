@@ -102,6 +102,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'tpope/vim-fugitive'
 
+" Path completions
+Plug 'prabirshrestha/asyncomplete-file.vim'
 call plug#end()
 
 " --------------------------------
@@ -198,6 +200,17 @@ call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
                 \   'show_source_kind': 1
                 \ }
                 \ }))
+
+" Configure file path completion
+call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+            \ 'name': 'file',
+            \ 'allowlist': ['*'],
+            \ 'priority': 10,
+            \ 'completor': function('asyncomplete#sources#file#completor')
+            \ }))
+
+" Enable asyncomplete for command-line mode
+autocmd CmdlineEnter * call asyncomplete#enable_for_buffer()
 
 " Automatically close preview window after completion
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
