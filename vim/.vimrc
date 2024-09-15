@@ -25,6 +25,7 @@ set number
 set relativenumber
 set tabstop=4
 set shiftwidth=4
+set softtabstop=4
 set expandtab
 set smartindent
 set autoindent
@@ -47,11 +48,11 @@ set showcmd
 set showmatch
 set visualbell
 set t_vb=
-set updatetime=300
+set updatetime=250
 set shortmess+=c
-set ttimeout
-set ttimeoutlen=50
-set timeoutlen=400
+
+" Time delay on <Leader> key
+set timeoutlen=3000 ttimeoutlen=100
 
 " --------------------------------
 " 2. Plugins
@@ -86,6 +87,9 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/asyncomplete-buffer.vim'
 Plug 'yami-beta/asyncomplete-omni.vim'
 
+" FZF
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 " Snippets
 Plug 'hrsh7th/vim-vsnip'
@@ -97,11 +101,11 @@ Plug 'preservim/nerdtree'
 " Auto pairs
 Plug 'jiangmiao/auto-pairs'
 
-" Comment plugin
-Plug 'tpope/vim-commentary'
-
 " Surround plugin
 Plug 'tpope/vim-surround'
+
+" vim-bufferline
+Plug 'bling/vim-bufferline'
 
 " Git plugins
 Plug 'airblade/vim-gitgutter'
@@ -118,6 +122,15 @@ call plug#end()
 " --------------------------------
 " 3. Plugin Keymaps
 " --------------------------------
+" Custom keymaps
+
+" For closing all the files in the buffers except the current one
+nnoremap <Leader>xx :w <bar> %bd <bar> e# <bar> bd# <CR>
+
+" Cycle through buffers
+noremap <C-h> :bprev<CR>
+noremap <C-l> :bnext<CR>
+
 " NERDTree
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
@@ -156,6 +169,9 @@ autocmd FileType lua setlocal expandtab shiftwidth=2 softtabstop=2
 autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType java setlocal expandtab shiftwidth=4 softtabstop=4
 
+" Syntax highlighting for (markdown).md files
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+
 " --------------------------------
 " 5. Plugin Configurations
 " --------------------------------
@@ -165,7 +181,69 @@ set background=dark
 
 " Airline
 let g:airline_powerline_fonts = 1
-let g:airline_theme='gruvbox'
+let g:airline_theme='onedark'
+
+" FZF settings
+" let $FZF_DEFAULT_COMMAND = "ag --hidden --ignore .git -p ~/.gitignore -g ''"
+" Fixed fzf load command
+let $FZF_DEFAULT_COMMAND=""
+let $FZF_PREVIEW_COMMAND = 'cat {}'
+let g:fzf_preview_window = ['right', 'ctrl-i']
+nnoremap <leader>fg :call FZFOpen(':Files')<CR>
+nnoremap <C-p> :call FZFOpen(':Buffers')<CR>
+nnoremap <Leader>gz :Commits<CR>
+nnoremap <Leader>uh :History<CR>
+" nnoremap <Leader>ul :BLines<CR>
+nnoremap <Leader>ut :Tags<CR>
+nnoremap <Leader>uu :BTags<CR>
+nnoremap <silent><Leader>uf
+            \ :call fzf#vim#buffer_tags('',
+            \ { 'options': ['--nth', '..-2,-1', '--query', '^f$ ']  })<CR>
+nnoremap <silent><Leader>uv
+            \ :call fzf#vim#buffer_tags('',
+            \ { 'options': ['--nth', '..-2,-1', '--query', '^v$ ']  })<CR>
+
+" Navigate between errors
+nnoremap <Leader>h :lprevious<CR>zz
+nnoremap <Leader>l :lnext<CR>zz
+
+" Fix FZF opening window in NERD tree buffer.`vim .` issue
+" function! FZFOpen(command_str)
+"   if (expand('%') =~# 'NERD_tree' && winnr('$') > 1)
+"     exe "normal! \<c-w>\<c-w>"
+"   endif
+"   exe 'normal! ' . a:command_str . "\<cr>"
+" endfunction
+
+
+function! FZFOpen(command_str)
+    "Defint the predefined directory
+    let predefined_directory = getcwd() "'~/Documents'  Set to Documents to reduce search time
+    if expand('%') =~# 'NERD_tree' && winnr('$') > 1
+        " Switch to the next window if NERDTree is open and there are other windows
+        exe "normal! \<c-w>\<c-w>"
+        " Check if current buffer is NERDTree and it's the only open window
+    elseif expand('%') =~# 'NERD_tree' && winnr('$') == 1
+        let current_file = expand('%')
+        " Open new window for fzf command
+        exe "new"
+        " Open the selected file in the new window
+        exe 'edit ' . fnameescape(current_file)
+        " Delete any 'No Name' buffer that might have been created
+        %bd
+    endif
+
+    " Temporarily change the directory to the predefined path
+    let current_cwd = getcwd()
+    execute 'cd ' . predefined_directory
+
+    try
+        " Execute the provided command_str
+        exe 'normal! ' . a:command_str . "\<cr>"
+    finally
+        execute 'cd ' . current_cwd
+    endtry
+endfunction
 
 " LSP Configuration
 function! s:on_lsp_buffer_enabled() abort
@@ -274,14 +352,5 @@ if executable('lua-language-server')
         \ 'name': 'lua-language-server',
         \ 'cmd': {server_info->['lua-language-server']},
         \ 'allowlist': ['lua'],
-        \ })
-endif
-
-" Markdown LSP
-if executable('remark-language-server')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'remark-language-server',
-        \ 'cmd': {server_info->['remark-language-server', '--stdio']},
-        \ 'allowlist': ['markdown'],
         \ })
 endif
