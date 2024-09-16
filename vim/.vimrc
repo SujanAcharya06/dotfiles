@@ -133,13 +133,13 @@ call plug#end()
 " --------------------------------
 " Custom keymaps
 let g:startify_custom_header = [
-            \ '                              ',
-            \ '            __                ',
-            \ '    __  __ /\_\    ___ ___    ',
-            \ '   /\ \/\ \\/\ \ /'' __` __`\ ',
-            \ '   \ \ \_/ |\ \ \/\ \/\ \/\ \ ',
-            \ '    \ \___/  \ \_\ \_\ \_\ \_\',
-            \ '     \/__/    \/_/\/_/\/_/\/_/',
+            \ '                                 ',
+            \ '            __                   ',
+            \ '    __  __ /\_\    ___ ___       ',
+            \ '   /\ \/\ \\/\ \ /'' __` __`\    ',
+            \ '   \ \ \_/ |\ \ \/\ \/\ \/\ \    ',
+            \ '    \ \___/  \ \_\ \_\ \_\ \_\   ',
+            \ '     \/__/    \/_/\/_/\/_/\/_/   ',
             \ ]
 
 " For closing all the files in the buffers except the current one
@@ -217,8 +217,8 @@ let g:ale_sign_info = 'ℹ'
 let $FZF_DEFAULT_COMMAND=""
 let $FZF_PREVIEW_COMMAND = 'cat {}'
 let g:fzf_preview_window = ['right', 'ctrl-i']
-nnoremap <leader>fg :call FZFOpen(':Files')<CR>
-nnoremap <C-p> :call FZFOpen(':Buffers')<CR>
+nnoremap <C-p> :call FZFOpen(':Files')<CR>
+nnoremap <C-q> :call FZFOpen(':Buffers')<CR>
 nnoremap <Leader>gz :Commits<CR>
 nnoremap <Leader>uh :History<CR>
 " nnoremap <Leader>ul :BLines<CR>
@@ -272,6 +272,12 @@ function! FZFOpen(command_str)
         execute 'cd ' . current_cwd
     endtry
 endfunction
+
+" Livegrep Telescope feature
+command! -nargs=* Rg call fzf#vim#grep(
+    \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+    \ fzf#vim#with_preview(), <bang>0)
+nnoremap <Leader>fg :Rg<CR>
 
 " LSP Configuration
 function! s:on_lsp_buffer_enabled() abort
