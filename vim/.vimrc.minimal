@@ -115,8 +115,6 @@ Plug 'tpope/vim-commentary'
 " Path completions
 Plug 'prabirshrestha/asyncomplete-file.vim'
 
-" Color Scheme
-Plug 'EdenEast/nightfox.nvim'
 call plug#end()
 
 " --------------------------------
@@ -169,7 +167,7 @@ au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 " 5. Plugin Configurations
 " --------------------------------
 " Theme
-colorscheme nightfox 
+colorscheme atomic
 set background=dark
 
 " Airline
