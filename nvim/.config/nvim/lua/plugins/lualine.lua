@@ -5,7 +5,7 @@ return {
     require('lualine').setup({
       options = {
         icons_enables = true;
-        theme = "carbonfox" --{"dracula"}
+        theme = "onedark" --{"dracula"}
       }
     })
   end
