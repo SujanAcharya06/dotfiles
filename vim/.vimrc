@@ -48,7 +48,7 @@ set showcmd
 set showmatch
 set visualbell
 set t_vb=
-set updatetime=250
+set updatetime=500
 set shortmess+=I
 
 " Time delay on <Leader> key
@@ -115,7 +115,13 @@ Plug 'airblade/vim-gitgutter'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'tpope/vim-fugitive'
 
-" Path completions
+" Advanced linter analysis
+Plug 'dense-analysis/ale'
+
+" Commentary
+Plug 'tpope/vim-commentary'
+
+"" Path completions
 Plug 'prabirshrestha/asyncomplete-file.vim'
 
 " Color Scheme
@@ -149,14 +155,6 @@ noremap <C-l> :bnext<CR>
 " NERDTree
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
-
-" LSP
-" nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-" nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-" nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-" nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-" nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-" nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
 
 " Git
 nnoremap <leader>gs :vert Git<CR>
@@ -197,6 +195,21 @@ set background=dark
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
+
+" ALE settings
+let g:ale_linters = {
+            \ 'c'          : ['clang'],
+            \ 'cpp'        : ['clang'],
+            \ 'vim'        : ['vint'],
+            \ 'python'     : ['pylint'],
+            \ 'javascript' : ['jshint'],
+            \ 'css'        : ['csslint'],
+            \ 'tex'        : ['chktex'],
+            \ }
+
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '∆'
+let g:ale_sign_info = 'ℹ'
 
 " FZF settings
 " let $FZF_DEFAULT_COMMAND = "ag --hidden --ignore .git -p ~/.gitignore -g ''"
@@ -299,7 +312,7 @@ call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options
 call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
             \ 'name': 'omni',
             \ 'allowlist': ['*'],
-            \ 'blocklist': ['c', 'cpp', 'html'],
+            \ 'blocklist': ['html'],
             \ 'completor': function('asyncomplete#sources#omni#completor'),
             \ 'config': {
                 \   'show_source_kind': 1
@@ -339,7 +352,8 @@ if executable('clangd')
     au User lsp_setup call lsp#register_server({
                 \ 'name': 'clangd',
                 \ 'cmd': {server_info->['clangd', '-background-index']},
-                \ 'allowlist': ['c', 'cpp', 'objc', 'objcpp'],
+                \ 'allowlist': ['c',  'objc'], 
+                \ 'blocklist': ['cpp', 'objcpp'],
                 \ })
 endif
 
