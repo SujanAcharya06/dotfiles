@@ -48,8 +48,8 @@ set showcmd
 set showmatch
 set visualbell
 set t_vb=
-set updatetime=500
-set shortmess+=I
+set updatetime=300
+set shortmess+=c
 
 " Time delay on <Leader> key
 set timeoutlen=3000 ttimeoutlen=100
@@ -209,8 +209,8 @@ endfunction
 
 " Livegrep Telescope feature
 command! -nargs=* Rg call fzf#vim#grep(
-    \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-    \ fzf#vim#with_preview(), <bang>0)
+            \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+            \ fzf#vim#with_preview(), <bang>0)
 nnoremap <Leader>fg :Rg<CR>
 
 " Vim-Visual-Multi 
@@ -225,9 +225,9 @@ let g:VM_add_cursor_at_pos_no_mappings = 1
 
 " Visual cursors with delay
 function! VisualCursorsWithDelay()
-  silent! normal! \<Plug>(VM-Visual-Cursors)
-  sleep 200m
-  silent! normal! A
+    silent! normal! \<Plug>(VM-Visual-Cursors)
+    sleep 200m
+    silent! normal! A
 endfunction
 
 " Set up mappings
@@ -300,7 +300,7 @@ autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 " Use Tab to navigate completion menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+inoremap <expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<cr>" : "\<cr>"
 
 " Enable LSP for specific languages (adjust as needed)
 if executable('pyls')
@@ -324,28 +324,28 @@ endif
 " HTML LSP
 if executable('html-languageserver')
     au User lsp_setup call lsp#register_server({
-        \ 'name': 'html-languageserver',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
-        \ 'allowlist': ['html'],
-        \ })
+                \ 'name': 'html-languageserver',
+                \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
+                \ 'allowlist': ['html'],
+                \ })
 endif
 
 " CSS LSP
 if executable('css-languageserver')
     au User lsp_setup call lsp#register_server({
-        \ 'name': 'css-languageserver',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
-        \ 'allowlist': ['css', 'less', 'sass', 'scss'],
-        \ })
+                \ 'name': 'css-languageserver',
+                \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
+                \ 'allowlist': ['css', 'less', 'sass', 'scss'],
+                \ })
 endif
 
 " Lua LSP
 if executable('lua-language-server')
     au User lsp_setup call lsp#register_server({
-        \ 'name': 'lua-language-server',
-        \ 'cmd': {server_info->['lua-language-server']},
-        \ 'allowlist': ['lua'],
-        \ })
+                \ 'name': 'lua-language-server',
+                \ 'cmd': {server_info->['lua-language-server']},
+                \ 'allowlist': ['lua'],
+                \ })
 endif
 
 " --------------------------------
@@ -368,9 +368,15 @@ nnoremap <Leader>xx :w <bar> %bd <bar> e# <bar> bd# <CR>
 " Move the current window in new vertical split window
 nnoremap <leader>mv :vsplit<CR>:b#<CR>
 
+" namvigate through pages
+nnoremap <Leader>kk zzHzz
+nnoremap <Leader>jj zzHzz
+
 " Cycle through buffers
 noremap <C-h> :bprev<CR>
 noremap <C-l> :bnext<CR>
+
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 
 " NERDTree
 nnoremap <C-n> :NERDTreeToggle<CR>
