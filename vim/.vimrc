@@ -123,6 +123,9 @@ Plug 'prabirshrestha/asyncomplete-file.vim'
 
 " Color Scheme
 Plug 'EdenEast/nightfox.nvim'
+
+" Vim-visual-multi
+Plug 'mg979/vim-visual-multi'
 call plug#end()
 
 " --------------------------------
@@ -232,15 +235,6 @@ nnoremap <silent><Leader>uv
 nnoremap <Leader>h :lprevious<CR>zz
 nnoremap <Leader>l :lnext<CR>zz
 
-" Fix FZF opening window in NERD tree buffer.`vim .` issue
-" function! FZFOpen(command_str)
-"   if (expand('%') =~# 'NERD_tree' && winnr('$') > 1)
-"     exe "normal! \<c-w>\<c-w>"
-"   endif
-"   exe 'normal! ' . a:command_str . "\<cr>"
-" endfunction
-
-
 function! FZFOpen(command_str)
     "Defint the predefined directory
     let predefined_directory = getcwd() "'~/Documents'  Set to Documents to reduce search time
@@ -275,6 +269,31 @@ command! -nargs=* Rg call fzf#vim#grep(
     \ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
     \ fzf#vim#with_preview(), <bang>0)
 nnoremap <Leader>fg :Rg<CR>
+
+" Vim-Visual-Multi 
+" Disable default mappings
+let g:VM_default_mappings = 0
+
+" Custom mappings
+let g:VM_maps = {'Find Under': ''}
+
+" Add cursor at position without mappings
+let g:VM_add_cursor_at_pos_no_mappings = 1
+
+" Visual cursors with delay
+function! VisualCursorsWithDelay()
+  silent! normal! \<Plug>(VM-Visual-Cursors)
+  sleep 200m
+  silent! normal! A
+endfunction
+
+" Set up mappings
+nmap <silent> <leader>ma <Plug>(VM-Select-All)
+nmap <silent> <leader>mr <Plug>(VM-Start-Regex-Search)
+nmap <silent> <leader>mp <Plug>(VM-Add-Cursor-At-Pos)
+vmap <silent> <leader>mc :call VisualCursorsWithDelay()<CR>
+nmap <silent> <leader>mo <Plug>(VM-Toggle-Mappings)
+
 
 " LSP Configuration
 function! s:on_lsp_buffer_enabled() abort
