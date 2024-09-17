@@ -118,7 +118,7 @@ Plug 'dense-analysis/ale'
 " Commentary
 Plug 'tpope/vim-commentary'
 
-"" Path completions
+" Path completions
 Plug 'prabirshrestha/asyncomplete-file.vim'
 
 " Color Scheme
@@ -129,64 +129,7 @@ Plug 'mg979/vim-visual-multi'
 call plug#end()
 
 " --------------------------------
-" 3. Plugin Keymaps
-" --------------------------------
-" Custom keymaps
-let g:startify_custom_header = [
-            \ '                                 ',
-            \ '            __                   ',
-            \ '    __  __ /\_\    ___ ___       ',
-            \ '   /\ \/\ \\/\ \ /'' __` __`\    ',
-            \ '   \ \ \_/ |\ \ \/\ \/\ \/\ \    ',
-            \ '    \ \___/  \ \_\ \_\ \_\ \_\   ',
-            \ '     \/__/    \/_/\/_/\/_/\/_/   ',
-            \ ]
-
-" For closing all the files in the buffers except the current one
-nnoremap <Leader>xx :w <bar> %bd <bar> e# <bar> bd# <CR>
-
-" Move the current window in new vertical split window
-nnoremap <leader>mv :vsplit<CR>:b#<CR>
-
-" Cycle through buffers
-noremap <C-h> :bprev<CR>
-noremap <C-l> :bnext<CR>
-
-" NERDTree
-nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <leader>nf :NERDTreeFind<CR>
-
-" Git
-nnoremap <leader>gs :vert Git<CR>
-nnoremap <leader>gd :vert Gdiff<CR>
-nnoremap <leader>gb :Git blame<CR>
-nnoremap <leader>gc :Git commit<CR>
-nnoremap <leader>P :Git push<CR>
-nnoremap <leader>gl :vert Git log --oneline<CR>
-
-" --------------------------------
-" 4. Autocmds
-" --------------------------------
-" Automatically source .vimrc on save
-augroup vimrc
-    autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
-augroup END
-
-" Remove trailing whitespace on save
-" autocmd BufWritePre * %s/\s\+$//e
-
-" Set indentation for specific file types
-autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
-autocmd FileType lua setlocal expandtab shiftwidth=2 softtabstop=2
-autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
-autocmd FileType java setlocal expandtab shiftwidth=4 softtabstop=4
-
-" Syntax highlighting for (markdown).md files
-au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
-
-" --------------------------------
-" 5. Plugin Configurations
+" 3. Plugin Configurations
 " --------------------------------
 " Theme
 colorscheme atomic
@@ -293,7 +236,6 @@ nmap <silent> <leader>mr <Plug>(VM-Start-Regex-Search)
 nmap <silent> <leader>mp <Plug>(VM-Add-Cursor-At-Pos)
 vmap <silent> <leader>mc :call VisualCursorsWithDelay()<CR>
 nmap <silent> <leader>mo <Plug>(VM-Toggle-Mappings)
-
 
 " LSP Configuration
 function! s:on_lsp_buffer_enabled() abort
@@ -405,3 +347,63 @@ if executable('lua-language-server')
         \ 'allowlist': ['lua'],
         \ })
 endif
+
+" --------------------------------
+" 4. Plugin Keymaps
+" --------------------------------
+" Custom keymaps
+let g:startify_custom_header = [
+            \ '                                 ',
+            \ '            __                   ',
+            \ '    __  __ /\_\    ___ ___       ',
+            \ '   /\ \/\ \\/\ \ /'' __` __`\    ',
+            \ '   \ \ \_/ |\ \ \/\ \/\ \/\ \    ',
+            \ '    \ \___/  \ \_\ \_\ \_\ \_\   ',
+            \ '     \/__/    \/_/\/_/\/_/\/_/   ',
+            \ ]
+
+" For closing all the files in the buffers except the current one
+nnoremap <Leader>xx :w <bar> %bd <bar> e# <bar> bd# <CR>
+
+" Move the current window in new vertical split window
+nnoremap <leader>mv :vsplit<CR>:b#<CR>
+
+" Cycle through buffers
+noremap <C-h> :bprev<CR>
+noremap <C-l> :bnext<CR>
+
+" NERDTree
+nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <leader>nf :NERDTreeFind<CR>
+
+" Git
+nnoremap <leader>gs :vert Git<CR>
+nnoremap <leader>gd :vert Gdiff<CR>
+nnoremap <leader>gb :Git blame<CR>
+nnoremap <leader>gc :Git commit<CR>
+nnoremap <leader>P :Git push<CR>
+nnoremap <leader>gl :vert Git log --oneline<CR>
+
+" --------------------------------
+" 5. Autocmds
+" --------------------------------
+" Automatically source .vimrc on save
+augroup vimrc
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
+" Remove trailing whitespace on save
+" autocmd BufWritePre * %s/\s\+$//e
+
+" Set indentation for specific file types
+autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
+autocmd FileType lua setlocal expandtab shiftwidth=2 softtabstop=2
+autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
+autocmd FileType java setlocal expandtab shiftwidth=4 softtabstop=4
+
+" Syntax highlighting for (markdown).md files
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+
+" Highlight the MatchParen group
+highlight MatchParen gui=bold guibg=darkblue guifg=lightblue
