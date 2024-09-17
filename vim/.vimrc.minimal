@@ -12,10 +12,16 @@ else
     let &t_EI = "\e[2 q"
 endif
 
-if exists('+termguicolors')
+" Check if termguicolors is supported
+if has('termguicolors')
+  " Check if the terminal supports true colors
+  if $COLORTERM =~# 'truecolor\|24bit'
+    " Set the required escape sequences for true color support
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    " Enable true color support
     set termguicolors
+  endif
 endif
 
 set nocompatible
@@ -38,7 +44,7 @@ set smartcase
 set splitbelow
 set splitright
 set hidden
-set mouse=a
+set mouse=
 set clipboard=unnamedplus
 set backspace=indent,eol,start
 set wildmenu
@@ -70,9 +76,6 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 
 call plug#begin('~/.vim/plugged')
 
-" Themes
-Plug 'morhetz/gruvbox'
-
 " Statusline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -87,16 +90,13 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/asyncomplete-buffer.vim'
 Plug 'yami-beta/asyncomplete-omni.vim'
 
-" FZF
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-
 " Snippets
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
 
-" NERDTree
-Plug 'preservim/nerdtree'
+" " NERDTree
+" Plug 'preservim/nerdtree'
+Plug 'tpope/vim-vinegar'
 
 " Auto pairs
 Plug 'jiangmiao/auto-pairs'
@@ -130,9 +130,9 @@ nnoremap <leader>mv :vsplit<CR>:b#<CR>
 noremap <C-h> :bprev<CR>
 noremap <C-l> :bnext<CR>
 
-" NERDTree
-nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <leader>nf :NERDTreeFind<CR>
+" " NERDTree
+" nnoremap <C-n> :NERDTreeToggle<CR>
+" nnoremap <leader>nf :NERDTreeFind<CR>
 
 " Git
 nnoremap <leader>gs :vert Git<CR>
@@ -173,68 +173,6 @@ set background=dark
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
-
-" FZF settings
-" let $FZF_DEFAULT_COMMAND = "ag --hidden --ignore .git -p ~/.gitignore -g ''"
-" Fixed fzf load command
-let $FZF_DEFAULT_COMMAND=""
-let $FZF_PREVIEW_COMMAND = 'cat {}'
-let g:fzf_preview_window = ['right', 'ctrl-i']
-nnoremap <leader>fg :call FZFOpen(':Files')<CR>
-nnoremap <C-p> :call FZFOpen(':Buffers')<CR>
-nnoremap <Leader>gz :Commits<CR>
-nnoremap <Leader>uh :History<CR>
-" nnoremap <Leader>ul :BLines<CR>
-nnoremap <Leader>ut :Tags<CR>
-nnoremap <Leader>uu :BTags<CR>
-nnoremap <silent><Leader>uf
-            \ :call fzf#vim#buffer_tags('',
-            \ { 'options': ['--nth', '..-2,-1', '--query', '^f$ ']  })<CR>
-nnoremap <silent><Leader>uv
-            \ :call fzf#vim#buffer_tags('',
-            \ { 'options': ['--nth', '..-2,-1', '--query', '^v$ ']  })<CR>
-
-" Navigate between errors
-nnoremap <Leader>h :lprevious<CR>zz
-nnoremap <Leader>l :lnext<CR>zz
-
-" Fix FZF opening window in NERD tree buffer.`vim .` issue
-" function! FZFOpen(command_str)
-"   if (expand('%') =~# 'NERD_tree' && winnr('$') > 1)
-"     exe "normal! \<c-w>\<c-w>"
-"   endif
-"   exe 'normal! ' . a:command_str . "\<cr>"
-" endfunction
-
-
-function! FZFOpen(command_str)
-    "Defint the predefined directory
-    let predefined_directory = getcwd() "'~/Documents'  Set to Documents to reduce search time
-    if expand('%') =~# 'NERD_tree' && winnr('$') > 1
-        " Switch to the next window if NERDTree is open and there are other windows
-        exe "normal! \<c-w>\<c-w>"
-        " Check if current buffer is NERDTree and it's the only open window
-    elseif expand('%') =~# 'NERD_tree' && winnr('$') == 1
-        let current_file = expand('%')
-        " Open new window for fzf command
-        exe "new"
-        " Open the selected file in the new window
-        exe 'edit ' . fnameescape(current_file)
-        " Delete any 'No Name' buffer that might have been created
-        %bd
-    endif
-
-    " Temporarily change the directory to the predefined path
-    let current_cwd = getcwd()
-    execute 'cd ' . predefined_directory
-
-    try
-        " Execute the provided command_str
-        exe 'normal! ' . a:command_str . "\<cr>"
-    finally
-        execute 'cd ' . current_cwd
-    endtry
-endfunction
 
 " LSP Configuration
 function! s:on_lsp_buffer_enabled() abort
