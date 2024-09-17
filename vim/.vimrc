@@ -73,9 +73,6 @@ call plug#begin('~/.vim/plugged')
 " Startify
 Plug 'mhinz/vim-startify'
 
-" Themes
-Plug 'morhetz/gruvbox'
-
 " Statusline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -189,7 +186,7 @@ au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 " 5. Plugin Configurations
 " --------------------------------
 " Theme
-colorscheme nightfox 
+colorscheme atomic
 set background=dark
 
 " Airline
