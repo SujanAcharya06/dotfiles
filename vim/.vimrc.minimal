@@ -104,6 +104,9 @@ Plug 'jiangmiao/auto-pairs'
 " Surround plugin
 Plug 'tpope/vim-surround'
 
+" Vim-bufferline
+Plug 'bling/vim-bufferline'
+
 " Git plugins
 Plug 'airblade/vim-gitgutter'
 Plug 'lewis6991/gitsigns.nvim'
@@ -169,6 +172,9 @@ au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 " Theme
 colorscheme atomic
 set background=dark
+
+" vim-vinegar
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 
 " Airline
 let g:airline_powerline_fonts = 1
