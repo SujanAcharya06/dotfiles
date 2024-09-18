@@ -303,12 +303,12 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<cr>" : "\<cr>"
 
 " Enable LSP for specific languages (adjust as needed)
-if executable('pyls')
+if executable('pyright-langserver')
     " pip install python-language-server
     au User lsp_setup call lsp#register_server({
-                \ 'name': 'pyls',
-                \ 'cmd': {server_info->['pyls']},
-                \ 'allowlist': ['python'],
+                \ 'name': 'pyright-languagesever',
+                \ 'cmd': {server_info->['pyright-languagesever']},
+                \ 'allowlist': ['python', 'py'],
                 \ })
 endif
 
