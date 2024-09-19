@@ -32,7 +32,6 @@ set relativenumber
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set expandtab
 set smartindent
 set autoindent
 set wrap
@@ -412,10 +411,10 @@ augroup END
 " autocmd BufWritePre * %s/\s\+$//e
 
 " Set indentation for specific file types
-autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
-autocmd FileType lua setlocal expandtab shiftwidth=4 softtabstop=4
-autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
-autocmd FileType java setlocal expandtab shiftwidth=4 softtabstop=4
+autocmd FileType python setlocal shiftwidth=4 softtabstop=4
+autocmd FileType lua setlocal shiftwidth=4 softtabstop=4
+autocmd FileType c setlocal shiftwidth=4 softtabstop=4
+autocmd FileType java setlocal shiftwidth=4 softtabstop=4
 
 " Syntax highlighting for (markdown).md files
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
