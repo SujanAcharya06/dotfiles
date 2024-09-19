@@ -46,8 +46,6 @@ set wildmode=list:longest,full
 set laststatus=2
 set showcmd
 set showmatch
-set visualbell
-set t_vb=
 set updatetime=300
 set shortmess+=c
 
@@ -269,9 +267,9 @@ call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options
             \ 'allowlist': ['*'],
             \ 'completor': function('asyncomplete#sources#buffer#completor'),
             \ 'config': {
-                \    'max_buffer_size': 5000000,
-                \  },
-                \ }))
+            \    'max_buffer_size': 5000000,
+            \  },
+            \ }))
 
 call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
             \ 'name': 'omni',
@@ -279,9 +277,9 @@ call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
             \ 'blocklist': ['html'],
             \ 'completor': function('asyncomplete#sources#omni#completor'),
             \ 'config': {
-                \   'show_source_kind': 1
-                \ }
-                \ }))
+            \   'show_source_kind': 1
+            \ }
+            \ }))
 
 " Configure file path completion
 call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
