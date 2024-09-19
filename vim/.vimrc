@@ -20,7 +20,9 @@ if exists('+termguicolors')
 endif
 
 " Changing cursor style
-set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+if has('gui_running')
+	set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+endif
 
 set nocompatible
 syntax enable
@@ -52,15 +54,15 @@ set showcmd
 set showmatch
 set updatetime=300
 set shortmess+=c
-set noexpandtab
-
-" List chars
-set list
-set listchars=tab:▸\ ,trail:·,extends:>,precedes:<,space:·
 
 " set ttimeout
 set ttimeoutlen=1
-set ttyfast
+" set ttyfast
+
+set noexpandtab
+" List chars
+set list
+set listchars=tab:│\ ,trail:·,extends:>,precedes:<,space:·
 
 " --------------------------------
 " 2. Plugins
@@ -411,7 +413,7 @@ augroup END
 
 " Set indentation for specific file types
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
-autocmd FileType lua setlocal expandtab shiftwidth=2 softtabstop=2
+autocmd FileType lua setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType java setlocal expandtab shiftwidth=4 softtabstop=4
 

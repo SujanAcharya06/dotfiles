@@ -35,20 +35,24 @@ vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#98c379", fg = "#282c34" })
 
 -- vim.opt.guicursor = "i:block-blinkwait1000-blinkon500-blinkoff500";
 vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,"..
-   "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,"..
-    "sm:block-blinkwait175-blinkoff150-blinkon175";
+"a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,"..
+"sm:block-blinkwait175-blinkoff150-blinkon175";
 
 -- Enable listchars
 vim.opt.list = true
+
+-- Don't convert tabs to spaces
+vim.opt.expandtab = false
+
 -- Set listchars
 vim.opt.listchars = {
-    space = '⋅',
-    -- eol = '↴',
-    trail = '~',
-    tab = '│ ',
-    extends = '›',
-    precedes = '‹',
-    nbsp = '␣',
+  space = '⋅',
+  -- eol = '↴',
+  trail = '~',
+  tab = '│ ',
+  extends = '›',
+  precedes = '‹',
+  nbsp = '␣',
 }
 
 -- Folding settings
@@ -74,8 +78,8 @@ vim.keymap.set("n", "<leader>zs", close_all_folds, { desc = "[s]hut all folds" }
 vim.keymap.set("n", "<leader>zo", open_all_folds, { desc = "[o]pen all folds" })
 
 vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = "*",
-    callback = function()
-        vim.cmd([[highlight! MatchParen  gui=bold guibg=darkblue guifg=lightblue]]) --[[ cterm=bold ctermbg=green ctermfg=blue ]]
-    end
+  pattern = "*",
+  callback = function()
+    vim.cmd([[highlight! MatchParen  gui=bold guibg=darkblue guifg=lightblue]]) --[[ cterm=bold ctermbg=green ctermfg=blue ]]
+  end
 })
