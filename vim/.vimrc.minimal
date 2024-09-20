@@ -5,23 +5,23 @@
 let mapleader = "\<Space>"
 
 if exists('$TMUX')
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\e[5 q\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\e[2 q\<Esc>\\"
+	let &t_SI = "\<Esc>Ptmux;\<Esc>\e[5 q\<Esc>\\"
+	let &t_EI = "\<Esc>Ptmux;\<Esc>\e[2 q\<Esc>\\"
 else
-    let &t_SI = "\e[5 q"
-    let &t_EI = "\e[2 q"
+	let &t_SI = "\e[5 q"
+	let &t_EI = "\e[2 q"
 endif
 
-" Check if termguicolors is supported
-if has('termguicolors')
-  " Check if the terminal supports true colors
-  if $COLORTERM =~# 'truecolor\|24bit'
-    " Set the required escape sequences for true color support
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    " Enable true color support
-    set termguicolors
-  endif
+" Set termguicolors if terminal supports
+if exists('+termguicolors')
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	set termguicolors
+endif
+
+" Changing cursor style
+if has('gui_running')
+	set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 endif
 
 set nocompatible
@@ -52,27 +52,28 @@ set wildmode=list:longest,full
 set laststatus=2
 set showcmd
 set showmatch
-set visualbell
-set t_vb=
-set updatetime=500
+set updatetime=300
 set shortmess+=I
+set noexpandtab
+set ttimeoutlen=1
 
-" Time delay on <Leader> key
-set timeoutlen=3000 ttimeoutlen=100
+" List chars
+set list
+set listchars=tab:│\ ,trail:·,extends:>,precedes:<,space:·
 
 " --------------------------------
 " 2. Plugins
 " --------------------------------
-" Install vim-plug if not found
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-endif
+" " Install vim-plug if not found
+" if empty(glob('~/.vim/autoload/plug.vim'))
+"     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+"                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" endif
 
-" Run PlugInstall if there are missing plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-            \| PlugInstall --sync | source $MYVIMRC
-            \| endif
+" " Run PlugInstall if there are missing plugins
+" autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+"             \| PlugInstall --sync | source $MYVIMRC
+"             \| endif
 
 call plug#begin('~/.vim/plugged')
 
@@ -95,7 +96,6 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/vim-vsnip-integ'
 
 " " NERDTree
-" Plug 'preservim/nerdtree'
 Plug 'tpope/vim-vinegar'
 
 " Auto pairs
@@ -150,18 +150,12 @@ nnoremap <leader>gl :vert Git log --oneline<CR>
 " --------------------------------
 " Automatically source .vimrc on save
 augroup vimrc
-    autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+	autocmd!
+	autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
 " Remove trailing whitespace on save
 " autocmd BufWritePre * %s/\s\+$//e
-
-" Set indentation for specific file types
-autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
-autocmd FileType lua setlocal expandtab shiftwidth=2 softtabstop=2
-autocmd FileType c setlocal expandtab shiftwidth=4 softtabstop=4
-autocmd FileType java setlocal expandtab shiftwidth=4 softtabstop=4
 
 " Syntax highlighting for (markdown).md files
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
@@ -182,23 +176,23 @@ let g:airline_theme='onedark'
 
 " LSP Configuration
 function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> gr <plug>(lsp-references)
-    nmap <buffer> gi <plug>(lsp-implementation)
-    nmap <buffer> gt <plug>(lsp-type-definition)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-    nmap <buffer> K <plug>(lsp-hover)
+	setlocal omnifunc=lsp#complete
+	setlocal signcolumn=yes
+	if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+	nmap <buffer> gd <plug>(lsp-definition)
+	nmap <buffer> gr <plug>(lsp-references)
+	nmap <buffer> gi <plug>(lsp-implementation)
+	nmap <buffer> gt <plug>(lsp-type-definition)
+	nmap <buffer> <leader>rn <plug>(lsp-rename)
+	nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+	nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+	nmap <buffer> K <plug>(lsp-hover)
 endfunction
 
 augroup lsp_install
-    au!
-    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+	au!
+	" call s:on_lsp_buffer_enabled only for languages that has the server registered.
+	autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
 
 " Asyncomplete Configuration
@@ -208,31 +202,31 @@ set completeopt=menuone,noinsert,noselect,preview
 
 " Register asyncomplete sources
 call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-            \ 'name': 'buffer',
-            \ 'allowlist': ['*'],
-            \ 'completor': function('asyncomplete#sources#buffer#completor'),
-            \ 'config': {
-                \    'max_buffer_size': 5000000,
-                \  },
-                \ }))
+			\ 'name': 'buffer',
+			\ 'allowlist': ['*'],
+			\ 'completor': function('asyncomplete#sources#buffer#completor'),
+			\ 'config': {
+			\    'max_buffer_size': 5000000,
+			\  },
+			\ }))
 
 call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
-            \ 'name': 'omni',
-            \ 'allowlist': ['*'],
-            \ 'blocklist': ['html'],
-            \ 'completor': function('asyncomplete#sources#omni#completor'),
-            \ 'config': {
-                \   'show_source_kind': 1
-                \ }
-                \ }))
+			\ 'name': 'omni',
+			\ 'allowlist': ['*'],
+			\ 'blocklist': ['html'],
+			\ 'completor': function('asyncomplete#sources#omni#completor'),
+			\ 'config': {
+			\   'show_source_kind': 1
+			\ }
+			\ }))
 
 " Configure file path completion
 call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-            \ 'name': 'file',
-            \ 'allowlist': ['*'],
-            \ 'priority': 10,
-            \ 'completor': function('asyncomplete#sources#file#completor')
-            \ }))
+			\ 'name': 'file',
+			\ 'allowlist': ['*'],
+			\ 'priority': 10,
+			\ 'completor': function('asyncomplete#sources#file#completor')
+			\ }))
 
 " Enable asyncomplete for command-line mode
 autocmd CmdlineEnter * call asyncomplete#enable_for_buffer()
