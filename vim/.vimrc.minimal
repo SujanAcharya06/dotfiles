@@ -64,22 +64,22 @@ set listchars=tab:│\ ,trail:·,extends:>,precedes:<,space:·
 " --------------------------------
 " 2. Plugins
 " --------------------------------
-" " Install vim-plug if not found
-" if empty(glob('~/.vim/autoload/plug.vim'))
-"     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-"                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-" endif
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
 
-" " Run PlugInstall if there are missing plugins
-" autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-"             \| PlugInstall --sync | source $MYVIMRC
-"             \| endif
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+            \| PlugInstall --sync | source $MYVIMRC
+            \| endif
 
 call plug#begin('~/.vim/plugged')
 
-" Statusline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" " Statusline
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 
 " LSP config
 Plug 'prabirshrestha/vim-lsp'
@@ -91,11 +91,11 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/asyncomplete-buffer.vim'
 Plug 'yami-beta/asyncomplete-omni.vim'
 
-" Snippets
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
+" " Snippets
+" Plug 'hrsh7th/vim-vsnip'
+" Plug 'hrsh7th/vim-vsnip-integ'
 
-" " NERDTree
+" NERDTree
 Plug 'tpope/vim-vinegar'
 
 " Auto pairs
@@ -104,20 +104,19 @@ Plug 'jiangmiao/auto-pairs'
 " Surround plugin
 Plug 'tpope/vim-surround'
 
-" Vim-bufferline
-Plug 'bling/vim-bufferline'
+" " Vim-bufferline
+" Plug 'bling/vim-bufferline'
 
-" Git plugins
-Plug 'airblade/vim-gitgutter'
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'tpope/vim-fugitive'
+" " Git plugins
+" Plug 'airblade/vim-gitgutter'
+" Plug 'lewis6991/gitsigns.nvim'
+" Plug 'tpope/vim-fugitive'
 
 " Commentary
 Plug 'tpope/vim-commentary'
 
 " Path completions
 Plug 'prabirshrestha/asyncomplete-file.vim'
-
 call plug#end()
 
 " --------------------------------
@@ -137,13 +136,13 @@ noremap <C-l> :bnext<CR>
 " nnoremap <C-n> :NERDTreeToggle<CR>
 " nnoremap <leader>nf :NERDTreeFind<CR>
 
-" Git
-nnoremap <leader>gs :vert Git<CR>
-nnoremap <leader>gd :vert Gdiff<CR>
-nnoremap <leader>gb :Git blame<CR>
-nnoremap <leader>gc :Git commit<CR>
-nnoremap <leader>P :Git push<CR>
-nnoremap <leader>gl :vert Git log --oneline<CR>
+" " Git
+" nnoremap <leader>gs :vert Git<CR>
+" nnoremap <leader>gd :vert Gdiff<CR>
+" nnoremap <leader>gb :Git blame<CR>
+" nnoremap <leader>gc :Git commit<CR>
+" nnoremap <leader>P :Git push<CR>
+" nnoremap <leader>gl :vert Git log --oneline<CR>
 
 " --------------------------------
 " 4. Autocmds
@@ -174,26 +173,26 @@ let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
 
-" LSP Configuration
-function! s:on_lsp_buffer_enabled() abort
-	setlocal omnifunc=lsp#complete
-	setlocal signcolumn=yes
-	if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-	nmap <buffer> gd <plug>(lsp-definition)
-	nmap <buffer> gr <plug>(lsp-references)
-	nmap <buffer> gi <plug>(lsp-implementation)
-	nmap <buffer> gt <plug>(lsp-type-definition)
-	nmap <buffer> <leader>rn <plug>(lsp-rename)
-	nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-	nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-	nmap <buffer> K <plug>(lsp-hover)
-endfunction
+" " LSP Configuration
+" function! s:on_lsp_buffer_enabled() abort
+" 	setlocal omnifunc=lsp#complete
+" 	setlocal signcolumn=yes
+" 	if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+" 	nmap <buffer> gd <plug>(lsp-definition)
+" 	nmap <buffer> gr <plug>(lsp-references)
+" 	nmap <buffer> gi <plug>(lsp-implementation)
+" 	nmap <buffer> gt <plug>(lsp-type-definition)
+" 	nmap <buffer> <leader>rn <plug>(lsp-rename)
+" 	nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+" 	nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+" 	nmap <buffer> K <plug>(lsp-hover)
+" endfunction
 
-augroup lsp_install
-	au!
-	" call s:on_lsp_buffer_enabled only for languages that has the server registered.
-	autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
+" augroup lsp_install
+" 	au!
+" 	" call s:on_lsp_buffer_enabled only for languages that has the server registered.
+" 	autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+" augroup END
 
 " Asyncomplete Configuration
 let g:asyncomplete_auto_popup = 1
