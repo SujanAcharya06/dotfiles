@@ -14,7 +14,7 @@ return {
 			vim.g.ale_fixers = {
 				python = { "isort", "black" },
 			}
-      vim.keymap.set("n", "<leader>d", ":ALEDetail<CR>", {noremap = true, silent = true})
+			vim.keymap.set("n", "<leader>d", ":ALEDetail<CR>", {noremap = true, silent = true})
 		end,
 	},
 }

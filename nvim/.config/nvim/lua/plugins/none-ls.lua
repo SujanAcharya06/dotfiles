@@ -1,9 +1,7 @@
 return {
 	"nvimtools/none-ls.nvim",
-
 	config = function()
 		local null_ls = require("null-ls")
-
 		null_ls.setup({
 			sources = {
 				null_ls.builtins.formatting.stylua,
@@ -13,9 +11,9 @@ return {
 				-- null_ls.builtins.diagnostics.eslint_d,
 				-- null_ls.builtins.diagnostics.rubocop, -- ruby (have to install rubocop in mason)
 				-- null_ls.builtins.formatting.rubocop, -- ruby
-            },
-            autostart = true,
-        })
-        vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
-    end,
+			},
+			autostart = true,
+		})
+		vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+	end,
 }

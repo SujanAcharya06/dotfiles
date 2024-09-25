@@ -115,25 +115,25 @@ echo "edit - to search using fzf and edit using vim"
 # eval "$(pyenv init --path)"
 
 if [[ -f ~/dotfiles/.env ]]; then
-    source ~/dotfiles/.env
-    export SENDER_EMAIL
-    export SENDER_PASSWORD
-    export MAIL_SERVER
-    export MAIL_PORT
-    export MAIL_USE_TLE
-    export WIFI
+	source ~/dotfiles/.env
+	export SENDER_EMAIL
+	export SENDER_PASSWORD
+	export MAIL_SERVER
+	export MAIL_PORT
+	export MAIL_USE_TLE
+	export WIFI
 else
-    echo ".env file Notfound cannot Set custom env variable"
+	echo ".env file Notfound cannot Set custom env variable"
 fi
 
 # In .bashrc or .zshrc
 if [ -f ~/.lazy-load.zsh ]; then
-    source ~/.lazy-load.zsh
+	source ~/.lazy-load.zsh
 fi
 
 # In .bashrc or .zshrc
 if [ -f ~/.aliases.zsh ]; then
-    source ~/.aliases.zsh
+	source ~/.aliases.zsh
 fi
 
 export PATH=$HOME/.local/bin:$PATH

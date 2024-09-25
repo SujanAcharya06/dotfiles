@@ -46,13 +46,13 @@ vim.opt.expandtab = false
 
 -- Set listchars
 vim.opt.listchars = {
-  space = '⋅',
-  -- eol = '↴',
-  trail = '~',
-  tab = '│ ',
-  extends = '›',
-  precedes = '‹',
-  nbsp = '␣',
+	space = '⋅',
+	-- eol = '↴',
+	trail = '~',
+	tab = '│ ',
+	extends = '›',
+	precedes = '‹',
+	nbsp = '␣',
 }
 
 -- Folding settings
@@ -66,11 +66,11 @@ vim.opt.foldlevelstart = 99
 
 -- Folding functions
 local function close_all_folds()
-  vim.api.nvim_exec2("%foldc!", { output = false })
+	vim.api.nvim_exec2("%foldc!", { output = false })
 end
 
 local function open_all_folds()
-  vim.api.nvim_exec2("%foldo!", { output = false })
+	vim.api.nvim_exec2("%foldo!", { output = false })
 end
 
 -- Keyboard shortcuts for folding
@@ -78,8 +78,8 @@ vim.keymap.set("n", "<leader>zs", close_all_folds, { desc = "[s]hut all folds" }
 vim.keymap.set("n", "<leader>zo", open_all_folds, { desc = "[o]pen all folds" })
 
 vim.api.nvim_create_autocmd("ColorScheme", {
-  pattern = "*",
-  callback = function()
-    vim.cmd([[highlight! MatchParen  gui=bold guibg=darkblue guifg=lightblue]]) --[[ cterm=bold ctermbg=green ctermfg=blue ]]
-  end
+	pattern = "*",
+	callback = function()
+		vim.cmd([[highlight! MatchParen  gui=bold guibg=darkblue guifg=lightblue]]) --[[ cterm=bold ctermbg=green ctermfg=blue ]]
+	end
 })
