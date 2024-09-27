@@ -391,7 +391,48 @@ nnoremap <leader>gd :vert Gdiff<CR>
 nnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gc :Git commit<CR>
 nnoremap <leader>P :Git push<CR>
+nnoremap <leader>ggp :Git push -f origin main<CR>
 nnoremap <leader>gl :vert Git log --oneline<CR>
+
+" Show last commit detials
+function! ShowLastCommit()
+	let file = expand('%:p')
+	let git_command = 'git log -1 --oneline -- ' . shellescape(file)
+	let commit_hash = system(git_command)
+
+	" if v:shell_error != 0
+	" 	echoerr "Git command failed. Error: " . v:shell_error
+	" 	echoerr "Command: " . git_command
+	" 	echoerr "Output: " . commit_hash
+	" 	return
+	" endif
+
+	if empty(commit_hash)
+		echoerr "No commit information available for file: " . file
+		return
+	endif
+
+	" Remove newline character from commit_hash
+	let commit_hash = substitute(commit_hash, '\n', '', 'g')
+	" Extract just the hash part (first 7 characters)
+	let short_hash = strpart(commit_hash, 0, 7)
+
+	" Open a new vertical split and run :Git show
+	try
+		" execute 'vertical new'
+		execute ':vert Git show ' . short_hash
+
+		" Set the buffer as non-modifiable
+		setlocal buftype=nofile
+		setlocal bufhidden=hide
+		setlocal noswapfile
+		setlocal nomodifiable
+	catch
+		echoerr "Failed to show commit. Error: " . v:exception
+	endtry
+endfunction
+
+nnoremap <leader>lc :call ShowLastCommit()<CR>
 
 " --------------------------------
 " 5. Autocmds
