@@ -3,20 +3,19 @@
 " --------------------------------
 " Set leader key to spacebar
 let mapleader = "\<Space>"
-
 let &t_SI = "\e[5 q"
 let &t_EI = "\e[2 q"
 
 " Set termguicolors if terminal supports
 if exists('+termguicolors')
-	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-	set termguicolors
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
 endif
 
 " Changing cursor style
 if has('gui_running')
-	set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+    set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 endif
 
 set nocompatible
@@ -27,7 +26,6 @@ set relativenumber
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-" set smartindent
 set autoindent
 set wrap
 set linebreak
@@ -48,30 +46,29 @@ set showcmd
 set showmatch
 set updatetime=300
 set shortmess+=c
-
-" set ttimeout
+set expandtab
 set ttimeoutlen=1
-" set ttyfast
 
-set noexpandtab
 " List chars
 set list
-set listchars=tab:│\ ,trail:·,extends:>,precedes:<,space:·
+set listchars=trail:·,extends:>,precedes:<,space:·
+
+
 
 " --------------------------------
 " 2. Plugins
 " --------------------------------
 " Install vim-plug if not found
+"
 if empty(glob('~/.vim/autoload/plug.vim'))
-	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
 " Run PlugInstall if there are missing plugins
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-			\| PlugInstall --sync | source $MYVIMRC
-			\| endif
-
+            \| PlugInstall --sync | source $MYVIMRC
+            \| endif
 call plug#begin('~/.vim/plugged')
 
 " Startify
@@ -130,14 +127,29 @@ Plug 'EdenEast/nightfox.nvim'
 
 " Vim-visual-multi
 Plug 'mg979/vim-visual-multi'
+
+" Vim-indent-guides
+Plug 'nathanaelkane/vim-indent-guides'
 call plug#end()
 
 " --------------------------------
 " 3. Plugin Configurations
 " --------------------------------
+"
 " Theme
-colorscheme atomic
 set background=dark
+colorscheme lucid
+
+" Reduce brightness of listchars
+highlight NonText ctermfg=8 guifg=#5c6370   " For invisible characters
+highlight SpecialKey ctermfg=8 guifg=#5c6370 " For special keys like tab
+highlight Whitespace ctermfg=8 guifg=#5c6370 " For spaces and other invisible chars
+
+" Vim-indent-guides enable on startup
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'startify']
 
 " Airline
 let g:airline_powerline_fonts = 1
@@ -145,18 +157,32 @@ let g:airline_theme='onedark'
 
 " ALE settings
 let g:ale_linters = {
-			\ 'c'          : ['clang'],
-			\ 'cpp'        : ['clang'],
-			\ 'vim'        : ['vint'],
-			\ 'python'     : ['pylint'],
-			\ 'javascript' : ['jshint'],
-			\ 'css'        : ['csslint'],
-			\ 'tex'        : ['chktex'],
-			\ }
+            \ 'c'          : ['clang'],
+            \ 'cpp'        : ['clang'],
+            \ 'vim'        : ['vint'],
+            \ 'python'     : ['pylint'],
+            \ 'javascript' : ['eslint'],
+            \ 'css'        : ['stylelint'],
+            \ 'html'       : ['htmlhint'],
+            \ 'lua'        : ['luacheck'],
+            \ 'tex'        : ['chktex'],
+            \ }
 
+let g:ale_fixers = {
+            \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \ 'python': ['black'],
+            \ 'javascript': ['prettier'],
+            \ 'css': ['prettier'],
+            \ 'html': ['prettier'],
+            \ }
+
+let g:ale_fix_on_save = 1
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '∆'
 let g:ale_sign_info = 'ℹ'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_virtualtext_cursor = 1
+let g:ale_hover_to_preview = 1
 
 " FZF settings
 " let $FZF_DEFAULT_COMMAND = "ag --hidden --ignore .git -p ~/.gitignore -g ''"
@@ -172,66 +198,72 @@ nnoremap <Leader>uh :History<CR>
 nnoremap <Leader>ut :Tags<CR>
 nnoremap <Leader>uu :BTags<CR>
 nnoremap <silent><Leader>uf
-			\ :call fzf#vim#buffer_tags('',
-			\ { 'options': ['--nth', '..-2,-1', '--query', '^f$ ']  })<CR>
+            \ :call fzf#vim#buffer_tags('',
+            \ { 'options': ['--nth', '..-2,-1', '--query', '^f$ ']  })<CR>
+
 nnoremap <silent><Leader>uv
-			\ :call fzf#vim#buffer_tags('',
-			\ { 'options': ['--nth', '..-2,-1', '--query', '^v$ ']  })<CR>
+            \ :call fzf#vim#buffer_tags('',
+            \ { 'options': ['--nth', '..-2,-1', '--query', '^v$ ']  })<CR>
 
 " Navigate between errors
 nnoremap <Leader>h :lprevious<CR>zz
 nnoremap <Leader>l :lnext<CR>zz
 
 function! FZFOpen(command_str)
-	"Defint the predefined directory
-	let predefined_directory = getcwd() "'~/Documents'  Set to Documents to reduce search time
-	if expand('%') =~# 'NERD_tree' && winnr('$') > 1
-		" Switch to the next window if NERDTree is open and there are other windows
-		exe "normal! \<c-w>\<c-w>"
-	" Check if current buffer is NERDTree and it's the only open window
-	elseif expand('%') =~# 'NERD_tree' && winnr('$') == 1
-		let current_file = expand('%')
-		" Open new window for fzf command
-		exe "new"
-		" Open the selected file in the new window
-		exe 'edit ' . fnameescape(current_file)
-		" Delete any 'No Name' buffer that might have been created
-		%bd
-	endif
-
-	" Temporarily change the directory to the predefined path
-	let current_cwd = getcwd()
-	execute 'cd ' . predefined_directory
-
-	try
-		" Execute the provided command_str
-		exe 'normal! ' . a:command_str . "\<cr>"
-	finally
-		execute 'cd ' . current_cwd
-	endtry
+    "Defint the predefined directory
+    let predefined_directory = getcwd() "'~/Documents'  Set to Documents to reduce search time
+    if expand('%') =~# 'NERD_tree' && winnr('$') > 1
+        " Switch to the next window if NERDTree is open and there are other windows
+        exe "normal! \<c-w>\<c-w>"
+    " Check if current buffer is NERDTree and it's the only open window
+    elseif expand('%') =~# 'NERD_tree' && winnr('$') == 1
+        let current_file = expand('%')
+        " Open new window for fzf command
+        exe "new"
+        " Open the selected file in the new window
+        exe 'edit ' . fnameescape(current_file)
+        " Delete any 'No Name' buffer that might have been created
+        %bd
+    endif
+    " Temporarily change the directory to the predefined path
+    let current_cwd = getcwd()
+    execute 'cd ' . predefined_directory
+    try
+        " Execute the provided command_str
+        exe 'normal! ' . a:command_str . "\<cr>"
+    finally
+        execute 'cd ' . current_cwd
+    endtry
 endfunction
 
 " Livegrep Telescope feature
 command! -nargs=* Rg call fzf#vim#grep(
-			\ 'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-			\ fzf#vim#with_preview(), <bang>0)
+            \ 'rg --column --line-number --no-heading --color=always --smart-case --hidden --glob "!.git/*" '.shellescape(<q-args>), 1,
+            \ fzf#vim#with_preview(), <bang>0)
 nnoremap <Leader>fg :Rg<CR>
+
+command! -nargs=* RgSearch call fzf#vim#grep(
+            \ 'rg --no-heading --vimgrep --smart-case '.shellescape(<q-args>). ' '.expand('%:p'), 1,
+            \ fzf#vim#with_preview(), <bang>0)
+nnoremap <Leader>ff :RgSearch<CR>
+
+
+
+
 
 " Vim-Visual-Multi
 " Disable default mappings
 let g:VM_default_mappings = 0
-
 " Custom mappings
 let g:VM_maps = {'Find Under': ''}
-
 " Add cursor at position without mappings
 let g:VM_add_cursor_at_pos_no_mappings = 1
 
 " Visual cursors with delay
 function! VisualCursorsWithDelay()
-	silent! normal! \<Plug>(VM-Visual-Cursors)
-	sleep 200m
-	silent! normal! A
+    silent! normal! \<Plug>(VM-Visual-Cursors)
+    sleep 200m
+    silent! normal! A
 endfunction
 
 " Set up mappings
@@ -243,57 +275,66 @@ nmap <silent> <leader>mo <Plug>(VM-Toggle-Mappings)
 
 " LSP Configuration
 function! s:on_lsp_buffer_enabled() abort
-	setlocal omnifunc=lsp#complete
-	setlocal signcolumn=yes
-	if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-	nmap <buffer> gd <plug>(lsp-definition)
-	nmap <buffer> gr <plug>(lsp-references)
-	nmap <buffer> gi <plug>(lsp-implementation)
-	nmap <buffer> gt <plug>(lsp-type-definition)
-	nmap <buffer> <leader>rn <plug>(lsp-rename)
-	nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-	nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-	nmap <buffer> K <plug>(lsp-hover)
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
 endfunction
 
 augroup lsp_install
-	au!
-	" call s:on_lsp_buffer_enabled only for languages that has the server registered.
-	autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+
+" Disable LSP
+let g:lsp_diagnostics_enabled = 0
+let g:lsp_highlight_references_enabled = 0
+let g:lsp_textprop_enabled = 0
+let g:lsp_signs_enabled = 0
+let g:lsp_virtual_text_enabled = 0
+
+" Additional ALE settings
+let g:ale_completion_enabled = 1
+let g:ale_set_balloons = 1
 
 " Asyncomplete Configuration
 let g:asyncomplete_auto_popup = 1
 let g:asyncomplete_auto_completeopt = 0
 set completeopt=menuone,noinsert,noselect,preview
-
 " Register asyncomplete sources
 call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-			\ 'name': 'buffer',
-			\ 'allowlist': ['*'],
-			\ 'completor': function('asyncomplete#sources#buffer#completor'),
-			\ 'config': {
-			\    'max_buffer_size': 5000000,
-			\  },
-			\ }))
-
+            \ 'name': 'buffer',
+            \ 'allowlist': ['*'],
+            \ 'completor': function('asyncomplete#sources#buffer#completor'),
+            \ 'config': {
+            \    'max_buffer_size': 5000000,
+            \  },
+            \ }))
 call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
-			\ 'name': 'omni',
-			\ 'allowlist': ['*'],
-			\ 'blocklist': ['html'],
-			\ 'completor': function('asyncomplete#sources#omni#completor'),
-			\ 'config': {
-			\   'show_source_kind': 1
-			\ }
-			\ }))
+            \ 'name': 'omni',
+            \ 'allowlist': ['*'],
+            \ 'blocklist': ['html'],
+            \ 'completor': function('asyncomplete#sources#omni#completor'),
+            \ 'config': {
+            \   'show_source_kind': 1
+            \ }
+            \ }))
 
 " Configure file path completion
 call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-			\ 'name': 'file',
-			\ 'allowlist': ['*'],
-			\ 'priority': 10,
-			\ 'completor': function('asyncomplete#sources#file#completor')
-			\ }))
+            \ 'name': 'file',
+            \ 'allowlist': ['*'],
+            \ 'priority': 10,
+            \ 'completor': function('asyncomplete#sources#file#completor')
+            \ }))
 
 " Enable asyncomplete for command-line mode
 autocmd CmdlineEnter * call asyncomplete#enable_for_buffer()
@@ -306,65 +347,19 @@ inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<cr>" : "\<cr>"
 
-" Enable LSP for specific languages (adjust as needed)
-if executable('pyright-langserver')
-	" pip install python-language-server
-	au User lsp_setup call lsp#register_server({
-				\ 'name': 'pyright-languagesever',
-				\ 'cmd': {server_info->['pyright-languagesever']},
-				\ 'allowlist': ['python', 'py'],
-				\ })
-endif
-
-if executable('clangd')
-	au User lsp_setup call lsp#register_server({
-				\ 'name': 'clangd',
-				\ 'cmd': {server_info->['clangd', '-background-index']},
-				\ 'allowlist': ['c',  'objc'],
-				\ 'blocklist': ['cpp', 'objcpp'],
-				\ })
-endif
-
-" HTML LSP
-if executable('html-languageserver')
-	au User lsp_setup call lsp#register_server({
-				\ 'name': 'html-languageserver',
-				\ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
-				\ 'allowlist': ['html'],
-				\ })
-endif
-
-" CSS LSP
-if executable('css-languageserver')
-	au User lsp_setup call lsp#register_server({
-				\ 'name': 'css-languageserver',
-				\ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
-				\ 'allowlist': ['css', 'less', 'sass', 'scss'],
-				\ })
-endif
-
-" Lua LSP
-if executable('lua-language-server')
-	au User lsp_setup call lsp#register_server({
-				\ 'name': 'lua-language-server',
-				\ 'cmd': {server_info->['lua-language-server']},
-				\ 'allowlist': ['lua'],
-				\ })
-endif
-
 " --------------------------------
 " 4. Plugin Keymaps
 " --------------------------------
 " Custom keymaps
 let g:startify_custom_header = [
-			\ '                                 ',
-			\ '            __                   ',
-			\ '    __  __ /\_\    ___ ___       ',
-			\ '   /\ \/\ \\/\ \ /'' __` __`\    ',
-			\ '   \ \ \_/ |\ \ \/\ \/\ \/\ \    ',
-			\ '    \ \___/  \ \_\ \_\ \_\ \_\   ',
-			\ '     \/__/    \/_/\/_/\/_/\/_/   ',
-			\ ]
+            \ '                                 ',
+            \ '            __                   ',
+            \ '    __  __ /\_\    ___ ___       ',
+            \ '   /\ \/\ \\/\ \ /'' __` __`\    ',
+            \ '   \ \ \_/ |\ \ \/\ \/\ \/\ \    ',
+            \ '    \ \___/  \ \_\ \_\ \_\ \_\   ',
+            \ '     \/__/    \/_/\/_/\/_/\/_/   ',
+            \ ]
 
 " For closing all the files in the buffers except the current one
 nnoremap <Leader>xx :w <bar> %bd <bar> e# <bar> bd# <CR>
@@ -396,40 +391,35 @@ nnoremap <leader>gl :vert Git log --oneline<CR>
 
 " Show last commit detials
 function! ShowLastCommit()
-	let file = expand('%:p')
-	let git_command = 'git log -1 --oneline -- ' . shellescape(file)
-	let commit_hash = system(git_command)
-
-	" if v:shell_error != 0
-	" 	echoerr "Git command failed. Error: " . v:shell_error
-	" 	echoerr "Command: " . git_command
-	" 	echoerr "Output: " . commit_hash
-	" 	return
-	" endif
-
-	if empty(commit_hash)
-		echoerr "No commit information available for file: " . file
-		return
-	endif
-
-	" Remove newline character from commit_hash
-	let commit_hash = substitute(commit_hash, '\n', '', 'g')
-	" Extract just the hash part (first 7 characters)
-	let short_hash = strpart(commit_hash, 0, 7)
-
-	" Open a new vertical split and run :Git show
-	try
-		" execute 'vertical new'
-		execute ':vert Git show ' . short_hash
-
-		" Set the buffer as non-modifiable
-		setlocal buftype=nofile
-		setlocal bufhidden=hide
-		setlocal noswapfile
-		setlocal nomodifiable
-	catch
-		echoerr "Failed to show commit. Error: " . v:exception
-	endtry
+    let file = expand('%:p')
+    let git_command = 'git log -1 --oneline -- ' . shellescape(file)
+    let commit_hash = system(git_command)
+    " if v:shell_error != 0
+    " 	echoerr "Git command failed. Error: " . v:shell_error
+    " 	echoerr "Command: " . git_command
+    " 	echoerr "Output: " . commit_hash
+    " 	return
+    " endif
+    if empty(commit_hash)
+        echoerr "No commit information available for file: " . file
+        return
+    endif
+    " Remove newline character from commit_hash
+    let commit_hash = substitute(commit_hash, '\n', '', 'g')
+    " Extract just the hash part (first 7 characters)
+    let short_hash = strpart(commit_hash, 0, 7)
+    " Open a new vertical split and run :Git show
+    try
+        " execute 'vertical new'
+        execute ':vert Git show ' . short_hash
+        " Set the buffer as non-modifiable
+        setlocal buftype=nofile
+        setlocal bufhidden=hide
+        setlocal noswapfile
+        setlocal nomodifiable
+    catch
+        echoerr "Failed to show commit. Error: " . v:exception
+    endtry
 endfunction
 
 nnoremap <leader>lc :call ShowLastCommit()<CR>
@@ -439,12 +429,11 @@ nnoremap <leader>lc :call ShowLastCommit()<CR>
 " --------------------------------
 " Automatically source .vimrc on save
 augroup vimrc
-	autocmd!
-	autocmd BufWritePost $MYVIMRC source $MYVIMRC
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
-" Remove trailing whitespace on save
-" autocmd BufWritePre * %s/\s\+$//e
+autocmd BufWritePre * %s/\s\+$//e   " Remove trailing spaces
 
 " Set indentation for specific file types
 autocmd FileType python setlocal shiftwidth=4 softtabstop=4
