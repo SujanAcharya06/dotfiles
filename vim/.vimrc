@@ -23,6 +23,7 @@ syntax enable
 filetype plugin indent on
 set number
 set relativenumber
+set numberwidth=2
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -52,8 +53,7 @@ set ttimeoutlen=1
 " List chars
 set list
 set listchars=trail:·,extends:>,precedes:<,space:·
-
-
+" space:·
 
 " --------------------------------
 " 2. Plugins
@@ -105,12 +105,8 @@ Plug 'jiangmiao/auto-pairs'
 " Surround plugin
 Plug 'tpope/vim-surround'
 
-" vim-bufferline
-Plug 'bling/vim-bufferline'
-
 " Git plugins
 Plug 'airblade/vim-gitgutter'
-Plug 'lewis6991/gitsigns.nvim'
 Plug 'tpope/vim-fugitive'
 
 " Advanced linter analysis
@@ -130,12 +126,14 @@ Plug 'mg979/vim-visual-multi'
 
 " Vim-indent-guides
 Plug 'nathanaelkane/vim-indent-guides'
+
+" Vim-instant-markdown
+Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
 call plug#end()
 
 " --------------------------------
 " 3. Plugin Configurations
 " --------------------------------
-"
 " Theme
 set background=dark
 colorscheme lucid
@@ -151,10 +149,17 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'startify']
 
+" Enable vim-gitgutter
+let g:gitgutter_enabled = 1
+
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
+" Vim-airline
 " ALE settings
 let g:ale_linters = {
             \ 'c'          : ['clang'],
@@ -176,13 +181,23 @@ let g:ale_fixers = {
             \ 'html': ['prettier'],
             \ }
 
-let g:ale_fix_on_save = 1
+let g:ale_disable_lsp = 1
+let g:ale_linters_explicit = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
+let g:ale_fix_on_save = 0
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '∆'
 let g:ale_sign_info = 'ℹ'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_virtualtext_cursor = 1
 let g:ale_hover_to_preview = 1
+
+highlight ALEError ctermbg=DarkGray guibg=DarkGray
+highlight ALEWarning ctermbg=DarkGray guibg=DarkGray
+let g:ale_set_highlights = 1
 
 " FZF settings
 " let $FZF_DEFAULT_COMMAND = "ag --hidden --ignore .git -p ~/.gitignore -g ''"
@@ -238,18 +253,9 @@ endfunction
 
 " Livegrep Telescope feature
 command! -nargs=* Rg call fzf#vim#grep(
-            \ 'rg --column --line-number --no-heading --color=always --smart-case --hidden --glob "!.git/*" '.shellescape(<q-args>), 1,
+            \ 'rg --column --line-number --no-heading --color=always --smart-case --hidden --glob "!{.git/**}" '.shellescape(<q-args>). ' .', 1,
             \ fzf#vim#with_preview(), <bang>0)
 nnoremap <Leader>fg :Rg<CR>
-
-command! -nargs=* RgSearch call fzf#vim#grep(
-            \ 'rg --no-heading --vimgrep --smart-case '.shellescape(<q-args>). ' '.expand('%:p'), 1,
-            \ fzf#vim#with_preview(), <bang>0)
-nnoremap <Leader>ff :RgSearch<CR>
-
-
-
-
 
 " Vim-Visual-Multi
 " Disable default mappings
@@ -294,12 +300,24 @@ augroup lsp_install
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
 
-" Disable LSP
+" LSP
 let g:lsp_diagnostics_enabled = 0
-let g:lsp_highlight_references_enabled = 0
-let g:lsp_textprop_enabled = 0
-let g:lsp_signs_enabled = 0
-let g:lsp_virtual_text_enabled = 0
+let g:lsp_diagnostics_signs_enabled = 0
+let g:lsp_diagnostics_virtual_text_enabled = 0
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_diagnostics_float_cursor = 1
+let g:lsp_highlight_references_enabled = 1
+let g:lsp_textprop_enabled = 1
+let g:lsp_signs_enabled = 1
+let g:lsp_virtual_text_enabled = 1
+let g:lsp_semantic_enabled = 1
+
+" LSP highlighting groups
+" highlight lspReference ctermfg=Darkgray guifg=Darkgray ctermbg=green guibg=green
+" highlight LspErrorText ctermfg=DarkGray guifg=DarkGray
+" highlight LspWarningText ctermfg=Yellow guifg=Yellow
+" highlight LspInformationText ctermfg=Blue guifg=Blue
+" highlight LspHintText ctermfg=Green guifg=Green
 
 " Additional ALE settings
 let g:ale_completion_enabled = 1
@@ -347,6 +365,14 @@ inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<cr>" : "\<cr>"
 
+if executable('clangd')
+    au User lsp_setup call lsp#register_server({
+                \ 'name': 'clangd',
+                \ 'cmd': {server_info->['clangd', '-background-index']},
+                \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+                \ })
+endif
+
 " --------------------------------
 " 4. Plugin Keymaps
 " --------------------------------
@@ -385,9 +411,11 @@ nnoremap <leader>gs :vert Git<CR>
 nnoremap <leader>gd :vert Gdiff<CR>
 nnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gc :Git commit<CR>
-nnoremap <leader>P :Git push<CR>
-nnoremap <leader>ggp :Git push -f origin main<CR>
+nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>gP :Git push -f origin main<CR>
 nnoremap <leader>gl :vert Git log --oneline<CR>
+nnoremap <leader>ga :Git commit --amend<CR>
+nnoremap <leader>gn :Git commit --amend --no-edit<CR>
 
 " Show last commit detials
 function! ShowLastCommit()
@@ -395,11 +423,11 @@ function! ShowLastCommit()
     let git_command = 'git log -1 --oneline -- ' . shellescape(file)
     let commit_hash = system(git_command)
     " if v:shell_error != 0
-    " 	echoerr "Git command failed. Error: " . v:shell_error
-    " 	echoerr "Command: " . git_command
-    " 	echoerr "Output: " . commit_hash
-    " 	return
-    " endif
+    "     echoerr "Git command failed. Error: " . v:shell_error
+    "     echoerr "Command: " . git_command
+    "     echoerr "Output: " . commit_hash
+    "     return
+    endif
     if empty(commit_hash)
         echoerr "No commit information available for file: " . file
         return
