@@ -44,10 +44,10 @@ if ! command_exists zsh; then
     echo -e "${GREEN}Installing Zsh...${NC}"
     sudo apt install -y zsh
     if [ "$(basename "$SHELL")" != "zsh" ]; then
-	    echo -e "${RED}Changing default shell to zsh...${NC}"
-	    chsh -s $(which zsh)
-	    echo -e "Default shell changed to zsh. Please log out and log back in to apply changes."
-	    exec zsh
+        echo -e "${RED}Changing default shell to zsh...${NC}"
+        chsh -s $(which zsh)
+        echo -e "Default shell changed to zsh. Please log out and log back in to apply changes."
+        exec zsh
     fi
 else
     echo -e "${RED}Zsh is already installed$.${NC}"
