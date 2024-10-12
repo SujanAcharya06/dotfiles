@@ -136,7 +136,7 @@ call plug#end()
 " --------------------------------
 " Theme
 set background=dark
-colorscheme lucid
+colorscheme monokai
 
 " Reduce brightness of listchars
 highlight NonText ctermfg=8 guifg=#5c6370   " For invisible characters
@@ -185,7 +185,7 @@ let g:ale_disable_lsp = 1
 let g:ale_linters_explicit = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 0
-let g:ale_lint_on_enter = 0
+let g:ale_lint_on_enter = 1
 let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 0
 let g:ale_sign_error = '✗'

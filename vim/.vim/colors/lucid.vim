@@ -25,6 +25,7 @@
 " :let _rock        = '#27242e'
 " very saturated grays
 :let _rock_dark   = '#0f0c14'
+
 :let _rock        = '#181320'
 " normal grays
 " --------------------------
@@ -43,27 +44,28 @@
 :let _powder      = '#8fc7db'
 :let _purple      = '#7470ce'
 :let _sky         = '#b3e4eb'
+:let _nblue       = '#5e638d' "navy blue
 :let _pink        = '#db0088'
 :let _sap         = '#fde9a2'
 
 " Light/inverted colors (darkrock-cloud, rock-lightgrey switched)
 if &background == "light"
-  :let _rock_dark   = '#f3f4f4'
-  :let _rock        = '#dfe0e0'
-  :let _gray_dark   = '#a9aeb3'
-  :let _gray        = '#82868a'
-  :let _gray_medium = '#bcbfc0'
-  :let _gray_light  = '#2c2d2e'
-  :let _cloud       = '#101010'
-  " --------------------------
-  :let _turquoise   = '#34b56e'
-  :let _fluoric     = '#71984f'
-  :let _cyan        = '#34b9b9'
-  :let _steel       = '#1b009a'
-  :let _powder      = '#3b7e9a'
-  :let _sky         = '#2e8f9f'
-  :let _pink        = '#c6006a'
-  :let _sap         = '#fde9a2'
+    :let _rock_dark   = '#f3f4f4'
+    :let _rock        = '#dfe0e0'
+    :let _gray_dark   = '#a9aeb3'
+    :let _gray        = '#82868a'
+    :let _gray_medium = '#bcbfc0'
+    :let _gray_light  = '#2c2d2e'
+    :let _cloud       = '#101010'
+    " --------------------------
+    :let _turquoise   = '#34b56e'
+    :let _fluoric     = '#71984f'
+    :let _cyan        = '#34b9b9'
+    :let _steel       = '#1b009a'
+    :let _powder      = '#3b7e9a'
+    :let _sky         = '#2e8f9f'
+    :let _pink        = '#c6006a'
+    :let _sap         = '#fde9a2'
 endif
 
 
@@ -71,20 +73,19 @@ set background=dark
 highlight clear
 
 if exists("syntax_on")
-  syntax reset
+    syntax reset
 endif
 
 set t_Co=256
 let colors_name = "lucid"
 let colorgroup = {}
 
-
 " Interface
 " ----------------------------------------------------------------------
 let colorgroup['Normal']       = {"GUIFG": _cloud,     "GUIBG":  _rock_dark}
 " ------------------------
 let colorgroup['Darker']       = {"GUIFG": _gray,      "GUIBG":  _rock_dark}
-let colorgroup['ColorColumn']  = {"GUIFG": _rock_dark, "GUIBG":  _pink}
+let colorgroup['ColorColumn']  = {"GUIFG": _rock_dark, "GUIBG":  _nblue}
 let colorgroup['Conceal']      = {"GUIFG": _sap,        "GUI": "bold"}
 " let colorgroup['Cursor']       = {"GUIFG": _rock_dark, "GUIBG":  _turquoise}
 let colorgroup['CursorLine']   = {                     "GUIBG":  _rock}
@@ -96,7 +97,7 @@ let colorgroup['FoldColumn']   = {                     "GUIBG":  _rock_dark}
 let colorgroup['Folded']       = {"GUIFG": _cloud,     "GUIBG":  _rock}
 let colorgroup['LineNr']       = {"GUIFG": _gray_dark, "GUIBG":  _rock_dark}
 if &background == "light"
-  let colorgroup['LineNr']       = {"GUIFG": _gray_medium, "GUIBG":  _rock_dark}
+    let colorgroup['LineNr']       = {"GUIFG": _gray_medium, "GUIBG":  _rock_dark}
 endif
 let colorgroup['MatchParen']   = {"GUIFG": _rock_dark, "GUIBG":  _pink}
 let colorgroup['ModeMsg']      = {"GUIFG": _rock_dark, "GUIBG":  _turquoise}
@@ -107,12 +108,12 @@ let colorgroup['Search']       = {                     "GUIBG":  _gray_dark, "GU
 let colorgroup['SignColumn']   = {                     "GUIBG":  _rock_dark}
 let colorgroup['StatusLine']   = {"GUIFG": _gray,      "GUIBG":  _rock}
 let colorgroup['StatusLineNC'] = {"GUIFG": _gray_dark, "GUIBG":  _rock}
-let colorgroup['Title']        = {"GUIFG": _pink,      "GUI": "bold"}
+let colorgroup['Title']        = {"GUIFG": _cyan,      "GUI": "bold"} " changed fg from _pink to _cyan"
 let colorgroup['Todo']         = {"GUIFG": _rock_dark, "GUIBG":  _powder}
 let colorgroup['VertSplit']    = {"GUIFG": _rock,      "GUIBG":  _rock}
 let colorgroup['Visual']       = {"GUIFG": _rock_dark, "GUIBG":  _sap}
 if &background == "light"
-  let colorgroup['Visual']       = {"GUIFG": _cloud,     "GUIBG":  _sap}
+    let colorgroup['Visual']       = {"GUIFG": _cloud,     "GUIBG":  _sap}
 endif
 let colorgroup['WarningMsg']   = {"GUIFG": _rock_dark, "GUIBG":  _steel}
 
@@ -124,7 +125,7 @@ let colorgroup['Comment']      = {"GUIFG": _gray,      "GUI": "italic"}
 let colorgroup['Class']        = {"GUIFG": _pink,      "GUI": "italic"}
 let colorgroup['Conditional']  = {"GUIFG": _cyan}
 let colorgroup['Constant']     = {"GUIFG": _turquoise, "GUI": "bold"}
-let colorgroup['Delimiter']    = {"GUIFG": _pink}
+let colorgroup['Delimiter']    = {"GUIFG": _cyan}
 let colorgroup['Function']     = {"GUIFG": _steel}
 let colorgroup['Identifier']   = {"GUIFG": _sky}
 let colorgroup['Module']       = {"GUIFG": _pink,      "GUI": "underline"}
@@ -333,67 +334,67 @@ hi link xmlEndTag             Function
 let s:colors = {}
 " http://choorucode.com/2011/07/29/vim-chart-of-color-names/
 let valid_cterm_colors =
-      \ [
-      \     'Black', 'DarkBlue', 'DarkGreen', 'DarkCyan',
-      \     'DarkRed', 'DarkMagenta', 'Brown', 'DarkYellow',
-      \     'LightGray', 'LightGrey', 'Gray', 'Grey',
-      \     'DarkGray', 'DarkGrey', 'Blue', 'LightBlue',
-      \     'Green', 'LightGreen', 'Cyan', 'LightCyan',
-      \     'Red', 'LightRed', 'Magenta', 'LightMagenta',
-      \     'Yellow', 'LightYellow', 'White',
-      \ ]
+            \ [
+            \     'Black', 'DarkBlue', 'DarkGreen', 'DarkCyan',
+            \     'DarkRed', 'DarkMagenta', 'Brown', 'DarkYellow',
+            \     'LightGray', 'LightGrey', 'Gray', 'Grey',
+            \     'DarkGray', 'DarkGrey', 'Blue', 'LightBlue',
+            \     'Green', 'LightGreen', 'Cyan', 'LightCyan',
+            \     'Red', 'LightRed', 'Magenta', 'LightMagenta',
+            \     'Yellow', 'LightYellow', 'White',
+            \ ]
 for key in keys(colorgroup)
-  let s:colors = colorgroup[key]
-  if has_key(s:colors, 'TERM')
-    let term = s:colors['TERM']
-  else
-    let term = 'NONE'
-  endif
-  if has_key(s:colors, 'GUI')
-    let gui = s:colors['GUI']
-  else
-    let gui='NONE'
-  endif
-  if has_key(s:colors, 'GUIFG')
-    let guifg = s:colors['GUIFG']
-  else
-    let guifg='NONE'
-  endif
-  if has_key(s:colors, 'GUIBG')
-    let guibg = s:colors['GUIBG']
-  else
-    let guibg='NONE'
-  endif
-  if has_key(s:colors, 'CTERM')
-    let cterm = s:colors['CTERM']
-  else
-    let cterm=gui
-  endif
-  if has_key(s:colors, 'CTERMFG')
-    let ctermfg = s:colors['CTERMFG']
-  else
-    if index(valid_cterm_colors, guifg) != -1
-      let ctermfg=guifg
+    let s:colors = colorgroup[key]
+    if has_key(s:colors, 'TERM')
+        let term = s:colors['TERM']
     else
-      let ctermfg='Blue'
+        let term = 'NONE'
     endif
-  endif
-  if has_key(s:colors, 'CTERMBG')
-    let ctermbg = s:colors['CTERMBG']
-  else
-    if index(valid_cterm_colors, guibg) != -1
-      let ctermbg=guibg
+    if has_key(s:colors, 'GUI')
+        let gui = s:colors['GUI']
     else
-      let ctermbg='NONE'
+        let gui='NONE'
     endif
-  endif
-  if has_key(s:colors, 'GUISP')
-    let guisp = s:colors['GUISP']
-  else
-    let guisp='NONE'
-  endif
+    if has_key(s:colors, 'GUIFG')
+        let guifg = s:colors['GUIFG']
+    else
+        let guifg='NONE'
+    endif
+    if has_key(s:colors, 'GUIBG')
+        let guibg = s:colors['GUIBG']
+    else
+        let guibg='NONE'
+    endif
+    if has_key(s:colors, 'CTERM')
+        let cterm = s:colors['CTERM']
+    else
+        let cterm=gui
+    endif
+    if has_key(s:colors, 'CTERMFG')
+        let ctermfg = s:colors['CTERMFG']
+    else
+        if index(valid_cterm_colors, guifg) != -1
+            let ctermfg=guifg
+        else
+            let ctermfg='Blue'
+        endif
+    endif
+    if has_key(s:colors, 'CTERMBG')
+        let ctermbg = s:colors['CTERMBG']
+    else
+        if index(valid_cterm_colors, guibg) != -1
+            let ctermbg=guibg
+        else
+            let ctermbg='NONE'
+        endif
+    endif
+    if has_key(s:colors, 'GUISP')
+        let guisp = s:colors['GUISP']
+    else
+        let guisp='NONE'
+    endif
 
-  if key =~ '^\k*$'
-    execute "hi ".key." term=".term." cterm=".cterm." gui=".gui." ctermfg=".ctermfg." guifg=".guifg." ctermbg=".ctermbg." guibg=".guibg." guisp=".guisp
-  endif
+    if key =~ '^\k*$'
+        execute "hi ".key." term=".term." cterm=".cterm." gui=".gui." ctermfg=".ctermfg." guifg=".guifg." ctermbg=".ctermbg." guibg=".guibg." guisp=".guisp
+    endif
 endfor
