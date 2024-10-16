@@ -8,7 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="avit"
+ZSH_THEME="oxide"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -70,7 +70,7 @@ ZSH_THEME="avit"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting command-time)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting dnf command-time)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -102,29 +102,25 @@ source $ZSH/oh-my-zsh.sh
 #
 #
 
-export PATH="$HOME/.config/emacs/bin:$PATH"
+# export PATH="$HOME/.config/emacs/bin:$PATH"
 
-echo "mail - to send mail via terminal - py"
-echo "mail.log - to log the mail details - py"
-echo "fileCount - to count the number of file recursively in a dir for given extension"
-echo "search - for peviewing using fzf and bat"
-echo "edit - to search using fzf and edit using vim"
+# echo "mail - to send mail via terminal - py"
+# echo "mail.log - to log the mail details - py"
+# echo "fileCount - to count the number of file recursively in a dir for given extension"
+# echo "search - for peviewing using fzf and bat"
+# echo "edit - to search using fzf and edit using vim"
 
-# export PYENV_ROOT="$HOME/.pyenv"
-# export PATH="$PYENV_ROOT/bin:$PATH"
-# eval "$(pyenv init --path)"
-
-if [[ -f /home/sujanacharya/syncthing/dotfiles/.env ]]; then
-    source /home/sujanacharya/syncthing/dotfiles/.env
-    export SENDER_EMAIL
-    export SENDER_PASSWORD
-    export MAIL_SERVER
-    export MAIL_PORT
-    export MAIL_USE_TLE
-    export WIFI
-else
-    echo ".env file Notfound cannot Set custom env variable"
-fi
+# if [[ -f /home/sujanacharya/syncthing/dotfiles/.env ]]; then
+#     source /home/sujanacharya/syncthing/dotfiles/.env
+#     export SENDER_EMAIL
+#     export SENDER_PASSWORD
+#     export MAIL_SERVER
+#     export MAIL_PORT
+#     export MAIL_USE_TLE
+#     export WIFI
+# else
+    # echo ".env file Notfound cannot Set custom env variable"
+# fi
 
 # In .bashrc or .zshrc
 if [ -f ~/.lazy-load.zsh ]; then
@@ -141,16 +137,3 @@ export PATH=$HOME/.local/bin:$PATH
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFULT_OPTS="--extended"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-# neovim v0.10.1
-export PATH="$PATH:/opt/nvim-linux64/bin/"
-
-#deno
-export DENO_INSTALL="/home/sujanacharya/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
-# Remove gnome-terminal titile bar
-gsettings set org.gnome.Terminal.Legacy.Settings headerbar "@mb false"
-
-# Golang
-export PATH=$PATH:/usr/local/go/bin
