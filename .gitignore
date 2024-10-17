@@ -3,3 +3,4 @@ lazy-lock.json
 .env
 tmp/
 plugged/
+pack/
