@@ -137,3 +137,5 @@ export PATH=$HOME/.local/bin:$PATH
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFULT_OPTS="--extended"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
