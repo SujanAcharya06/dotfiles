@@ -28,6 +28,10 @@ return {
                     title = "Language Server Protocol",
                     timeout = 1000,
                 })
+                -- Enable signature help
+                if client.server_capabilities.signatureHelpProvider then
+                    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { buffer = bufnr })
+                end
                 -- Mappings.
                 local opts = { buffer = bufnr, noremap = true, silent = true }
                 -- ... (keep existing keymaps)
@@ -71,7 +75,8 @@ return {
                         analysis = {
                             autoSearchPaths = true,
                             useLibraryCodeForTypes = true,
-                            diagnosticMode = "workspace"
+                            diagnosticMode = "workspace",
+                            includeAuthorityInWorkspaceSymbolsResponse = true,
                         }
                     }
                 }
@@ -89,6 +94,9 @@ return {
                 severity_sort = false,
             })
             vim.g.lsp_semantic_enabled = 1
+
+            -- vim.o.updatetime = 250 -- Set a lower updatetime for better responsiveness
+            -- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.lsp.buf.hover()]]
         end
     }
 }
