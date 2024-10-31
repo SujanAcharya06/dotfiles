@@ -110,17 +110,17 @@ source $ZSH/oh-my-zsh.sh
 # echo "search - for peviewing using fzf and bat"
 # echo "edit - to search using fzf and edit using vim"
 
-# if [[ -f /home/sujanacharya/syncthing/dotfiles/.env ]]; then
-#     source /home/sujanacharya/syncthing/dotfiles/.env
-#     export SENDER_EMAIL
-#     export SENDER_PASSWORD
-#     export MAIL_SERVER
-#     export MAIL_PORT
-#     export MAIL_USE_TLE
-#     export WIFI
-# else
-    # echo ".env file Notfound cannot Set custom env variable"
-# fi
+if [[ -f /home/sujanacharya/dotfiles/.env ]]; then
+    source /home/sujanacharya/dotfiles/.env
+    export SENDER_EMAIL
+    export SENDER_PASSWORD
+    # export MAIL_SERVER
+    # export MAIL_PORT
+    # export MAIL_USE_TLE
+    export WIFI
+else
+    echo ".env file Notfound cannot Set custom env variable"
+fi
 
 # In .bashrc or .zshrc
 if [ -f ~/.lazy-load.zsh ]; then
@@ -137,5 +137,9 @@ export PATH=$HOME/.local/bin:$PATH
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFULT_OPTS="--extended"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 
 export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+
+bindkey '^[^M' autosuggest-accept
