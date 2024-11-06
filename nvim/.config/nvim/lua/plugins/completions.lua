@@ -30,12 +30,17 @@ return {
                     end,
                 },
                 window = {
-                    completion = cmp.config.window.bordered({
-                        winhighlight = "Normal:Normal,FloatBorder:BorderBG,CursorLine:PmenuSel,Search:None",
-                    }),
-                    documentation = cmp.config.window.bordered({
-                        winhighlight = "Normal:Normal,FloatBorder:BorderBG,CursorLine:PmenuSel,Search:None",
-                    }),
+                    completion = {
+                        border = 'rounded',
+                        winhighlight = 'Normal:Normal,FloatBorder:BorderBG,CursorLine:PmenuSel,Search:None',
+                        col_offset = 0,
+                        side_padding = 1,
+                        scrollbar = false,
+                    },
+                    documentation = {
+                        border = 'rounded',
+                        winhighlight = 'Normal:Normal,FloatBorder:BorderBG,CursorLine:PmenuSel,Search:None',
+                    },
                 },
                 formatting = {
                     format = lspkind.cmp_format({
@@ -75,19 +80,18 @@ return {
                     end, { "i", "s" }),
                 }),
                 sources = cmp.config.sources({
-                    { name = "nvim_lsp" },
-                    { name = "luasnip" },
-                    { name = "path" },
-                    { name = 'omni' },
-                    { name = "buffer", keyword_length = 2 },
-                    { name = 'vim-dadbod-completion' },
+                    { name = "nvim_lsp", priority = 1000 },
+                    { name = "luasnip", priority = 750 },
+                    { name = "path", priority = 500 },
+                    { name = 'omni', priority = 400 },
+                    { name = "buffer", priority = 250, keyword_length = 2 },
+                    { name = 'vim-dadbod-completion', priority = 250 },
                 }),
                 experimental = {
                     ghost_text = true,
                 },
             })
 
-            -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
             cmp.setup.cmdline({ '/', '?' }, {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
@@ -95,7 +99,6 @@ return {
                 }
             })
 
-            -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
             cmp.setup.cmdline(':', {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = cmp.config.sources({
@@ -104,7 +107,6 @@ return {
                         { name = 'cmdline' }
                     })
             })
-
         end,
     },
 }

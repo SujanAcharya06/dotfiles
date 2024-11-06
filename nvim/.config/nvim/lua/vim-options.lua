@@ -10,7 +10,7 @@ vim.g.maplocalleader = "\\"
 vim.opt.termguicolors = true
 -- Spell checking configuration
 vim.opt.spelllang = "en_us"
-vim.opt.spell = false  -- Spell checking is off by default
+vim.opt.spell = false -- Spell checking is off by default
 -- Keymaps for spell checking
 vim.api.nvim_set_keymap('n', '<leader>s', ':set spell!<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<C-]>', ']s', { noremap = true })
@@ -18,7 +18,7 @@ vim.api.nvim_set_keymap('n', '<leader>s', ':set spell!<CR>', { noremap = true, s
 -- Key map to automatically correct the spelling
 vim.api.nvim_set_keymap('n', '<leader>c', '1z=', { noremap = true })
 -- Lazy menu toggle
-vim.api.nvim_set_keymap('n', '<leader>]', ':Lazy<CR>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<leader>]', ':Lazy<CR>', { noremap = true })
 -- Resize splits using Alt key
 -- vim.api.nvim_set_keymap('n', '<A-h>', ':resize +2<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<A-l>', ':resize -2<CR>', { noremap = true, silent = true })
@@ -27,9 +27,9 @@ vim.api.nvim_set_keymap('n', '<A-.>', ':vertical resize +2<CR>', { noremap = tru
 vim.api.nvim_set_hl(0, "BorderBG", { fg = "#3e4451", bg = "#282c34" })
 vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#98c379", fg = "#282c34" })
 -- vim.opt.guicursor = "i:block-blinkwait1000-blinkon500-blinkoff500";
-vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,"..
-"a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,"..
-"sm:block-blinkwait175-blinkoff150-blinkon175";
+vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50," ..
+    "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor," ..
+    "sm:block-blinkwait175-blinkoff150-blinkon175";
 -- Enable listchars
 vim.opt.list = true
 -- Don't convert tabs to spaces
@@ -68,6 +68,13 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         vim.cmd([[highlight! MatchParen  gui=bold guibg=darkblue guifg=lightblue]]) --[[ cterm=bold ctermbg=green ctermfg=blue ]]
     end
 })
+
+-- vim.opt.grepprg = "grep -HRIn $* ."
+--
+-- vim.keymap.set("n", "<Leader>gg", ":copen | :silent :grep ")
+-- vim.keymap.set("n", "]q", ":cnext <CR>")
+-- vim.keymap.set("n", "[q", ":cprev <CR>")
+
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     callback = function()
@@ -75,3 +82,10 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         vim.cmd([[%s/\s\+$//e]])
     end,
 })
+
+vim.cmd([[
+augroup django_ft
+autocmd!
+autocmd BufNewFile,BufRead *.html set filetype=html
+augroup END
+]])

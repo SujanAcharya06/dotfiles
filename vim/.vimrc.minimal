@@ -5,23 +5,23 @@
 let mapleader = "\<Space>"
 
 if exists('$TMUX')
-	let &t_SI = "\<Esc>Ptmux;\<Esc>\e[5 q\<Esc>\\"
-	let &t_EI = "\<Esc>Ptmux;\<Esc>\e[2 q\<Esc>\\"
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\e[5 q\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\e[2 q\<Esc>\\"
 else
-	let &t_SI = "\e[5 q"
-	let &t_EI = "\e[2 q"
+    let &t_SI = "\e[5 q"
+    let &t_EI = "\e[2 q"
 endif
 
 " Set termguicolors if terminal supports
 if exists('+termguicolors')
-	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-	set termguicolors
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
 endif
 
 " Changing cursor style
 if has('gui_running')
-	set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+    set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 endif
 
 set nocompatible
@@ -149,8 +149,8 @@ noremap <C-l> :bnext<CR>
 " --------------------------------
 " Automatically source .vimrc on save
 augroup vimrc
-	autocmd!
-	autocmd BufWritePost $MYVIMRC source $MYVIMRC
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
 " Remove trailing whitespace on save
@@ -201,31 +201,31 @@ set completeopt=menuone,noinsert,noselect,preview
 
 " Register asyncomplete sources
 call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-			\ 'name': 'buffer',
-			\ 'allowlist': ['*'],
-			\ 'completor': function('asyncomplete#sources#buffer#completor'),
-			\ 'config': {
-			\    'max_buffer_size': 5000000,
-			\  },
-			\ }))
+            \ 'name': 'buffer',
+            \ 'allowlist': ['*'],
+            \ 'completor': function('asyncomplete#sources#buffer#completor'),
+            \ 'config': {
+            \    'max_buffer_size': 5000000,
+            \  },
+            \ }))
 
 call asyncomplete#register_source(asyncomplete#sources#omni#get_source_options({
-			\ 'name': 'omni',
-			\ 'allowlist': ['*'],
-			\ 'blocklist': ['html'],
-			\ 'completor': function('asyncomplete#sources#omni#completor'),
-			\ 'config': {
-			\   'show_source_kind': 1
-			\ }
-			\ }))
+            \ 'name': 'omni',
+            \ 'allowlist': ['*'],
+            \ 'blocklist': ['html'],
+            \ 'completor': function('asyncomplete#sources#omni#completor'),
+            \ 'config': {
+            \   'show_source_kind': 1
+            \ }
+            \ }))
 
 " Configure file path completion
 call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-			\ 'name': 'file',
-			\ 'allowlist': ['*'],
-			\ 'priority': 10,
-			\ 'completor': function('asyncomplete#sources#file#completor')
-			\ }))
+            \ 'name': 'file',
+            \ 'allowlist': ['*'],
+            \ 'priority': 10,
+            \ 'completor': function('asyncomplete#sources#file#completor')
+            \ }))
 
 " Enable asyncomplete for command-line mode
 autocmd CmdlineEnter * call asyncomplete#enable_for_buffer()

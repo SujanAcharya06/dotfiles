@@ -23,7 +23,7 @@ syntax enable
 filetype plugin indent on
 set number
 set relativenumber
-set numberwidth=2
+set numberwidth=1
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -115,6 +115,9 @@ Plug 'dense-analysis/ale'
 " Commentary
 Plug 'tpope/vim-commentary'
 
+" Vim-Grepper
+Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
+
 " Path completions
 Plug 'prabirshrestha/asyncomplete-file.vim'
 
@@ -129,6 +132,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 
 " Vim-instant-markdown
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
+
 call plug#end()
 
 " --------------------------------
@@ -251,11 +255,60 @@ function! FZFOpen(command_str)
     endtry
 endfunction
 
-" Livegrep Telescope feature
-command! -nargs=* Rg call fzf#vim#grep(
-            \ 'rg --column --line-number --no-heading --color=always --smart-case --hidden --glob "!{.git/**}" '.shellescape(<q-args>). ' .', 1,
-            \ fzf#vim#with_preview(), <bang>0)
-nnoremap <Leader>fg :Rg<CR>
+" " Livegrep Telescope feature
+" command! -nargs=* Rg call fzf#vim#grep(
+"             \ 'rg --column --line-number --no-heading --color=always --smart-case --hidden --glob "!{.git/**}" '.shellescape(<q-args>). ' .', 1,
+"             \ fzf#vim#with_preview(), <bang>0)
+" nnoremap <Leader>fg :Rg<CR>
+
+" Vim-grepper configuration
+let g:grepper = {}
+let g:grepper.tools = ['grep', 'git', 'rg']
+let g:grepper.highlight = 1
+let g:grepper.quickfix = 1
+let g:grepper.jump = 0
+
+" Modified preview function to properly handle cursor movement
+function! PreviewQuickfixLine()
+    " Don't do anything if we're not in the quickfix window
+    if &filetype != 'qf'
+        return
+    endif
+
+    let l:list = getqflist()
+    if len(l:list) == 0
+        return
+    endif
+
+    " Get current quickfix item
+    let l:curr_item = l:list[line('.') - 1]
+
+    " Find the window that has the buffer
+    let l:winid = win_getid()
+    wincmd p
+
+    " Jump to the location
+    call cursor(l:curr_item.lnum, l:curr_item.col)
+    normal! zz
+
+    " Go back to quickfix window
+    call win_gotoid(l:winid)
+endfunction
+
+" Set up the autocommand for cursor movement
+autocmd FileType qf autocmd CursorMoved <buffer> call PreviewQuickfixLine()
+
+" Open quickfix with focus after grep
+autocmd User Grepper botright copen
+
+" Your existing mappings
+nnoremap <leader>gg :Grepper<cr>
+nnoremap <leader>fg :Grepper -buffer<cr>
+nmap gs <plug>(GrepperOperator)
+xmap gs <plug>(GrepperOperator)
+nnoremap <leader>* :Grepper -cword -noprompt<cr>
+
+" ----------------------------------------------------------
 
 " Vim-Visual-Multi
 " Disable default mappings
@@ -427,27 +480,27 @@ function! ShowLastCommit()
     "     echoerr "Command: " . git_command
     "     echoerr "Output: " . commit_hash
     "     return
-    endif
-    if empty(commit_hash)
-        echoerr "No commit information available for file: " . file
-        return
-    endif
-    " Remove newline character from commit_hash
-    let commit_hash = substitute(commit_hash, '\n', '', 'g')
-    " Extract just the hash part (first 7 characters)
-    let short_hash = strpart(commit_hash, 0, 7)
-    " Open a new vertical split and run :Git show
-    try
-        " execute 'vertical new'
-        execute ':vert Git show ' . short_hash
-        " Set the buffer as non-modifiable
-        setlocal buftype=nofile
-        setlocal bufhidden=hide
-        setlocal noswapfile
-        setlocal nomodifiable
-    catch
-        echoerr "Failed to show commit. Error: " . v:exception
-    endtry
+endif
+if empty(commit_hash)
+    echoerr "No commit information available for file: " . file
+    return
+endif
+" Remove newline character from commit_hash
+let commit_hash = substitute(commit_hash, '\n', '', 'g')
+" Extract just the hash part (first 7 characters)
+let short_hash = strpart(commit_hash, 0, 7)
+" Open a new vertical split and run :Git show
+try
+    " execute 'vertical new'
+    execute ':vert Git show ' . short_hash
+    " Set the buffer as non-modifiable
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+    setlocal noswapfile
+    setlocal nomodifiable
+catch
+    echoerr "Failed to show commit. Error: " . v:exception
+endtry
 endfunction
 
 nnoremap <leader>lc :call ShowLastCommit()<CR>
