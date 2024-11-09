@@ -6,7 +6,7 @@ return {
         notify.setup({
             top_down = true,
             render = "wrapped-compact",
-            max_width = 30,
+            max_width = 35,
             max_height = 25,
 
         })
@@ -14,7 +14,8 @@ return {
         vim.notify = notify
         vim.api.nvim_create_augroup("NotifyFileEvents", { clear = true })
         local function get_filename()
-            return vim.fn.expand("%:t")
+            -- return vim.fn.expand("%:t")
+            return vim.fn.expand("%:p")
         end
         -- Table for keeping the files in the current session
         local opened_files = {}
@@ -66,11 +67,28 @@ return {
                 end
             end
         })
+        -- vim.api.nvim_create_autocmd("BufWritePost", {
+        --     group = "NotifyFileEvents",
+        --     callback = function()
+        --         local filename = get_filename()
+        --         notify("Saved file: " .. filename, "info", {
+        --             title = "File Saved",
+        --             timeout = 600,
+        --         })
+        --     end,
+        -- })
         vim.api.nvim_create_autocmd("BufWritePost", {
             group = "NotifyFileEvents",
             callback = function()
-                local filename = get_filename()
-                notify("Saved file: " .. filename, "info", {
+                local fullpath = get_filename()
+                local bufnr = vim.api.nvim_get_current_buf()
+                local bytes = vim.fn.getfsize(fullpath)
+                local lines = vim.api.nvim_buf_line_count(bufnr)
+
+                -- Format message similar to Vim's output
+                local msg = string.format('"%s" %dL, %dB written', fullpath, lines, bytes)
+
+                notify(msg, "info", {
                     title = "File Saved",
                     timeout = 600,
                 })
