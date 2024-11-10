@@ -1,3 +1,4 @@
+zmodload zsh/zprof
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -70,7 +71,7 @@ ZSH_THEME="oxide"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting dnf command-time pyenv-lazy)
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions dnf command-time pyenv-lazy)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -143,3 +144,8 @@ source <(fzf --zsh)
 export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
 
 bindkey '^[^M' autosuggest-accept
+
+timezsh() {
+    shell=${1-$SHELL}
+    for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}
