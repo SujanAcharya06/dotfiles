@@ -1,6 +1,5 @@
--- In your ~/.config/nvim/lua/plugins/grepper.lua
 return {
-    "vim-scripts/vim-grepper",
+    "mhinz/vim-grepper",
     lazy = false,
     config = function()
         -- Basic grepper setup
@@ -49,7 +48,8 @@ return {
             end
 
             -- Get the line safely
-            local ok2, lines = pcall(vim.api.nvim_buf_get_lines, curr_item.bufnr, curr_item.lnum - 1, curr_item.lnum, false)
+            local ok2, lines = pcall(vim.api.nvim_buf_get_lines, curr_item.bufnr, curr_item.lnum - 1, curr_item.lnum,
+                false)
             if not ok2 or #lines == 0 then
                 vim.fn.win_gotoid(qf_winid)
                 return
@@ -64,7 +64,7 @@ return {
             end
 
             -- Try to set cursor position
-            local ok3 = pcall(vim.api.nvim_win_set_cursor, 0, {curr_item.lnum, col})
+            local ok3 = pcall(vim.api.nvim_win_set_cursor, 0, { curr_item.lnum, col })
             if ok3 then
                 vim.cmd('normal! zz')
             end
