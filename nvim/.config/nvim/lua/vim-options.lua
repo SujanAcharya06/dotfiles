@@ -69,12 +69,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     end
 })
 
--- vim.opt.grepprg = "grep -HRIn $* ."
---
--- vim.keymap.set("n", "<Leader>gg", ":copen | :silent :grep ")
--- vim.keymap.set("n", "]q", ":cnext <CR>")
--- vim.keymap.set("n", "[q", ":cprev <CR>")
-
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     callback = function()
