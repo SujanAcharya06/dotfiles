@@ -143,6 +143,10 @@ source <(fzf --zsh)
 
 export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
 
+# NNN vars
+export NNN_PLUG='c:fzcd;f:finder;o:fzopen;p:preview-tui;d:diffs;t:nmount;v:imgview'
+export NNN_FIFO="/tmp/nnn.fifo"
+
 bindkey '^[^M' autosuggest-accept
 
 timezsh() {
