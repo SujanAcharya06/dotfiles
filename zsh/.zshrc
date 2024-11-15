@@ -4,7 +4,6 @@ zmodload zsh/zprof
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -71,7 +70,9 @@ ZSH_THEME="oxide"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions dnf command-time pyenv-lazy)
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions command-time)
+# dnf
+# pyenv-lazy
 
 source $ZSH/oh-my-zsh.sh
 
@@ -115,18 +116,18 @@ if [[ -f /home/sujanacharya/dotfiles/.env ]]; then
     source /home/sujanacharya/dotfiles/.env
     export SENDER_EMAIL
     export SENDER_PASSWORD
-    # export MAIL_SERVER
-    # export MAIL_PORT
-    # export MAIL_USE_TLE
+    export MAIL_SERVER
+    export MAIL_PORT
+    export MAIL_USE_TLE
     export WIFI
 else
     echo ".env file Notfound cannot Set custom env variable"
 fi
 
-# In .bashrc or .zshrc
-if [ -f ~/.lazy-load.zsh ]; then
-    source ~/.lazy-load.zsh
-fi
+# # In .bashrc or .zshrc
+# if [ -f ~/.lazy-load.zsh ]; then
+#     source ~/.lazy-load.zsh
+# fi
 
 # In .bashrc or .zshrc
 if [ -f ~/.aliases.zsh ]; then
@@ -141,7 +142,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
-export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
+# export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
 
 # NNN vars
 export NNN_PLUG='c:fzcd;f:finder;o:fzopen;p:preview-tui;d:diffs;t:nmount;v:imgview'
