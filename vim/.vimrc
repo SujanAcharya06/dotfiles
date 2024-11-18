@@ -454,6 +454,10 @@ nnoremap <Leader>jj zzHzz
 noremap <C-h> :bprev<CR>
 noremap <C-l> :bnext<CR>
 
+" Change window focous
+nnoremap <A-h> <C-w>h
+nnoremap <A-l> <C-w>l
+
 
 " NERDTree
 nnoremap <C-n> :NERDTreeToggle<CR>
