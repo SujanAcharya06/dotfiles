@@ -16,15 +16,16 @@ exec_always autotiling
 set $schema "org.gnome.desktop.interface"
 
 exec_always {
+    gsettings set org.gnome.desktop.interface gtk-application-prefer-dark-theme true
     gsettings set $schema gtk-theme "Silvery-GTK"
     gsettings set $schema icon-theme Papirus-Dark
     gsettings set $schema font-name "UbuntuNerdFont 11"
     # gsettings set $schema font-name "FiraCode 10"
     gsettings set $schema cursor-theme "capitaine-cursors"
-    gsettings set $schema gtk-application-prefer-dark-theme true
 }
 
-
+# ghostty server
+exec ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false
 
 ### Variables
 #
@@ -49,7 +50,8 @@ set $right l
 # Your preferred terminal emulator
 # Recommends: foot
 # set $term foot
-set $term foot -e sh -c "cd \$(cat $HOME/.current_dir) && exec zsh"
+set $term ghostty --gtk-single-instance=true
+# set $term foot -e sh -c "cd \$(cat $HOME/.current_dir) && exec zsh"
 
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -71,7 +73,8 @@ set $browser firefox
 # Requires: desktop-backgrounds-compat, swaybg
 #output * bg /usr/share/backgrounds/default.png fill
 
-output * bg ~/.config/sway/backgrounds/fedora-blue.jpg fill
+# output * bg ~/.config/sway/backgrounds/fedora-blue.jpg fill
+output * bg ~/.config/sway/backgrounds/gradient.jpg fill
 
 # Set refresh rate to 60Hz
 # output eDP-1 mode 1920x1080@60.015Hz position 0,0
