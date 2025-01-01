@@ -144,6 +144,8 @@ source <(fzf --zsh)
 
 export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
 
+export EDITOR=vim
+
 # # NNN vars
 # export NNN_PLUG='c:fzcd;f:finder;o:fzopen;p:preview-tui;d:diffs;t:nmount;v:imgview'
 # export NNN_FIFO="/tmp/nnn.fifo"
@@ -153,4 +155,12 @@ bindkey '^[^M' autosuggest-accept
 timezsh() {
     shell=${1-$SHELL}
     for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}
+
+function lf() {
+    command lf "$@"
+    if [ -f "/tmp/lfdir" ]; then
+        cd "$(cat /tmp/lfdir)"
+        rm -f "/tmp/lfdir"
+    fi
 }
