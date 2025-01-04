@@ -157,10 +157,15 @@ timezsh() {
     for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
 }
 
+# Source last directory on new terminal
+if [ -f "$HOME/.last_dir" ]; then
+    cd "$(cat $HOME/.last_dir)"
+fi
+
+# Keep the lf function from before
 function lf() {
     command lf "$@"
-    if [ -f "/tmp/lfdir" ]; then
-        cd "$(cat /tmp/lfdir)"
-        rm -f "/tmp/lfdir"
+    if [ -f "$HOME/.last_dir" ]; then
+        cd "$(cat $HOME/.last_dir)"
     fi
 }
