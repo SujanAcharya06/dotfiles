@@ -169,3 +169,9 @@ function lf() {
         cd "$(cat $HOME/.last_dir)"
     fi
 }
+
+# keep track of last cd'd dir
+function cd() {
+    builtin cd "$@"
+    pwd > "$HOME/.last_dir"
+}
