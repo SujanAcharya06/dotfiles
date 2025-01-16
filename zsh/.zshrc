@@ -104,6 +104,7 @@ source $ZSH/oh-my-zsh.sh
 #
 #
 
+# EMACS path
 # export PATH="$HOME/.config/emacs/bin:$PATH"
 
 # echo "mail - to send mail via terminal - py"
@@ -112,6 +113,7 @@ source $ZSH/oh-my-zsh.sh
 # echo "search - for peviewing using fzf and bat"
 # echo "edit - to search using fzf and edit using vim"
 
+# Setting env variables
 if [[ -f /home/sujanacharya/dotfiles/.env ]]; then
     source /home/sujanacharya/dotfiles/.env
     export SENDER_EMAIL
@@ -129,7 +131,7 @@ fi
 #     source ~/.lazy-load.zsh
 # fi
 
-# In .bashrc or .zshrc
+# Custom aliases
 if [ -f ~/.aliases.zsh ]; then
     source ~/.aliases.zsh
 fi
@@ -139,9 +141,11 @@ export PATH=$HOME/.local/bin:$PATH
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFULT_OPTS="--extended"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
+# SSH keyring
 export SSH_AUTH_SOCK=/run/user/1000/keyring/ssh
 
 export EDITOR=vim
@@ -150,8 +154,10 @@ export EDITOR=vim
 # export NNN_PLUG='c:fzcd;f:finder;o:fzopen;p:preview-tui;d:diffs;t:nmount;v:imgview'
 # export NNN_FIFO="/tmp/nnn.fifo"
 
+# keybind for autocompleting autosuggest
 bindkey '^[^M' autosuggest-accept
 
+# checking zsh load time
 timezsh() {
     shell=${1-$SHELL}
     for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
