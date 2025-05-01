@@ -45,6 +45,10 @@ alias emacs='emacsclient -c -a 'emacs''
 
 #Wifi quick connect
 alias w='nmcli c up $WIFI'
+alias pg5='nmcli c up $PG_WIFI_5'
+alias pg6='nmcli c up $PG_WIFI_6'
+
+
 
 alias dr='/home/sujanacharya/Documents/remote-sync/dry-run.sh'
 alias snd='/home/sujanacharya/Documents/remote-sync/send.sh'
