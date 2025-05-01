@@ -9,7 +9,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "clangd", "jdtls", "html", "pyright", "cssls", "bashls" }
+                ensure_installed = { "lua_ls", "clangd", "html", "pyright", "cssls", "bashls"}
             })
         end
     },
@@ -92,9 +92,6 @@ return {
                     },
                 }
             })
-            -- JAVA LSP setup
-            setup_server("jdtls")
-
             -- Bash LSP setup
             setup_server("bashls")
 
