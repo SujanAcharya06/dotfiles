@@ -44,9 +44,9 @@ alias fcd='cd "$(dirname "$(fzf)")"'
 alias emacs='emacsclient -c -a 'emacs''
 
 #Wifi quick connect
-alias w='nmcli c up $WIFI'
-alias pg5='nmcli c up $PG_WIFI_5'
-alias pg6='nmcli c up $PG_WIFI_6'
+alias w='nmcli c up $HOME_WIFI_5G'
+alias pga='nmcli c up $PG_WIFI_4A'
+alias pgb='nmcli c up $PG_WIFI_4B'
 
 
 
