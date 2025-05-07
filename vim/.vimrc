@@ -140,7 +140,7 @@ call plug#end()
 " --------------------------------
 " Theme
 set background=dark
-colorscheme monokai
+colorscheme terafox
 
 " Reduce brightness of listchars
 highlight NonText ctermfg=8 guifg=#5c6370   " For invisible characters
