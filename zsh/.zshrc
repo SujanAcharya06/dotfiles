@@ -121,7 +121,14 @@ if [[ -f /home/sujanacharya/dotfiles/.env ]]; then
     export MAIL_SERVER
     export MAIL_PORT
     export MAIL_USE_TLE
-    export WIFI
+    export PG_WIFI_4A
+    export PG_WIFI_4B
+
+    export HOME_WIFI_5G
+    export HOME_WIFI_4G
+    export PG_DB_USERNAME
+    export PG_DB_PASSWORD
+
 else
     echo ".env file Notfound cannot Set custom env variable"
 fi
@@ -168,11 +175,17 @@ if [ -f "$HOME/.last_dir" ]; then
     cd "$(cat $HOME/.last_dir)"
 fi
 
-# Keep the lf function from before
-function lf() {
-    command lf "$@"
-    if [ -f "$HOME/.last_dir" ]; then
-        cd "$(cat $HOME/.last_dir)"
+lf() {
+    tmp="$(mktemp)"
+    command lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        if [ -d "$dir" ]; then
+            if [ "$dir" != "$(pwd)" ]; then
+                cd "$dir"
+            fi
+        fi
     fi
 }
 
@@ -181,3 +194,5 @@ function cd() {
     builtin cd "$@"
     pwd > "$HOME/.last_dir"
 }
+
+export TERM=xterm-256color
