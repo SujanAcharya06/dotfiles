@@ -116,19 +116,6 @@ source $ZSH/oh-my-zsh.sh
 # Setting env variables
 if [[ -f /home/sujanacharya/dotfiles/.env ]]; then
     source /home/sujanacharya/dotfiles/.env
-    export SENDER_EMAIL
-    export SENDER_PASSWORD
-    export MAIL_SERVER
-    export MAIL_PORT
-    export MAIL_USE_TLE
-    export PG_WIFI_4A
-    export PG_WIFI_4B
-
-    export HOME_WIFI_5G
-    export HOME_WIFI_4G
-    export PG_DB_USERNAME
-    export PG_DB_PASSWORD
-
 else
     echo ".env file Notfound cannot Set custom env variable"
 fi
