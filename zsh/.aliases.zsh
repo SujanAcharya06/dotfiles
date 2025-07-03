@@ -9,16 +9,16 @@ alias mail='python /home/sujanacharya/Documents/repos/Py-Scripts/test.py'
 alias mail-log='python /home/sujanacharya/Documents/repos/Py-Scripts/test-logfile.py'
 
 alias cat='bat'
-alias ls='exa'
-alias ll='exa -alh'
-alias tree='exa --tree'
+
+alias ls='eza --icons auto'
+alias ll='eza -alh --icons auto'
+alias la='eza -a --icons auto'
+alias l='eza -lh --icons auto'
+alias tree='eza --tree --icons auto'
 
 # For executing cpp program
 alias exe-cpp='sh /home/sujanacharya/Documents/repos/bashScripts/Auto-Exec/exe-cpp.sh'
 alias exe-java='sh /home/sujanacharya/Documents/repos/bashScripts/Auto-Exec/exe-java.sh'
-
-# For storing the cwd of the folder in ranger
-alias ranger='pyenv exec ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 
 # For rm -rf
 alias rm='trash'
@@ -52,3 +52,5 @@ alias pgb='nmcli c up $PG_WIFI_4B'
 
 alias dr='/home/sujanacharya/Documents/remote-sync/dry-run.sh'
 alias snd='/home/sujanacharya/Documents/remote-sync/send.sh'
+
+alias nvimk='NVIM_APPNAME=kickstart nvim'
