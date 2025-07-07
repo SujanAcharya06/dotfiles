@@ -183,3 +183,6 @@ function cd() {
 }
 
 export TERM=xterm-256color
+
+export JAVA_HOME="/usr/lib/jvm/jdk-21.0.7-oracle-x64"
+export PATH="$JAVA_HOME/bin:$PATH"
