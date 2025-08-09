@@ -92,3 +92,24 @@ vim.keymap.set('n', '<A-l>', '<C-w>l', { noremap = true, silent = true })
 -- Optional: Add mappings for up/down navigation as well
 vim.keymap.set('n', '<A-k>', '<C-w>k', { noremap = true, silent = true })
 vim.keymap.set('n', '<A-j>', '<C-w>j', { noremap = true, silent = true })
+
+-- Custom command to preview Markdown in a new Kitty terminal with Glow
+vim.api.nvim_create_user_command("MDPreview", function()
+    vim.fn.jobstart({"kitty", "--detach", "glow", vim.fn.expand("%")})
+end, {})
+
+-- vim.api.nvim_create_user_command("MDPreview", function()
+--     vim.cmd("!glow -p --style=dark --color=always " .. vim.fn.shellescape(vim.fn.expand("%")))
+-- end, { bang = true })
+-- vim.keymap.set('n', '<leader>P', ':MDPreview<CR>', { noremap = true, silent = true })
+--
+
+-- Move line down
+vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { noremap = true, silent = true })
+-- Move line up
+vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { noremap = true, silent = true })
+
+-- Move selected block down
+vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+-- Move selected block up
+vim.keymap.set('v', "<A-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })

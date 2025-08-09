@@ -9,7 +9,8 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "clangd", "html", "pyright", "cssls", "bashls"}
+                ensure_installed = { "lua_ls", "clangd", "html", "pyright", "cssls", "bashls"},
+                automatic_installation = false -- stop auto-start for installed servers
             })
         end
     },
@@ -24,10 +25,13 @@ return {
             capabilities.textDocument.completion.completionItem.snippetSupport = true
             local lspconfig = require("lspconfig")
             local on_attach = function(client, bufnr)
-                notify("LSP attached: " .. client.name, "info", {
-                    title = "Language Server Protocol",
-                    timeout = 1000,
-                })
+                -- Skip notification for Java files since nvim-jdtls handles them
+                if vim.bo[bufnr].filetype ~= "java" then
+                    notify("LSP attached: " .. client.name, "info", {
+                        title = "Language Server Protocol",
+                        timeout = 1000,
+                    })
+                end
                 -- Enable signature help
                 if client.server_capabilities.signatureHelpProvider then
                     vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { buffer = bufnr })
@@ -37,8 +41,31 @@ return {
                 -- ... (keep existing keymaps)
             end
 
+            -- COMPLETELY DISABLE automatic jdtls configuration
+            -- Override the jdtls config to prevent auto-setup
+            lspconfig.configs.jdtls = nil
+            lspconfig.jdtls = nil
+
+            -- Also disable it at the filetype level
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "java",
+                callback = function()
+                    -- Stop any jdtls that might be auto-starting
+                    for _, client in pairs(vim.lsp.get_active_clients({ name = "jdtls" })) do
+                        if client.config.cmd and client.config.cmd[1] == "jdtls" then
+                            -- This is the basic jdtls, stop it
+                            vim.lsp.stop_client(client.id)
+                        end
+                    end
+                end,
+            })
+
             -- Setup function for LSP servers
             local setup_server = function(server, config)
+                -- Skip Java LSP because it's handled separately in java.lua via nvim-jdtls
+                if server == "jdtls" then
+                    return
+                end
                 config = config or {}
                 config.capabilities = capabilities
                 config.on_attach = on_attach

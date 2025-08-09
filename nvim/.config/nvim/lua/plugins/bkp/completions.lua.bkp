@@ -1,4 +1,4 @@
-return{
+return {
     {
         "hrsh7th/cmp-nvim-lsp"
     },
@@ -53,10 +53,7 @@ return{
                                 luasnip = "[Snippet]",
                                 buffer = "[Buffer]",
                                 path = "[Path]",
-                                omni = "[Omni]",
-                                ["vim-dadbod-completion"] = "[DB]",
                             })[entry.source.name]
-
                             return vim_item
                         end
                     }),

@@ -1,0 +1,70 @@
+return {
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({
+                panel = {
+                    enabled = false,
+                },
+                suggestion = {
+                    enabled = true,
+                    auto_trigger = true,
+                    debounce = 75,
+                    keymap = {
+                        accept = "<Tab>",
+                        accept_word = false,
+                        accept_line = "<CR>", -- Enter also accepts suggestion
+                        next = "<C-0>",
+                        prev = "<C-9>",
+                        dismiss = "<BS>", -- Backspace dismisses suggestion
+                    },
+                },
+                filetypes = {
+                    yaml = false,
+                    markdown = false,
+                    help = false,
+                    gitcommit = false,
+                    gitrebase = false,
+                    hgcommit = false,
+                    svn = false,
+                    cvs = false,
+                    ["."] = false,
+                },
+            })
+
+            -- Function to check and notify Copilot status
+            local function check_copilot_status()
+                vim.schedule(function()
+                    vim.cmd('Copilot status')
+                end)
+            end
+
+            -- Toggle function with explicit notification
+            vim.g.copilot_enabled = true
+            local function toggle_copilot()
+                if vim.g.copilot_enabled then
+                    vim.cmd('Copilot disable')
+                    vim.g.copilot_enabled = false
+                    vim.notify("Copilot disabled", vim.log.levels.INFO)
+                else
+                    vim.cmd('Copilot enable')
+                    vim.g.copilot_enabled = true
+                    vim.notify("Copilot enabled", vim.log.levels.INFO)
+                end
+            end
+
+            vim.keymap.set('n', '<leader>cp', toggle_copilot, { desc = 'Toggle Copilot' })
+
+            -- Auto-check Copilot status when opening files
+            vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+                pattern = "*",
+                callback = function()
+                    -- Delay the status check to ensure Copilot is loaded
+                    vim.defer_fn(check_copilot_status, 500)
+                end,
+            })
+        end,
+    },
+}

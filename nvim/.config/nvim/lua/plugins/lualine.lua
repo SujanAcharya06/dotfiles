@@ -4,8 +4,10 @@ return {
     config = function()
         require('lualine').setup({
             options = {
-                icons_enables = true;
-                theme = "onedark" --{"dracula"}
+                icons_enabled = true,
+                theme = "codedark" --{"dracula"}
+                -- theme = "auto"
+
             }
         })
     end

@@ -17,6 +17,7 @@ return{
             "hrsh7th/cmp-path",
             "hrsh7th/cmp-cmdline",
             "onsails/lspkind.nvim",
+            "zbirenbaum/copilot-cmp", -- Add copilot-cmp as dependency
         },
         config = function()
             local cmp = require("cmp")
@@ -47,15 +48,24 @@ return{
                         mode = "symbol_text",
                         maxwidth = 50,
                         ellipsis_char = "...",
+                        symbol_map = {
+                            Copilot = "",
+                        },
                         before = function(entry, vim_item)
                             vim_item.menu = ({
                                 nvim_lsp = "[LSP]",
                                 luasnip = "[Snippet]",
                                 buffer = "[Buffer]",
                                 path = "[Path]",
+                                copilot = "[Copilot]", -- Add Copilot source label
                                 omni = "[Omni]",
                                 ["vim-dadbod-completion"] = "[DB]",
                             })[entry.source.name]
+
+                            -- Color copilot suggestions differently
+                            if entry.source.name == "copilot" then
+                                vim_item.kind_hl_group = "CmpItemKindCopilot"
+                            end
 
                             return vim_item
                         end
@@ -84,6 +94,7 @@ return{
                 }),
                 sources = cmp.config.sources({
                     { name = "nvim_lsp", priority = 1000 },
+                    { name = "copilot", priority = 900, group_index = 2 }, -- Add Copilot source
                     { name = "luasnip", priority = 750 },
                     { name = "path", priority = 500 },
                     { name = 'omni', priority = 400 },
@@ -93,7 +104,25 @@ return{
                 experimental = {
                     ghost_text = true,
                 },
+                sorting = {
+                    priority_weight = 2,
+                    comparators = {
+                        require("copilot_cmp.comparators").prioritize,
+                        cmp.config.compare.offset,
+                        cmp.config.compare.exact,
+                        cmp.config.compare.score,
+                        cmp.config.compare.recently_used,
+                        cmp.config.compare.locality,
+                        cmp.config.compare.kind,
+                        cmp.config.compare.sort_text,
+                        cmp.config.compare.length,
+                        cmp.config.compare.order,
+                    },
+                },
             })
+
+            -- Set up highlight group for Copilot
+            vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 
             cmp.setup.cmdline({ '/', '?' }, {
                 mapping = cmp.mapping.preset.cmdline(),
@@ -107,8 +136,8 @@ return{
                 sources = cmp.config.sources({
                     { name = 'path' }
                 }, {
-                        { name = 'cmdline' }
-                    })
+                    { name = 'cmdline' }
+                })
             })
         end,
     },
