@@ -1,0 +1,11 @@
+-- return {
+--   -- disable underlines from semantic tokens
+--   ["@type"] = { underline = false },
+--   ["@lsp"] = { underline = false },
+--   ["@lsp.type.class"] = { underline = false },
+--   ["@lsp.mod.public"] = { underline = false },
+--   ["@lsp.mod.readonly"] = { underline = false },
+--   ["@lsp.typemod.class.public"] = { underline = false },
+--   ["@lsp.typemod.class.readonly"] = { underline = false },
+--   ["@lsp.type.variable.java"] = { underline = false },
+-- }
