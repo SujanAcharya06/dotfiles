@@ -1,0 +1,42 @@
+-- Command to create a C++ project structure
+-- ~/.config/nvim/lua/config/cpp-create-project.lua
+
+vim.api.nvim_create_user_command("CppProj", function()
+  local project_name = vim.fn.input("Enter C++ project name: ")
+
+  if project_name == "" then
+    print("❌ Project name cannot be empty")
+    return
+  end
+
+  local root = project_name
+
+  local dirs = {
+    root .. "/src",
+    root .. "/libs/glad",
+    root .. "/include",
+    root .. "/build",
+  }
+
+  for _, dir in ipairs(dirs) do
+    vim.fn.mkdir(dir, "p")
+  end
+
+  local main_cpp = [[
+#include <iostream>
+
+int main() {
+		std::cout << "Hello from C++ project!" << std::endl;
+		return 0;
+}
+]]
+
+  local file = io.open(root .. "/src/main.cpp", "w")
+
+  if file then
+    file:write(main_cpp)
+    file:close()
+  end
+
+  print("✅ C++ project created: " .. project_name)
+end, {})
