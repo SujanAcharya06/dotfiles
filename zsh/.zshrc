@@ -182,7 +182,20 @@ function cd() {
     pwd > "$HOME/.last_dir"
 }
 
-export TERM=xterm-256color
+# export TERM=xterm-256color
+export TERM=xterm-kitty
 
 export JAVA_HOME="/usr/lib/jvm/jdk-21.0.7-oracle-x64"
 export PATH="$JAVA_HOME/bin:$PATH"
+
+
+# export JAVA_HOME=/usr/lib/jvm/jdk-17.0.2
+# export PATH=$JAVA_HOME/bin:$PATH
+
+export PATH="$HOME/.cargo/bin:$PATH"
+. "/home/sujanacharya/.deno/env"
+
+export BROWSER=google-chrome
+
+export PATH=/usr/local/cuda-12.9/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-12.9/lib64:$LD_LIBRARY_PATH
