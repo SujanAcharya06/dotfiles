@@ -133,6 +133,9 @@ Plug 'nathanaelkane/vim-indent-guides'
 " Vim-instant-markdown
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
 
+" Copy to clipboard
+Plug 'christoomey/vim-system-copy'
+
 call plug#end()
 
 " --------------------------------
@@ -140,7 +143,7 @@ call plug#end()
 " --------------------------------
 " Theme
 set background=dark
-colorscheme terafox
+colorscheme carbonfox
 
 " Reduce brightness of listchars
 highlight NonText ctermfg=8 guifg=#5c6370   " For invisible characters
