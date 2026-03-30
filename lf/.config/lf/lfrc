@@ -1,35 +1,37 @@
-set previewer ~/.config/lf/previewer
-
 # Basic Settings
 set preview true
+set previewer ~/.config/lf/previewer
+set cleaner ~/.config/lf/cleaner
+
+set icons true
+set drawbox
+set ignorecase true
+
 set hidden false
-#set color256 true
 set drawbox
 set ignorecase true
 set icons true
-set sixel true
-# set rulerfmt "%d  |%a  |%p  |\033[7;31m %m \033[0m  |\033[7;33m %c \033[0m  |\033[7;35m %s \033[0m  |\033[7;34m %f \033[0m  |%i/%t"
-# Enhance ruler format with colors
+
+# Enhanced ruler format
 set rulerfmt "\033[38;5;240m%d\033[0m | \033[38;5;39m%a\033[0m | \033[38;5;110m%p\033[0m |\033[7;31m %m \033[0m|\033[7;33m %c \033[0m|\033[7;35m %s \033[0m|\033[7;34m %f \033[0m| %i/%t"
 
-# Custom Functions
+# Keep all your commands
 cmd mkdir ${{
     printf "Directory Name: "
-        read ans
-        mkdir $ans
+    read ans
+    mkdir "$ans"
 }}
 
 cmd mkfile ${{
     printf "File Name: "
-        read ans
-        $EDITOR $ans
+    read ans
+    $EDITOR "$ans"
 }}
 
 cmd setwallpaper ${{
     setwallpaper "$f"
 }}
 
-# Archive bindings
 cmd unarchive ${{
     case "$f" in
         *.zip) unzip "$f" ;;
@@ -39,89 +41,77 @@ cmd unarchive ${{
         *.tar) tar -xvf "$f" ;;
         *.7z) 7z e "$f" ;;
         *) echo "Unsupported format" ;;
-        esac
+    esac
 }}
 
-# Trash bindings
 cmd trash ${{
     files=$(printf "$fx" | tr '\n' ';')
-        while [ "$files" ]; do
-            file=${files%%;*}
-
-    trashy put "$(basename "$file")"
+    while [ "$files" ]; do
+        file=${files%%;*}
+        trashy put "$(basename "$file")"
         if [ "$files" = "$file" ]; then
             files=''
         else
             files="${files#*;}"
-                fi
-                done
+        fi
+    done
 }}
 
 cmd open &{{
     case $(file --mime-type -Lb $f) in
         text/*) lf -remote "send $id \$nvim \$fx";;
-             *) xdg-open "$f"
-             esac
-             }}
-
-             cmd on-select &{{
-             lf -remote "send $id set statfmt \"$(exa -ld --color=always "$f")\""
-             }}
-
-             cmd fzf_jump ${{
-             # res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location')"
-             res="$(find . | fzf --reverse --header='Jump to location')"
-             if [ -n "$res" ]; then
-             if [ -d "$res" ]; then
-             cmd="cd"
-             else
-             cmd="select"
-             fi
-             res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
-             lf -remote "send $id $cmd \"$res\""
-             fi
-             }}
-             map <c-f> :fzf_jump
-
-             cmd fzf_search ${{
-             RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
-             res="$(
-             FZF_DEFAULT_COMMAND="$RG_PREFIX ''" \
-             fzf --bind "change:reload:$RG_PREFIX {q} || true" \
-             --ansi --layout=reverse --header 'Search in files' \
-             | cut -d':' -f1 | sed 's/\\/\\\\/g;s/"/\\"/g'
-             )"
-             [ -n "$res" ] && lf -remote "send $id select \"$res\""
-             }}
-             map <c-g> :fzf_search
-
-             cmd z-jump ${{
-             ZLUA_SCRIPT="$ZDOTDIR/plugins/z.lua/z.lua"
-             lf -remote "send ${id} cd \"$($ZLUA_SCRIPT -e $@ | sed 's/\\/\\\\/g;s/"/\\"/g')\""
-             }}
-             map Z push :z-jump<space>-I<space>
-             map zb push :z-jump<space>-b<space>
-             map zz push :z-jump<space>
-
-# Define a custom function to open current directory in Thunar
-cmd open_in_thunar &{{
-thunar "$PWD" > /dev/null 2>&1 &
+        *) xdg-open "$f";;
+    esac
 }}
 
-# Map it to a key (e.g., 'T')
+cmd on-select &{{
+    lf -remote "send $id set statfmt \"$(exa -ld --color=always "$f")\""
+}}
+
+cmd fzf_jump ${{
+    res="$(find . | fzf --reverse --header='Jump to location')"
+    if [ -n "$res" ]; then
+        if [ -d "$res" ]; then
+            cmd="cd"
+        else
+            cmd="select"
+        fi
+        res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+        lf -remote "send $id $cmd \"$res\""
+    fi
+}}
+map <c-f> :fzf_jump
+
+cmd fzf_search ${{
+    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+    res="$(
+    FZF_DEFAULT_COMMAND="$RG_PREFIX ''" \
+    fzf --bind "change:reload:$RG_PREFIX {q} || true" \
+    --ansi --layout=reverse --header 'Search in files' \
+    | cut -d':' -f1 | sed 's/\\/\\\\/g;s/"/\\"/g'
+    )"
+    [ -n "$res" ] && lf -remote "send $id select \"$res\""
+}}
+map <c-g> :fzf_search
+
+cmd z-jump ${{
+    ZLUA_SCRIPT="$ZDOTDIR/plugins/z.lua/z.lua"
+    lf -remote "send ${id} cd \"$($ZLUA_SCRIPT -e $@ | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+map Z push :z-jump<space>-I<space>
+map zb push :z-jump<space>-b<space>
+map zz push :z-jump<space>
+
+cmd open_in_thunar &{{
+    thunar "$PWD" > /dev/null 2>&1 &
+}}
 map T open_in_thunar
 
 # Bindings
-# map c
-# map d
 map m
-
-# Image preview
 map - $~/.config/lf/draw_img "$f"
-
 map co $vscodium "$f"
 map cf $dotbare fadd -f
-
 map au unarchive
 map ae $wine "$f"
 
@@ -151,7 +141,16 @@ map gv cd ~/Videos
 map gs cd ~/.local/bin
 map gt cd ~/.local/share/Trash/files
 
-# default one
+# Quit behavior
 cmd q :quit
 map q push :q<enter>
 set autoquit true
+
+# Toggle preview
+unmap i
+map i set preview!
+
+cmd playvideo &{{
+	mpv --vo=gpu --geometry=50%x50% "$f"
+}}
+map V playvideo
