@@ -1,11 +1,71 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-case "$(file -Lb --mime-type -- "$1")" in
-    image/*)
-        chafa -f sixel -s "$2x$3" --animate off --polite on "$1"
-        exit 1
-        ;;
-    *)
-        previewer "$1"
-        ;;
+file="$1"
+w="$2"
+h="$3"
+x="$4"
+y="$5"
+
+image() {
+	if [ -n "$KITTY_WINDOW_ID" ]; then
+		kitty +kitten icat \
+			--silent \
+			--stdin no \
+			--transfer-mode file \
+			--place "${w}x${h}@${x}x${y}" \
+			"$1" </dev/null >/dev/tty
+		exit 1
+	else
+		chafa "$1" -s "${w}x${h}"
+	fi
+}
+
+CACHE="$HOME/.cache/lf"
+mkdir -p "$CACHE"
+
+cache="$CACHE/thumb.$(
+	stat --printf '%n%i%s%Y' -- "$(readlink -f "$file")" | sha256sum | awk '{print $1}'
+)"
+
+case "$(printf "%s" "$file" | awk '{print tolower($0)}')" in
+
+# ---------- PDF ----------
+*.pdf)
+	[ ! -f "$cache.jpg" ] &&
+		pdftoppm -jpeg -f 1 -singlefile "$file" "$cache"
+	image "$cache.jpg"
+	;;
+
+# ---------- VIDEO ----------
+*.avi | *.mp4 | *.mkv | *.webm | *.mov | *.mpg | *.mpeg | *.ts | *.m4v)
+	if [ ! -f "$cache.jpg" ]; then
+		timeout 2 ffmpegthumbnailer \
+			-i "$file" \
+			-o "$cache.jpg" \
+			-s 0 \
+			-q 5 >/dev/null 2>&1
+	fi
+
+	[ -f "$cache.jpg" ] && image "$cache.jpg"
+	;;
+
+# ---------- IMAGE ----------
+*.bmp | *.jpg | *.jpeg | *.png | *.webp | *.gif | *.tiff | *.ico)
+	image "$file"
+	;;
+
+# ---------- TEXT ----------
+*.txt | *.log | *.md | *.conf | *.json | *.xml | *.yaml | *.sh)
+	bat --color=always --style=numbers --line-range=:500 "$file"
+	;;
+
+*.mp3 | *.flac | *.wav)
+	mediainfo "$file"
+	;;
+
+# ---------- DEFAULT ----------
+*)
+	file "$file"
+	;;
+
 esac

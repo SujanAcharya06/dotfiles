@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# move cursor to preview pane origin and clear area
+printf "\033[2J\033[3J\033[H" >/dev/tty
