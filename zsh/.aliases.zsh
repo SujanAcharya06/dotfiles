@@ -45,12 +45,16 @@ alias emacs='emacsclient -c -a 'emacs''
 
 #Wifi quick connect
 alias w='nmcli c up $HOME_WIFI_5G'
-alias pga='nmcli c up $PG_WIFI_4A'
-alias pgb='nmcli c up $PG_WIFI_4B'
-
-
+alias pga='nmcli c up $PG_WIFI_4A_5G'
+alias pga4g='nmcli c up $PG_WIFI_4A'
+alias pgb='nmcli c up $PG_WIFI_4B_5G'
+alias pgb4g='nmcli c up $PG_WIFI_4B'
+alias cmf='nmcli c up $MOBILE'
 
 alias dr='/home/sujanacharya/Documents/remote-sync/dry-run.sh'
 alias snd='/home/sujanacharya/Documents/remote-sync/send.sh'
 
 alias nvimk='NVIM_APPNAME=kickstart nvim'
+alias nvimj='NVIM_APPNAME=nvimnew nvim'
+
+alias app-run='mvn exec:java -Dexec.mainClass="com.example.App'
