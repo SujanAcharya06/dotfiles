@@ -114,8 +114,8 @@ source $ZSH/oh-my-zsh.sh
 # echo "edit - to search using fzf and edit using vim"
 
 # Setting env variables
-if [[ -f /home/sujanacharya/dotfiles/.env ]]; then
-    source /home/sujanacharya/dotfiles/.env
+if [[ -f $HOME/dotfiles/.env ]]; then
+    source $HOME/dotfiles/.env
 else
     echo ".env file Notfound cannot Set custom env variable"
 fi
